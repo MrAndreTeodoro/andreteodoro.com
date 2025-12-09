@@ -1,0 +1,110 @@
+# Books test fixtures
+
+# Featured book with full details
+atomic_habits:
+  title: "Atomic Habits"
+  author: "James Clear"
+  cover_url: "https://example.com/atomic-habits.jpg"
+  affiliate_link: "https://amazon.com/atomic-habits"
+  rating: 5
+  read_date: <%= 30.days.ago.to_date %>
+  isbn: "9780735211292"
+  category: "productivity"
+  featured: true
+
+# Book with review but no notes
+deep_work:
+  title: "Deep Work"
+  author: "Cal Newport"
+  cover_url: "https://example.com/deep-work.jpg"
+  affiliate_link: "https://amazon.com/deep-work"
+  rating: 4
+  read_date: <%= 60.days.ago.to_date %>
+  isbn: "9781455586691"
+  category: "productivity"
+  featured: false
+
+# Book with notes but no review
+sapiens:
+  title: "Sapiens"
+  author: "Yuval Noah Harari"
+  cover_url: "https://example.com/sapiens.jpg"
+  affiliate_link:
+  rating: 5
+  read_date: <%= 90.days.ago.to_date %>
+  isbn: "9780062316097"
+  category: "history"
+  featured: true
+
+# Book without review or notes
+zero_to_one:
+  title: "Zero to One"
+  author: "Peter Thiel"
+  cover_url: "https://example.com/zero-to-one.jpg"
+  affiliate_link: "https://amazon.com/zero-to-one"
+  rating: 4
+  read_date: <%= 120.days.ago.to_date %>
+  isbn: "9780804139298"
+  category: "business"
+  featured: false
+
+# Book without rating
+unrated_book:
+  title: "The Lean Startup"
+  author: "Eric Ries"
+  cover_url: "https://example.com/lean-startup.jpg"
+  affiliate_link:
+  rating:
+  read_date: <%= 150.days.ago.to_date %>
+  isbn: "9780307887894"
+  category: "business"
+  featured: false
+
+# Book read this year
+current_year_book:
+  title: "The Psychology of Money"
+  author: "Morgan Housel"
+  cover_url: "https://example.com/psychology-money.jpg"
+  affiliate_link: "https://amazon.com/psychology-money"
+  rating: 5
+  read_date: <%= Date.today.beginning_of_year + 15.days %>
+  isbn: "9780857197689"
+  category: "finance"
+  featured: true
+
+# Book with different category for testing normalization
+tech_book:
+  title: "Clean Code"
+  author: "Robert C. Martin"
+  cover_url: "https://example.com/clean-code.jpg"
+  affiliate_link: "https://amazon.com/clean-code"
+  rating: 5
+  read_date: <%= 200.days.ago.to_date %>
+  isbn: "9780132350884"
+  category: "Programming"
+  featured: false
+
+# Low rated book
+low_rated:
+  title: "Mediocre Book"
+  author: "Some Author"
+  cover_url:
+  affiliate_link:
+  rating: 2
+  read_date: <%= 180.days.ago.to_date %>
+  isbn: "9781234567890"
+  category: "self-help"
+  featured: false
+# Book with invalid URL (for validation testing, commented out as it won't load)
+# invalid_url_book:
+#   title: "Invalid URL Book"
+#   author: "Test Author"
+#   cover_url:
+#   affiliate_link: "not-a-valid-url"
+#   review:
+#   notes:
+#   rating: 3
+#   read_date: <%= 10.days.ago.to_date %>
+#   isbn: "9780000000000"
+#   category: "test"
+#   featured: false

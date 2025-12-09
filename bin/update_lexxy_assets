@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Script to copy Lexxy and ActionText assets to vendor directories
+# This is needed because importmap requires assets to be in accessible locations
+
+require "fileutils"
+
+def copy_asset(source, destination)
+  if File.exist?(source)
+    FileUtils.cp(source, destination)
+    puts "✓ Copied #{File.basename(source)} to #{destination}"
+  else
+    puts "✗ Warning: #{source} not found"
+  end
+end
+
+puts "Updating Lexxy and ActionText assets..."
+puts ""
+
+# Get gem paths
+lexxy_path = `bundle show lexxy`.strip
+activestorage_path = `bundle show activestorage`.strip
+actiontext_path = `bundle show actiontext`.strip
+
+# Ensure vendor/javascript directory exists
+FileUtils.mkdir_p("vendor/javascript")
+FileUtils.mkdir_p("app/assets/stylesheets")
+
+puts "Copying JavaScript files to vendor/javascript/..."
+copy_asset("#{lexxy_path}/app/assets/javascript/lexxy.js", "vendor/javascript/lexxy.js")
+copy_asset("#{activestorage_path}/app/assets/javascripts/activestorage.esm.js", "vendor/javascript/activestorage.esm.js")
+copy_asset("#{actiontext_path}/app/assets/javascripts/actiontext.esm.js", "vendor/javascript/actiontext.esm.js")
+
+puts ""
+puts "Copying Lexxy CSS files to app/assets/stylesheets/..."
+copy_asset("#{lexxy_path}/app/assets/stylesheets/lexxy.css", "app/assets/stylesheets/lexxy.css")
+copy_asset("#{lexxy_path}/app/assets/stylesheets/lexxy-content.css", "app/assets/stylesheets/lexxy-content.css")
+copy_asset("#{lexxy_path}/app/assets/stylesheets/lexxy-editor.css", "app/assets/stylesheets/lexxy-editor.css")
+copy_asset("#{lexxy_path}/app/assets/stylesheets/lexxy-variables.css", "app/assets/stylesheets/lexxy-variables.css")
+
+puts ""
+puts "✅ All assets updated successfully!"
+puts ""
+puts "Note: Run this script whenever you update the Lexxy gem version"

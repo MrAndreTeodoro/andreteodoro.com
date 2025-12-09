@@ -1,0 +1,356 @@
+<%= form_with(model: [:admin, @gear_item], class: "space-y-6") do |f| %>
+  <!-- Error Messages -->
+  <% if @gear_item.errors.any? %>
+    <div class="rounded-md bg-red-50 p-4 border border-red-200">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg
+            class="h-5 w-5 text-red-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </div>
+
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            <%= pluralize(@gear_item.errors.count, "error") %> prohibited this
+            gear item from being saved:
+          </h3>
+
+          <div class="mt-2 text-sm text-red-700">
+            <ul class="list-disc pl-5 space-y-1">
+              <% @gear_item.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Basic Information Section -->
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Name -->
+      <div class="md:col-span-2">
+        <%= f.label :name, "Product Name", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.text_field :name,
+          placeholder: "e.g., MacBook Pro 16\", Nike Metcon 9, Rogue Echo Bike",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@gear_item.errors[:name].any? ? 'border-red-300' : ''}",
+          required: true %>
+
+        <% if @gear_item.errors[:name].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @gear_item.errors[:name].first %>
+          </p>
+        <% end %>
+      </div>
+
+      <!-- Category -->
+      <div>
+        <%= f.label :category, "Category", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.select :category,
+          [
+            ['Tech', 'tech'],
+            ['Fitness', 'fitness'],
+            ['Everyday', 'everyday']
+          ],
+          { include_blank: 'Select a category' },
+          {
+            class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@gear_item.errors[:category].any? ? 'border-red-300' : ''}",
+            required: true
+          } %>
+
+        <% if @gear_item.errors[:category].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @gear_item.errors[:category].first %>
+          </p>
+        <% end %>
+      </div>
+
+      <!-- Price -->
+      <div>
+        <%= f.label :price, "Price", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <div class="relative rounded-md shadow-sm">
+          <div
+            class="
+              absolute inset-y-0 left-0 pl-3 flex items-center
+              pointer-events-none
+            "
+          >
+            <span class="text-gray-500 sm:text-sm">$</span>
+          </div>
+
+          <%= f.number_field :price,
+            step: 0.01,
+            min: 0,
+            placeholder: "0.00",
+            class: "w-full pl-7 pr-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@gear_item.errors[:price].any? ? 'border-red-300' : ''}" %>
+        </div>
+
+        <% if @gear_item.errors[:price].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @gear_item.errors[:price].first %>
+          </p>
+        <% else %>
+          <p class="mt-1 text-xs text-gray-500">
+            Optional: Leave blank if price not available
+          </p>
+        <% end %>
+      </div>
+
+      <!-- Position -->
+      <div>
+        <%= f.label :position, "Display Position", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.number_field :position,
+          min: 0,
+          placeholder: "0 (auto)",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@gear_item.errors[:position].any? ? 'border-red-300' : ''}" %>
+
+        <% if @gear_item.errors[:position].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @gear_item.errors[:position].first %>
+          </p>
+        <% else %>
+          <p class="mt-1 text-xs text-gray-500">
+            Order items appear on your site (lower = first)
+          </p>
+        <% end %>
+      </div>
+
+      <!-- Featured -->
+      <div class="flex items-center h-full">
+        <div class="flex items-start pt-6">
+          <div class="flex items-center h-5">
+            <%= f.check_box :featured,
+              class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" %>
+          </div>
+
+          <div class="ml-3">
+            <%= f.label :featured, class: "font-medium text-gray-700" do %>
+              <span class="flex items-center">
+                Featured Item
+                <svg
+                  class="w-4 h-4 ml-1 text-yellow-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                  />
+                </svg>
+              </span>
+            <% end %>
+
+            <p class="text-sm text-gray-500">
+              Display prominently on your site
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="md:col-span-2">
+        <%= f.label :description, "Description", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.rich_text_area :description,
+          placeholder: "Why do you recommend this product? What makes it great? How do you use it?" %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Share your experience and why you recommend this gear
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Media & Links Section -->
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">
+      Media & Links
+      <span class="text-sm font-normal text-gray-500">(Optional)</span>
+    </h3>
+
+    <div class="grid grid-cols-1 gap-6">
+      <!-- Product Image Upload -->
+      <div>
+        <%= f.label :product_image, "Product Image", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <div class="space-y-4">
+          <!-- Current Image Preview -->
+          <% if @gear_item.product_image.attached? || @gear_item.image_url.present? %>
+            <div class="relative inline-block">
+              <% if @gear_item.product_image.attached? %>
+                <%= image_tag @gear_item.product_image, class: "h-48 w-auto rounded-lg shadow-md border border-gray-200", alt: "#{@gear_item.name} image" %>
+              <% elsif @gear_item.image_url.present? %>
+                <%= image_tag @gear_item.image_url, class: "h-48 w-auto rounded-lg shadow-md border border-gray-200", alt: "#{@gear_item.name} image" %>
+              <% end %>
+
+              <% if @gear_item.product_image.attached? %>
+                <div class="mt-2">
+                  <%= button_to "Remove Product Image",
+                    [:purge_product_image, :admin, @gear_item],
+                    method: :delete,
+                    class: "text-xs text-red-600 hover:text-red-700 font-medium",
+                    data: { turbo_confirm: "Are you sure you want to remove this product image?" },
+                    form: { class: "inline" } %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <!-- File Upload -->
+          <div>
+            <%= f.file_field :product_image,
+              accept: "image/*",
+              class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer border border-gray-300 rounded-md",
+              onchange: "previewProductImage(event)" %>
+
+            <p class="mt-1 text-xs text-gray-500">
+              Upload a product image (JPG, PNG, WEBP). Recommended size: 800x800px or similar square aspect ratio.
+            </p>
+          </div>
+
+          <!-- Image Preview -->
+          <div id="product-image-preview" class="hidden">
+            <p class="text-sm font-medium text-gray-700 mb-2">Preview:</p>
+            <img id="preview-img" class="h-48 w-auto rounded-lg shadow-md border border-gray-200" />
+          </div>
+
+          <!-- Fallback to URL (if no file uploaded) -->
+          <div class="pt-4 border-t border-gray-200">
+            <%= f.label :image_url, "Or use Product Image URL", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+            <%= f.url_field :image_url,
+              placeholder: "https://example.com/product-image.jpg",
+              class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" %>
+
+            <p class="mt-1 text-xs text-gray-500">
+              Alternative: Provide a URL if you don't want to upload a file
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Affiliate Link -->
+      <div>
+        <%= f.label :affiliate_link, "Affiliate/Purchase Link", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.url_field :affiliate_link,
+          placeholder: "https://amazon.com/product-name",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@gear_item.errors[:affiliate_link].any? ? 'border-red-300' : ''}" %>
+
+        <% if @gear_item.errors[:affiliate_link].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @gear_item.errors[:affiliate_link].first %>
+          </p>
+        <% else %>
+          <p class="mt-1 text-xs text-gray-500">
+            Link where readers can purchase (Amazon, manufacturer site, etc.)
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Section -->
+  <div class="bg-blue-50 rounded-lg border border-blue-200 p-4">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg
+          class="h-5 w-5 text-blue-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      </div>
+
+      <div class="ml-3">
+        <h3 class="text-sm font-medium text-blue-800">Tips for adding gear</h3>
+
+        <div class="mt-2 text-sm text-blue-700">
+          <ul class="list-disc pl-5 space-y-1">
+            <li>
+              <strong>Be specific:</strong> Include model numbers and versions
+              (e.g., "MacBook Pro 16\" M3 Max")
+            </li>
+
+            <li>
+              <strong>Share your experience:</strong> Explain why you recommend
+              it and how you use it
+            </li>
+
+            <li>
+              <strong>Feature selectively:</strong> Only feature your absolute
+              top recommendations (3-5 per category)
+            </li>
+
+            <li>
+              <strong>Position matters:</strong> Lower numbers appear first
+              (position 1 = first item)
+            </li>
+
+            <li>
+              <strong>Affiliate links:</strong> Add Amazon Associates or other
+              affiliate links to earn commissions
+            </li>
+
+            <li>
+              <strong>Categories:</strong> Tech = gadgets/computers, Fitness =
+              workout gear, Everyday = lifestyle items
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Actions -->
+  <div class="flex items-center justify-end gap-4 pt-6 border-t border-gray-200">
+    <%= link_to "Cancel", admin_gear_items_path, class: "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+
+    <%= f.submit (@gear_item.new_record? ? "Create Gear Item" : "Update Gear Item"), class: "px-6 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+  </div>
+<% end %>
+
+<script>
+  function previewProductImage(event) {
+    const input = event.target;
+    const preview = document.getElementById('product-image-preview');
+    const previewImg = document.getElementById('preview-img');
+
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        previewImg.src = e.target.result;
+        preview.classList.remove('hidden');
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    } else {
+      preview.classList.add('hidden');
+    }
+  }
+</script>

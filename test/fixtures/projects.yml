@@ -1,0 +1,45 @@
+# Test fixtures for Projects
+
+startup_one:
+  name: "FitTrack Pro"
+  url: "https://fittrackpro.com"
+  logo_url: "https://example.com/fittrack-logo.png"
+  project_type: "startup"
+  featured: true
+  tech_stack: '["Rails 8", "PostgreSQL", "Turbo"]'
+  status: "active"
+  position: 1
+
+startup_two:
+  name: "DevFlow"
+  url: "https://devflow.app"
+  project_type: "startup"
+  featured: false
+  tech_stack: '["Next.js", "TypeScript", "Prisma"]'
+  status: "in_development"
+  position: 2
+
+side_project_one:
+  name: "RaceDay Timer"
+  url: "https://github.com/user/raceday"
+  project_type: "side_project"
+  featured: false
+  tech_stack: '["Rails", "Hotwire"]'
+  status: "active"
+  position: 1
+
+experiment_one:
+  name: "AI Experiment"
+  project_type: "experiment"
+  featured: false
+  tech_stack: '["Python", "TensorFlow"]'
+  status: "archived"
+  position: 1
+
+archived_project:
+  name: "Old Project"
+  url: "https://oldproject.com"
+  project_type: "startup"
+  featured: false
+  status: "archived"
+  position: 10

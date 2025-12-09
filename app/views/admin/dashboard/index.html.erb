@@ -1,0 +1,549 @@
+<% content_for :page_title, "Dashboard" %>
+<% content_for :page_subtitle, "Overview of your portfolio content" %>
+
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+  <!-- Sport Activities -->
+  <div class="bg-white rounded-lg shadow p-6 border border-gray-200">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="text-sm font-medium text-gray-600">Sport Activities</p>
+
+        <p class="text-3xl font-bold text-gray-900 mt-2">
+          <%= @stats[:sport_activities] %>
+        </p>
+      </div>
+
+      <div class="bg-blue-100 rounded-full p-3">
+        <svg
+          class="w-8 h-8 text-blue-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 10V3L4 14h7v7l9-11h-7z"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <%= link_to "Manage Sports →", admin_sport_activities_path, class: "text-sm text-blue-600 hover:text-blue-700 font-medium" %>
+  </div>
+
+  <!-- Books -->
+  <div class="bg-white rounded-lg shadow p-6 border border-gray-200">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="text-sm font-medium text-gray-600">Books</p>
+
+        <p class="text-3xl font-bold text-gray-900 mt-2">
+          <%= @stats[:books] %>
+        </p>
+      </div>
+
+      <div class="bg-green-100 rounded-full p-3">
+        <svg
+          class="w-8 h-8 text-green-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <%= link_to "Manage Books →", admin_books_path, class: "text-sm text-blue-600 hover:text-blue-700 font-medium" %>
+      <span class="text-xs text-gray-500"><%= @featured_books %> featured</span>
+    </div>
+  </div>
+
+  <!-- Gear Items -->
+  <div class="bg-white rounded-lg shadow p-6 border border-gray-200">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="text-sm font-medium text-gray-600">Gear Items</p>
+
+        <p class="text-3xl font-bold text-gray-900 mt-2">
+          <%= @stats[:gear_items] %>
+        </p>
+      </div>
+
+      <div class="bg-purple-100 rounded-full p-3">
+        <svg
+          class="w-8 h-8 text-purple-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+          />
+
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <%= link_to "Manage Gear →", admin_gear_items_path, class: "text-sm text-blue-600 hover:text-blue-700 font-medium" %>
+  </div>
+
+  <!-- Projects -->
+  <div class="bg-white rounded-lg shadow p-6 border border-gray-200">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="text-sm font-medium text-gray-600">Projects</p>
+
+        <p class="text-3xl font-bold text-gray-900 mt-2">
+          <%= @stats[:projects] %>
+        </p>
+      </div>
+
+      <div class="bg-yellow-100 rounded-full p-3">
+        <svg
+          class="w-8 h-8 text-yellow-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <%= link_to "Manage Projects →", admin_projects_path, class: "text-sm text-blue-600 hover:text-blue-700 font-medium" %>
+      <span class="text-xs text-gray-500"><%= @active_projects %> active</span>
+    </div>
+  </div>
+
+  <!-- Blog Posts -->
+  <div class="bg-white rounded-lg shadow p-6 border border-gray-200">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="text-sm font-medium text-gray-600">Blog Posts</p>
+
+        <p class="text-3xl font-bold text-gray-900 mt-2">
+          <%= @stats[:blog_posts] %>
+        </p>
+      </div>
+
+      <div class="bg-red-100 rounded-full p-3">
+        <svg
+          class="w-8 h-8 text-red-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <%= link_to "Manage Posts →", admin_blog_posts_path, class: "text-sm text-blue-600 hover:text-blue-700 font-medium" %>
+
+      <span class="text-xs text-gray-500">
+        <%= @published_posts %> / <%= @draft_posts %> draft
+      </span>
+    </div>
+  </div>
+
+  <!-- Social Links -->
+  <div class="bg-white rounded-lg shadow p-6 border border-gray-200">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="text-sm font-medium text-gray-600">Social Links</p>
+
+        <p class="text-3xl font-bold text-gray-900 mt-2">
+          <%= @stats[:social_links] %>
+        </p>
+      </div>
+
+      <div class="bg-indigo-100 rounded-full p-3">
+        <svg
+          class="w-8 h-8 text-indigo-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <%= link_to "Manage Links →", admin_social_links_path, class: "text-sm text-blue-600 hover:text-blue-700 font-medium" %>
+  </div>
+</div>
+
+<!-- Quick Stats Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+  <div
+    class="
+      bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow p-6
+      text-white
+    "
+  >
+    <p class="text-sm font-medium opacity-90">Total Blog Views</p>
+
+    <p class="text-4xl font-bold mt-2">
+      <%= number_with_delimiter(@total_views) %>
+    </p>
+  </div>
+
+  <div
+    class="
+      bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow p-6
+      text-white
+    "
+  >
+    <p class="text-sm font-medium opacity-90">Published Posts</p>
+    <p class="text-4xl font-bold mt-2"><%= @published_posts %></p>
+  </div>
+
+  <div
+    class="
+      bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg shadow p-6
+      text-white
+    "
+  >
+    <p class="text-sm font-medium opacity-90">Featured Books</p>
+    <p class="text-4xl font-bold mt-2"><%= @featured_books %></p>
+  </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+  <!-- Recent Blog Posts -->
+  <div class="bg-white rounded-lg shadow border border-gray-200">
+    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+      <h3 class="text-lg font-semibold text-gray-900">Recent Blog Posts</h3>
+      <%= link_to "View All", admin_blog_posts_path, class: "text-sm text-blue-600 hover:text-blue-700 font-medium" %>
+    </div>
+
+    <div class="p-6">
+      <% if @recent_blog_posts.any? %>
+        <div class="space-y-4">
+          <% @recent_blog_posts.each do |post| %>
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <%= link_to edit_admin_blog_post_path(post.id), class: "text-sm font-medium text-gray-900 hover:text-blue-600" do %>
+                  <%= post.title %>
+                <% end %>
+
+                <p class="text-xs text-gray-500 mt-1">
+                  <%= post.formatted_published_date %> •
+                  <%= post.views_count %> views
+                </p>
+              </div>
+
+              <% if post.published? %>
+                <span
+                  class="
+                    inline-flex items-center px-2 py-1 rounded text-xs
+                    font-medium bg-green-100 text-green-800
+                  "
+                >
+                  Published
+                </span>
+              <% else %>
+                <span
+                  class="
+                    inline-flex items-center px-2 py-1 rounded text-xs
+                    font-medium bg-gray-100 text-gray-800
+                  "
+                >
+                  Draft
+                </span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-500 text-sm">No blog posts yet.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Recent Projects -->
+  <div class="bg-white rounded-lg shadow border border-gray-200">
+    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+      <h3 class="text-lg font-semibold text-gray-900">Recent Projects</h3>
+      <%= link_to "View All", admin_projects_path, class: "text-sm text-blue-600 hover:text-blue-700 font-medium" %>
+    </div>
+
+    <div class="p-6">
+      <% if @recent_projects.any? %>
+        <div class="space-y-4">
+          <% @recent_projects.each do |project| %>
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <%= link_to edit_admin_project_path(project), class: "text-sm font-medium text-gray-900 hover:text-blue-600" do %>
+                  <%= project.name %>
+                <% end %>
+
+                <p class="text-xs text-gray-500 mt-1">
+                  <%= project.project_type_display_name %> •
+                  <%= project.status_display_name %>
+                </p>
+              </div>
+
+              <% if project.featured %>
+                <span
+                  class="
+                    inline-flex items-center px-2 py-1 rounded text-xs
+                    font-medium bg-purple-100 text-purple-800
+                  "
+                >
+                  Featured
+                </span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-500 text-sm">No projects yet.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Recent Books -->
+  <div class="bg-white rounded-lg shadow border border-gray-200">
+    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+      <h3 class="text-lg font-semibold text-gray-900">Recent Books</h3>
+      <%= link_to "View All", admin_books_path, class: "text-sm text-blue-600 hover:text-blue-700 font-medium" %>
+    </div>
+
+    <div class="p-6">
+      <% if @recent_books.any? %>
+        <div class="space-y-4">
+          <% @recent_books.each do |book| %>
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <%= link_to edit_admin_book_path(book), class: "text-sm font-medium text-gray-900 hover:text-blue-600" do %>
+                  <%= book.title %>
+                <% end %>
+
+                <p class="text-xs text-gray-500 mt-1">
+                  by <%= book.author %> •
+                  <%= book.star_rating if book.rating %>
+                </p>
+              </div>
+
+              <% if book.featured %>
+                <span
+                  class="
+                    inline-flex items-center px-2 py-1 rounded text-xs
+                    font-medium bg-purple-100 text-purple-800
+                  "
+                >
+                  Featured
+                </span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-500 text-sm">No books yet.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Recent Sport Activities -->
+  <div class="bg-white rounded-lg shadow border border-gray-200">
+    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+      <h3 class="text-lg font-semibold text-gray-900">
+        Recent Sport Activities
+      </h3>
+
+      <%= link_to "View All", admin_sport_activities_path, class: "text-sm text-blue-600 hover:text-blue-700 font-medium" %>
+    </div>
+
+    <div class="p-6">
+      <% if @recent_sport_activities.any? %>
+        <div class="space-y-4">
+          <% @recent_sport_activities.each do |activity| %>
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <%= link_to edit_admin_sport_activity_path(activity), class: "text-sm font-medium text-gray-900 hover:text-blue-600" do %>
+                  <%= activity.title %>
+                <% end %>
+
+                <p class="text-xs text-gray-500 mt-1">
+                  <%= activity.sport_display_name %>
+                  •
+                  <%= activity.category_display_name %>
+                  <% if activity.formatted_value.present? %>
+                    •
+                    <%= activity.formatted_value %>
+                  <% end %>
+                </p>
+              </div>
+
+              <% if activity.personal_record %>
+                <span
+                  class="
+                    inline-flex items-center px-2 py-1 rounded text-xs
+                    font-medium bg-yellow-100 text-yellow-800
+                  "
+                >
+                  PR
+                </span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-500 text-sm">No sport activities yet.</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="mt-8 bg-white rounded-lg shadow border border-gray-200 p-6">
+  <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+    <%= link_to new_admin_sport_activity_path, class: "flex flex-col items-center justify-center p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors" do %>
+      <svg
+        class="w-8 h-8 text-blue-600 mb-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+        />
+      </svg>
+
+      <span class="text-sm font-medium text-gray-900">Add Sport</span>
+    <% end %>
+
+    <%= link_to new_admin_book_path, class: "flex flex-col items-center justify-center p-4 bg-green-50 hover:bg-green-100 rounded-lg transition-colors" do %>
+      <svg
+        class="w-8 h-8 text-green-600 mb-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+        />
+      </svg>
+
+      <span class="text-sm font-medium text-gray-900">Add Book</span>
+    <% end %>
+
+    <%= link_to new_admin_gear_item_path, class: "flex flex-col items-center justify-center p-4 bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors" do %>
+      <svg
+        class="w-8 h-8 text-purple-600 mb-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+        />
+      </svg>
+
+      <span class="text-sm font-medium text-gray-900">Add Gear</span>
+    <% end %>
+
+    <%= link_to new_admin_project_path, class: "flex flex-col items-center justify-center p-4 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition-colors" do %>
+      <svg
+        class="w-8 h-8 text-yellow-600 mb-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+        />
+      </svg>
+
+      <span class="text-sm font-medium text-gray-900">Add Project</span>
+    <% end %>
+
+    <%= link_to new_admin_blog_post_path, class: "flex flex-col items-center justify-center p-4 bg-red-50 hover:bg-red-100 rounded-lg transition-colors" do %>
+      <svg
+        class="w-8 h-8 text-red-600 mb-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+        />
+      </svg>
+
+      <span class="text-sm font-medium text-gray-900">New Post</span>
+    <% end %>
+
+    <%= link_to new_admin_social_link_path, class: "flex flex-col items-center justify-center p-4 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition-colors" do %>
+      <svg
+        class="w-8 h-8 text-indigo-600 mb-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+        />
+      </svg>
+
+      <span class="text-sm font-medium text-gray-900">Add Link</span>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,327 @@
+<%= form_with(model: [:admin, @book], class: "space-y-6") do |f| %>
+  <!-- Error Messages -->
+  <% if @book.errors.any? %>
+    <div class="rounded-md bg-red-50 p-4 border border-red-200">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg
+            class="h-5 w-5 text-red-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </div>
+
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            <%= pluralize(@book.errors.count, "error") %> prohibited this book
+            from being saved:
+          </h3>
+
+          <div class="mt-2 text-sm text-red-700">
+            <ul class="list-disc pl-5 space-y-1">
+              <% @book.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Basic Information Section -->
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Title -->
+      <div class="md:col-span-2">
+        <%= f.label :title, "Title", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.text_field :title,
+          placeholder: "e.g., Atomic Habits, The Pragmatic Programmer",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@book.errors[:title].any? ? 'border-red-300' : ''}",
+          required: true %>
+
+        <% if @book.errors[:title].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @book.errors[:title].first %>
+          </p>
+        <% end %>
+      </div>
+
+      <!-- Author -->
+      <div class="md:col-span-2">
+        <%= f.label :author, "Author", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.text_field :author,
+          placeholder: "e.g., James Clear, David Thomas",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@book.errors[:author].any? ? 'border-red-300' : ''}",
+          required: true %>
+
+        <% if @book.errors[:author].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @book.errors[:author].first %>
+          </p>
+        <% end %>
+      </div>
+
+      <!-- Category -->
+      <div>
+        <%= f.label :category, "Category", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.select :category,
+          [
+            ['Tech', 'tech'],
+            ['Self-Help', 'self-help'],
+            ['Productivity', 'productivity'],
+            ['Fitness', 'fitness'],
+            ['Business', 'business'],
+            ['Biography', 'biography'],
+            ['Fiction', 'fiction']
+          ],
+          { include_blank: 'Select a category' },
+          {
+            class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          } %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Optional: Helps organize and filter books
+        </p>
+      </div>
+
+      <!-- Rating -->
+      <div>
+        <%= f.label :rating, "Rating", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.select :rating,
+          [
+            ['5 Stars - Exceptional', 5],
+            ['4 Stars - Great', 4],
+            ['3 Stars - Good', 3],
+            ['2 Stars - Fair', 2],
+            ['1 Star - Poor', 1]
+          ],
+          { include_blank: 'No rating yet' },
+          {
+            class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          } %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Optional: Your rating out of 5 stars
+        </p>
+      </div>
+
+      <!-- Read Date -->
+      <div>
+        <%= f.label :read_date, "Read Date", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.date_field :read_date,
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" %>
+
+        <p class="mt-1 text-xs text-gray-500">When did you finish reading?</p>
+      </div>
+
+      <!-- Featured -->
+      <div class="flex items-center h-full">
+        <div class="flex items-start pt-6">
+          <div class="flex items-center h-5">
+            <%= f.check_box :featured,
+              class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" %>
+          </div>
+
+          <div class="ml-3">
+            <%= f.label :featured, class: "font-medium text-gray-700" do %>
+              <span class="flex items-center">
+                Featured Book
+                <svg
+                  class="w-4 h-4 ml-1 text-yellow-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                  />
+                </svg>
+              </span>
+            <% end %>
+
+            <p class="text-sm text-gray-500">
+              Display this book prominently on your site
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Review Section -->
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">Review & Notes</h3>
+
+    <div class="space-y-6">
+      <!-- Review -->
+      <div>
+        <%= f.label :review, "Review", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.rich_text_area :review,
+          placeholder: "Share your thoughts about the book. What did you learn? Would you recommend it?" %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Optional: Your public review that will be displayed on your site
+        </p>
+      </div>
+
+      <!-- Notes -->
+      <div>
+        <%= f.label :notes, "Personal Notes", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.rich_text_area :notes,
+          placeholder: "Key takeaways, quotes, ideas to remember..." %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Optional: Private notes, key takeaways, and memorable quotes
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Book Details Section -->
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">
+      Additional Details
+      <span class="text-sm font-normal text-gray-500">(Optional)</span>
+    </h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- ISBN -->
+      <div>
+        <%= f.label :isbn, "ISBN", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.text_field :isbn,
+          placeholder: "e.g., 9780735211292",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          International Standard Book Number
+        </p>
+      </div>
+
+      <!-- Cover Image Upload -->
+      <div class="md:col-span-2">
+        <%= f.label :cover_image, "Cover Image", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <div class="space-y-4">
+          <!-- Current Cover Preview -->
+          <% if @book.cover_image.attached? || @book.cover_url.present? %>
+            <div class="relative inline-block">
+              <% if @book.cover_image.attached? %>
+                <%= image_tag @book.cover_image, class: "h-48 w-auto rounded-lg shadow-md border border-gray-200", alt: "#{@book.title} cover" %>
+              <% elsif @book.cover_url.present? %>
+                <%= image_tag @book.cover_url, class: "h-48 w-auto rounded-lg shadow-md border border-gray-200", alt: "#{@book.title} cover" %>
+              <% end %>
+
+              <% if @book.cover_image.attached? %>
+                <div class="mt-2">
+                  <%= button_to "Remove Cover Image",
+                    [:purge_cover_image, :admin, @book],
+                    method: :delete,
+                    class: "text-xs text-red-600 hover:text-red-700 font-medium",
+                    data: { turbo_confirm: "Are you sure you want to remove this cover image?" },
+                    form: { class: "inline" } %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <!-- File Upload -->
+          <div>
+            <%= f.file_field :cover_image,
+              accept: "image/*",
+              class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer border border-gray-300 rounded-md",
+              onchange: "previewCoverImage(event)" %>
+
+            <p class="mt-1 text-xs text-gray-500">
+              Upload a cover image (JPG, PNG, WEBP). Recommended size: 400x600px or similar aspect ratio.
+            </p>
+          </div>
+
+          <!-- Image Preview -->
+          <div id="cover-image-preview" class="hidden">
+            <p class="text-sm font-medium text-gray-700 mb-2">Preview:</p>
+            <img id="preview-img" class="h-48 w-auto rounded-lg shadow-md border border-gray-200" />
+          </div>
+
+          <!-- Fallback to URL (if no file uploaded) -->
+          <div class="pt-4 border-t border-gray-200">
+            <%= f.label :cover_url, "Or use Cover Image URL", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+            <%= f.url_field :cover_url,
+              placeholder: "https://example.com/book-cover.jpg",
+              class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" %>
+
+            <p class="mt-1 text-xs text-gray-500">
+              Alternative: Provide a URL if you don't want to upload a file
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Affiliate Link -->
+      <div class="md:col-span-2">
+        <%= f.label :affiliate_link, "Affiliate/Purchase Link", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.url_field :affiliate_link,
+          placeholder: "https://amazon.com/book-title",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@book.errors[:affiliate_link].any? ? 'border-red-300' : ''}" %>
+
+        <% if @book.errors[:affiliate_link].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @book.errors[:affiliate_link].first %>
+          </p>
+        <% else %>
+          <p class="mt-1 text-xs text-gray-500">
+            Link where readers can purchase the book (Amazon, Bookshop.org,
+            etc.)
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Actions -->
+  <div class="flex items-center justify-end gap-4 pt-6 border-t border-gray-200">
+    <%= link_to "Cancel", admin_books_path, class: "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+
+    <%= f.submit (@book.new_record? ? "Create Book" : "Update Book"), class: "px-6 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+  </div>
+<% end %>
+
+<script>
+  function previewCoverImage(event) {
+    const input = event.target;
+    const preview = document.getElementById('cover-image-preview');
+    const previewImg = document.getElementById('preview-img');
+
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        previewImg.src = e.target.result;
+        preview.classList.remove('hidden');
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    } else {
+      preview.classList.add('hidden');
+    }
+  }
+</script>

@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+/* Configure Tailwind to scan these paths for class names */
+@source "../../../app/views/**/*.{erb,html,rb}";
+@source "../../../app/helpers/**/*.rb";
+@source "../../../app/javascript/**/*.js";
+@source "../../../app/components/**/*.{rb,erb}";
+@source "../../../app/controllers/**/*.rb";

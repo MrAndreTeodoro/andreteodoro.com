@@ -1,0 +1,257 @@
+<%= form_with(model: [:admin, @sport_activity], class: "space-y-6") do |f| %>
+  <!-- Error Messages -->
+  <% if @sport_activity.errors.any? %>
+    <div class="rounded-md bg-red-50 p-4 border border-red-200">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg
+            class="h-5 w-5 text-red-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </div>
+
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            <%= pluralize(@sport_activity.errors.count, "error") %> prohibited
+            this activity from being saved:
+          </h3>
+
+          <div class="mt-2 text-sm text-red-700">
+            <ul class="list-disc pl-5 space-y-1">
+              <% @sport_activity.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Basic Information Section -->
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Sport Type -->
+      <div>
+        <%= f.label :sport_type, "Sport Type", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.select :sport_type,
+          [
+            ['CrossFit', 'crossfit'],
+            ['Hyrox', 'hyrox'],
+            ['Running', 'running']
+          ],
+          { include_blank: 'Select a sport type' },
+          {
+            class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@sport_activity.errors[:sport_type].any? ? 'border-red-300' : ''}",
+            required: true
+          } %>
+
+        <% if @sport_activity.errors[:sport_type].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @sport_activity.errors[:sport_type].first %>
+          </p>
+        <% end %>
+      </div>
+
+      <!-- Category -->
+      <div>
+        <%= f.label :category, "Category", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.select :category,
+          [
+            ['Benchmark', 'benchmark'],
+            ['Result', 'result'],
+            ['Event', 'event']
+          ],
+          { include_blank: 'Select a category' },
+          {
+            class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@sport_activity.errors[:category].any? ? 'border-red-300' : ''}",
+            required: true
+          } %>
+
+        <% if @sport_activity.errors[:category].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @sport_activity.errors[:category].first %>
+          </p>
+        <% end %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Benchmark: Standard workout, Result: Competition/test result, Event:
+          Upcoming/past event
+        </p>
+      </div>
+
+      <!-- Title -->
+      <div class="md:col-span-2">
+        <%= f.label :title, "Title", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.text_field :title,
+          placeholder: "e.g., Fran, Half Marathon, HYROX World Championship",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@sport_activity.errors[:title].any? ? 'border-red-300' : ''}",
+          required: true %>
+
+        <% if @sport_activity.errors[:title].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @sport_activity.errors[:title].first %>
+          </p>
+        <% end %>
+      </div>
+
+      <!-- Description -->
+      <div class="md:col-span-2">
+        <%= f.label :description, "Description", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.rich_text_area :description,
+          placeholder: "Describe the workout, event, or achievement..." %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Optional: Add details about the workout, conditions, or context
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result Information Section -->
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">Result Information</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Value -->
+      <div>
+        <%= f.label :value, "Value", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.text_field :value,
+          placeholder: "e.g., 3:45, 21:30, 1500",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Time, weight, distance, etc.
+        </p>
+      </div>
+
+      <!-- Unit -->
+      <div>
+        <%= f.label :unit, "Unit", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.text_field :unit,
+          placeholder: "e.g., minutes, lbs, kg, km",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Unit of measurement
+        </p>
+      </div>
+
+      <!-- Date -->
+      <div>
+        <%= f.label :date, "Date", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.date_field :date,
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          When did/will this occur?
+        </p>
+      </div>
+
+      <!-- Personal Record -->
+      <div class="md:col-span-3">
+        <div class="flex items-start">
+          <div class="flex items-center h-5">
+            <%= f.check_box :personal_record,
+              class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" %>
+          </div>
+
+          <div class="ml-3">
+            <%= f.label :personal_record, class: "font-medium text-gray-700" do %>
+              <span class="flex items-center">
+                Personal Record
+                <svg
+                  class="w-4 h-4 ml-1 text-yellow-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                  />
+                </svg>
+              </span>
+            <% end %>
+
+            <p class="text-sm text-gray-500">
+              Mark this as a personal record or best result
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Information Section -->
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">
+      Event Information
+      <span class="text-sm font-normal text-gray-500">(Optional)</span>
+    </h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Event Name -->
+      <div>
+        <%= f.label :event_name, "Event Name", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.text_field :event_name,
+          placeholder: "e.g., Boston Marathon, CrossFit Open 2025",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Name of the competition or event
+        </p>
+      </div>
+
+      <!-- Location -->
+      <div>
+        <%= f.label :location, "Location", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.text_field :location,
+          placeholder: "e.g., Boston, MA or Online",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Where the event took/will take place
+        </p>
+      </div>
+
+      <!-- Result URL -->
+      <div class="md:col-span-2">
+        <%= f.label :result_url, "Result URL", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.url_field :result_url,
+          placeholder: "https://example.com/results/...",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Link to official results, leaderboard, or video
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Actions -->
+  <div class="flex items-center justify-end gap-4 pt-6 border-t border-gray-200">
+    <%= link_to "Cancel", admin_sport_activities_path, class: "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+
+    <%= f.submit (@sport_activity.new_record? ? "Create Activity" : "Update Activity"), class: "px-6 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+  </div>
+<% end %>

@@ -1,0 +1,94 @@
+<% content_for :page_title, "New Project" %>
+<% content_for :page_subtitle, "Add a new project to your portfolio" %>
+
+<!-- Breadcrumb Navigation -->
+<nav class="mb-6" aria-label="Breadcrumb">
+  <ol class="flex items-center space-x-2 text-sm text-gray-500">
+    <li>
+      <%= link_to "Projects", admin_projects_path, class: "hover:text-gray-700 transition-colors" %>
+    </li>
+
+    <li>
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          fill-rule="evenodd"
+          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </li>
+
+    <li class="font-medium text-gray-900">New Project</li>
+  </ol>
+</nav>
+
+<!-- Form Container -->
+<div class="max-w-4xl"><%= render "form" %></div>
+
+<!-- Tips Section -->
+<div class="max-w-4xl mt-6">
+  <div class="bg-blue-50 rounded-lg border border-blue-200 p-4">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg
+          class="h-5 w-5 text-blue-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      </div>
+
+      <div class="ml-3">
+        <h3 class="text-sm font-medium text-blue-800">
+          Tips for adding projects
+        </h3>
+
+        <div class="mt-2 text-sm text-blue-700">
+          <ul class="list-disc pl-5 space-y-1">
+            <li>
+              <strong>Required fields:</strong> Only project name and type are
+              required
+            </li>
+
+            <li>
+              <strong>Project types:</strong> Startups for businesses, Side
+              Projects for hobby work, Experiments for learning
+            </li>
+
+            <li>
+              <strong>Featured projects:</strong> Highlighted prominently on
+              your portfolio homepage
+            </li>
+
+            <li>
+              <strong>Status:</strong> Use "Active" for live projects, "In
+              Development" for WIP, "Archived" for completed/sunset
+            </li>
+
+            <li>
+              <strong>Tech stack:</strong> Supports JSON array format or simple
+              comma-separated list
+            </li>
+
+            <li>
+              <strong>Display position:</strong> Lower numbers appear first;
+              set to 0 for automatic positioning
+            </li>
+
+            <li>
+              <strong>Logo URL:</strong> Add a direct link to your project's
+              logo for better visual appeal
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

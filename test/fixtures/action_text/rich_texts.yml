@@ -1,0 +1,42 @@
+# ActionText Rich Text Fixtures
+
+# Blog Post Content
+published_one_content:
+  record: published_one (BlogPost)
+  name: content
+  body: <p>This is a comprehensive guide to building a portfolio application with Rails 8. The framework provides amazing tools like Hotwire for building modern web applications without complex JavaScript frameworks.</p>
+
+published_one_excerpt:
+  record: published_one (BlogPost)
+  name: excerpt
+  body: <p>How I built my portfolio with Rails 8</p>
+
+published_two_content:
+  record: published_two (BlogPost)
+  name: content
+  body: <p>Here are ten essential best practices that every Rails developer should follow to write clean, maintainable, and efficient code.</p>
+
+published_two_excerpt:
+  record: published_two (BlogPost)
+  name: excerpt
+  body: <p>Essential practices for Rails developers</p>
+
+draft_one_content:
+  record: draft_one (BlogPost)
+  name: content
+  body: <p>Draft content that is not yet ready for publication.</p>
+
+draft_one_excerpt:
+  record: draft_one (BlogPost)
+  name: excerpt
+  body: <p>This article is still being written</p>
+
+scheduled_post_content:
+  record: scheduled_post (BlogPost)
+  name: content
+  body: <p>This post is scheduled for future publication.</p>
+
+scheduled_post_excerpt:
+  record: scheduled_post (BlogPost)
+  name: excerpt
+  body: <p>Coming soon</p>

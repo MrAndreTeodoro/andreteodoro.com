@@ -1,0 +1,317 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+  <!-- Back Button -->
+  <div class="mb-12">
+    <%= link_to sports_path, class: "inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors mb-4" do %>
+      <svg
+        class="w-5 h-5 mr-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"
+        />
+      </svg>
+      Back to All Sports
+    <% end %>
+
+    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+      <% case @sport_type %>
+      <% when 'crossfit' %>
+        🏋️ CrossFit
+      <% when 'hyrox' %>
+        ⚡ Hyrox
+      <% when 'running' %>
+        🏃 Running
+      <% end %>
+    </h1>
+
+    <p class="text-xl text-gray-600">
+      <% case @sport_type %>
+      <% when 'crossfit' %>
+        Constantly varied, high-intensity functional movements. Building
+        strength and conditioning through the sport of fitness.
+      <% when 'hyrox' %>
+        The fitness race for every body. 8km of running combined with 8 workout
+        stations testing strength and endurance.
+      <% when 'running' %>
+        From 5Ks to marathons, tracking progress one mile at a time.
+      <% end %>
+    </p>
+  </div>
+
+  <!-- Benchmarks Section -->
+  <section class="mb-16">
+    <h2 class="text-3xl font-bold text-gray-900 mb-8">Benchmarks</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @benchmarks.each do |benchmark| %>
+        <div
+          class="
+            bg-white border border-gray-200 rounded-lg p-6
+            hover:border-gray-300 hover:shadow-lg transition-all duration-300
+          "
+        >
+          <h3 class="text-xl font-bold text-gray-900 mb-3">
+            <%= benchmark.title %>
+          </h3>
+
+          <div class="flex items-baseline space-x-2 mb-4">
+            <span class="text-4xl font-bold text-blue-600">
+              <%= benchmark.value %>
+            </span>
+
+            <% if benchmark.unit.present? %>
+              <span class="text-gray-600 text-lg"><%= benchmark.unit %></span>
+            <% end %>
+          </div>
+
+          <% if benchmark.description.present? %>
+            <div class="text-gray-600 text-sm prose max-w-none">
+              <%= benchmark.description %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if @benchmarks.empty? %>
+        <div
+          class="
+            col-span-full bg-white border border-gray-200 rounded-lg
+            p-8 text-center
+          "
+        >
+          <p class="text-gray-600">No benchmarks recorded yet.</p>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- Personal Records Section -->
+  <% if @personal_records.any? %>
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">🏆 Personal Records</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <% @personal_records.each do |pr| %>
+          <div
+            class="
+              bg-gradient-to-br from-yellow-50 to-white border
+              border-yellow-200 rounded-lg p-6 hover:border-yellow-400
+              hover:shadow-lg transition-all duration-300
+            "
+          >
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h3 class="text-xl font-bold text-gray-900 mb-1">
+                  <%= pr.title %>
+                </h3>
+
+                <% if pr.date %>
+                  <p class="text-sm text-yellow-600">
+                    <%= pr.date.strftime("%B %d, %Y") %>
+                  </p>
+                <% end %>
+              </div>
+
+              <span class="text-3xl">🏆</span>
+            </div>
+
+            <div class="flex items-baseline space-x-2 mb-3">
+              <span class="text-3xl font-bold text-yellow-600">
+                <%= pr.value %>
+              </span>
+
+              <% if pr.unit.present? %>
+                <span class="text-gray-600 text-lg"><%= pr.unit %></span>
+              <% end %>
+            </div>
+
+            <% if pr.description.present? %>
+              <div class="text-gray-600 text-sm prose max-w-none">
+                <%= pr.description %>
+              </div>
+            <% end %>
+
+            <% if pr.location.present? %>
+              <p class="text-gray-500 text-xs mt-2">📍 <%= pr.location %></p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
+  <!-- Recent Results Section -->
+  <section class="mb-16">
+    <h2 class="text-3xl font-bold text-gray-900 mb-8">Recent Results</h2>
+
+    <div class="space-y-4">
+      <% @results.each do |result| %>
+        <div
+          class="
+            bg-white border border-gray-200 rounded-xl p-6
+            hover:border-gray-300 hover:shadow-lg transition-all
+            duration-300
+          "
+        >
+          <div class="flex items-start justify-between">
+            <div class="flex-1">
+              <div class="flex items-center space-x-3 mb-2">
+                <% if result.date %>
+                  <span class="text-sm text-gray-500">
+                    <%= result.date.strftime("%B %d, %Y") %>
+                  </span>
+                <% end %>
+
+                <% if result.personal_record %>
+                  <span
+                    class="
+                      px-2 py-1 bg-yellow-100 text-yellow-700 text-xs
+                      rounded uppercase font-semibold flex items-center
+                    "
+                  >
+                    🏆 PR
+                  </span>
+                <% end %>
+              </div>
+
+              <h3 class="text-xl font-bold text-gray-900 mb-2">
+                <%= result.title %>
+              </h3>
+
+              <% if result.description.present? %>
+                <div class="text-gray-600 text-sm mb-3 prose max-w-none">
+                  <%= result.description %>
+                </div>
+              <% end %>
+
+              <% if result.location.present? %>
+                <p class="text-gray-500 text-sm">📍 <%= result.location %></p>
+              <% end %>
+
+              <% if result.result_url.present? %>
+                <a
+                  href="<%= result.result_url %>"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="
+                    inline-flex items-center text-blue-600
+                    hover:text-blue-700 transition-colors text-sm
+                    font-semibold mt-2
+                  "
+                >
+                  View Results →
+                </a>
+              <% end %>
+            </div>
+
+            <div class="text-right ml-4">
+              <p class="text-3xl font-bold text-blue-600">
+                <%= result.formatted_value %>
+              </p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <% if @results.empty? %>
+        <div class="bg-white border border-gray-200 rounded-lg p-8 text-center">
+          <p class="text-gray-600">No results recorded yet.</p>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- Upcoming Events Section -->
+  <% if @events.any? %>
+    <section>
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Upcoming Events</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% @events.each do |event| %>
+          <div
+            class="
+              bg-white border border-gray-200 rounded-lg p-6
+              hover:border-blue-500 hover:shadow-lg transition-all duration-300
+            "
+          >
+            <div class="mb-4">
+              <% if event.date %>
+                <div class="flex items-center space-x-2 mb-2">
+                  <span
+                    class="
+                      px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded
+                      uppercase font-semibold
+                    "
+                  >
+                    <%= event.date.strftime("%b %d") %>
+                  </span>
+
+                  <% if event.upcoming? %>
+                    <span
+                      class="
+                        px-2 py-1 bg-green-100 text-green-700 text-xs
+                        rounded uppercase font-semibold
+                      "
+                    >
+                      Upcoming
+                    </span>
+                  <% elsif event.past? %>
+                    <span
+                      class="
+                        px-2 py-1 bg-gray-100 text-gray-600 text-xs
+                        rounded uppercase font-semibold
+                      "
+                    >
+                      Completed
+                    </span>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <h4 class="text-lg font-semibold text-gray-900 mt-2">
+                <%= event.event_name || event.title %>
+              </h4>
+            </div>
+
+            <% if event.location.present? %>
+              <p class="text-gray-600 text-sm mb-2">📍 <%= event.location %></p>
+            <% end %>
+
+            <% if event.description.present? %>
+              <div class="text-gray-500 text-sm prose max-w-none">
+                <%= event.description %>
+              </div>
+            <% end %>
+
+            <% if event.result_url.present? %>
+              <a
+                href="<%= event.result_url %>"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="
+                  inline-flex items-center text-blue-600 hover:text-blue-700
+                  transition-colors text-sm font-semibold mt-3
+                "
+              >
+                Event Details →
+              </a>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% else %>
+    <section>
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Upcoming Events</h2>
+
+      <div class="bg-white border border-gray-200 rounded-lg p-8 text-center">
+        <p class="text-gray-600">No upcoming events scheduled.</p>
+      </div>
+    </section>
+  <% end %>
+</div>

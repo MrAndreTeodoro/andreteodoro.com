@@ -1,0 +1,362 @@
+<% content_for :page_title, "Projects" %>
+<% content_for :page_subtitle, "Manage your projects and side projects" %>
+
+<!-- Search and Filters -->
+<div class="mb-6 space-y-4">
+  <!-- Search Bar -->
+  <div class="flex items-center gap-4">
+    <%= form_with url: admin_projects_path, method: :get, class: "flex-1 flex gap-2" do |f| %>
+      <div class="relative flex-1">
+        <div
+          class="
+            absolute inset-y-0 left-0 pl-3 flex items-center
+            pointer-events-none
+          "
+        >
+          <svg
+            class="h-5 w-5 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+        </div>
+
+        <%= f.text_field :search,
+          value: params[:search],
+          placeholder: "Search projects by name or description...",
+          class: "block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+      </div>
+
+      <%= f.hidden_field :type, value: params[:type] if params[:type].present? %>
+      <%= f.hidden_field :status, value: params[:status] if params[:status].present? %>
+      <%= f.hidden_field :featured, value: params[:featured] if params[:featured].present? %>
+
+      <%= f.submit "Search", class: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+
+      <% if params[:search].present? %>
+        <%= link_to "Clear", admin_projects_path(type: params[:type], status: params[:status], featured: params[:featured]), class: "px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors" %>
+      <% end %>
+    <% end %>
+
+    <%= link_to new_admin_project_path, class: "inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors whitespace-nowrap" do %>
+      <svg
+        class="w-5 h-5 mr-2"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+        />
+      </svg>
+      New Project
+    <% end %>
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <!-- Filter by Type -->
+      <div class="flex space-x-2">
+        <%= link_to "All Types", admin_projects_path(search: params[:search], status: params[:status], featured: params[:featured]), class: "px-4 py-2 rounded-lg text-sm font-medium transition-colors #{params[:type].nil? ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" %>
+        <%= link_to "Startups", admin_projects_path(type: 'startup', search: params[:search], status: params[:status], featured: params[:featured]), class: "px-4 py-2 rounded-lg text-sm font-medium transition-colors #{params[:type] == 'startup' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" %>
+        <%= link_to "Side Projects", admin_projects_path(type: 'side_project', search: params[:search], status: params[:status], featured: params[:featured]), class: "px-4 py-2 rounded-lg text-sm font-medium transition-colors #{params[:type] == 'side_project' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" %>
+        <%= link_to "Experiments", admin_projects_path(type: 'experiment', search: params[:search], status: params[:status], featured: params[:featured]), class: "px-4 py-2 rounded-lg text-sm font-medium transition-colors #{params[:type] == 'experiment' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" %>
+      </div>
+
+      <!-- Filter by Status -->
+      <div class="flex space-x-2 border-l border-gray-300 pl-4">
+        <%= link_to "All Status", admin_projects_path(type: params[:type], search: params[:search], featured: params[:featured]), class: "px-3 py-1.5 rounded-lg text-sm font-medium transition-colors #{params[:status].nil? ? 'bg-gray-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" %>
+        <%= link_to "Active", admin_projects_path(type: params[:type], status: 'active', search: params[:search], featured: params[:featured]), class: "px-3 py-1.5 rounded-lg text-sm font-medium transition-colors #{params[:status] == 'active' ? 'bg-green-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" %>
+        <%= link_to "In Dev", admin_projects_path(type: params[:type], status: 'in_development', search: params[:search], featured: params[:featured]), class: "px-3 py-1.5 rounded-lg text-sm font-medium transition-colors #{params[:status] == 'in_development' ? 'bg-yellow-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" %>
+        <%= link_to "Archived", admin_projects_path(type: params[:type], status: 'archived', search: params[:search], featured: params[:featured]), class: "px-3 py-1.5 rounded-lg text-sm font-medium transition-colors #{params[:status] == 'archived' ? 'bg-gray-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" %>
+      </div>
+
+      <!-- Featured Filter -->
+      <div class="border-l border-gray-300 pl-4">
+        <%= link_to admin_projects_path(type: params[:type], status: params[:status], search: params[:search], featured: params[:featured] == 'true' ? nil : 'true'), class: "inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium transition-colors #{params[:featured] == 'true' ? 'bg-yellow-500 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" do %>
+          <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
+          Featured
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="grid grid-cols-4 gap-4 mb-6">
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-4">
+    <p class="text-sm text-gray-600">Total Projects</p>
+    <p class="text-2xl font-bold text-gray-900 mt-1"><%= @projects.count %></p>
+
+    <p class="text-xs text-gray-500 mt-1">
+      <% if params[:search].present? || params[:type].present? || params[:status].present? || params[:featured].present? %>
+        Filtered from
+        <%= Project.count %>
+        total
+      <% else %>
+        All projects
+      <% end %>
+    </p>
+  </div>
+
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-4">
+    <p class="text-sm text-gray-600">Startups</p>
+
+    <p class="text-2xl font-bold text-purple-600 mt-1">
+      <%= Project.startups.count %>
+    </p>
+  </div>
+
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-4">
+    <p class="text-sm text-gray-600">Active</p>
+
+    <p class="text-2xl font-bold text-green-600 mt-1">
+      <%= Project.active.count %>
+    </p>
+  </div>
+
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-4">
+    <p class="text-sm text-gray-600">Featured</p>
+
+    <p class="text-2xl font-bold text-yellow-600 mt-1">
+      <%= Project.featured.count %>
+    </p>
+  </div>
+</div>
+
+<!-- Projects Table -->
+<div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+  <% if @projects.any? %>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th
+              class="
+                px-6 py-3 text-left text-xs font-medium text-gray-500
+                uppercase tracking-wider
+              "
+            >
+              Position
+            </th>
+
+            <th
+              class="
+                px-6 py-3 text-left text-xs font-medium text-gray-500
+                uppercase tracking-wider
+              "
+            >
+              Name
+            </th>
+
+            <th
+              class="
+                px-6 py-3 text-left text-xs font-medium text-gray-500
+                uppercase tracking-wider
+              "
+            >
+              Type
+            </th>
+
+            <th
+              class="
+                px-6 py-3 text-left text-xs font-medium text-gray-500
+                uppercase tracking-wider
+              "
+            >
+              Status
+            </th>
+
+            <th
+              class="
+                px-6 py-3 text-left text-xs font-medium text-gray-500
+                uppercase tracking-wider
+              "
+            >
+              Featured
+            </th>
+
+            <th
+              class="
+                px-6 py-3 text-left text-xs font-medium text-gray-500
+                uppercase tracking-wider
+              "
+            >
+              URL
+            </th>
+
+            <th
+              class="
+                px-6 py-3 text-right text-xs font-medium text-gray-500
+                uppercase tracking-wider
+              "
+            >
+              Actions
+            </th>
+          </tr>
+        </thead>
+
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @projects.each do |project| %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <%= project.position %>
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div>
+                    <div class="text-sm font-medium text-gray-900">
+                      <%= project.name %>
+                    </div>
+
+                    <% if project.description.present? %>
+                      <div class="text-sm text-gray-500">
+                        <%= truncate(project.description.to_plain_text, length: 50) %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= project.project_type == 'startup' ? 'bg-purple-100 text-purple-800' : project.project_type == 'side_project' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800' %>">
+                  <%= project.project_type_display_name %>
+                </span>
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= project.active? ? 'bg-green-100 text-green-800' : project.in_development? ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800' %>">
+                  <%= project.status_display_name %>
+                </span>
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <% if project.featured %>
+                  <svg
+                    class="w-5 h-5 text-yellow-500"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                    />
+                  </svg>
+                <% else %>
+                  <span class="text-gray-400">—</span>
+                <% end %>
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <% if project.url.present? %>
+                  <a
+                    href="<%= project.url %>"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-blue-600 hover:text-blue-800"
+                  >
+                    Visit
+                  </a>
+                <% else %>
+                  <span class="text-gray-400">—</span>
+                <% end %>
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <div class="flex items-center justify-end space-x-3">
+                  <%= link_to edit_admin_project_path(project), class: "text-blue-600 hover:text-blue-900" do %>
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                      />
+                    </svg>
+                  <% end %>
+
+                  <%= button_to admin_project_path(project), method: :delete, data: { turbo_confirm: "Are you sure you want to delete this project?" }, class: "text-red-600 hover:text-red-900" do %>
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="text-center py-12">
+      <svg
+        class="mx-auto h-12 w-12 text-gray-400"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+        />
+      </svg>
+
+      <h3 class="mt-2 text-sm font-medium text-gray-900">No projects</h3>
+
+      <p class="mt-1 text-sm text-gray-500">
+        Get started by creating a new project.
+      </p>
+
+      <div class="mt-6">
+        <%= link_to new_admin_project_path, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" do %>
+          <svg
+            class="w-5 h-5 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+          </svg>
+          New Project
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

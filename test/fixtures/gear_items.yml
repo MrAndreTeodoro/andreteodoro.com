@@ -1,0 +1,151 @@
+# Gear Items test fixtures
+
+# Featured tech item with full details
+macbook_pro:
+  name: "MacBook Pro 16-inch M3 Max"
+  category: "tech"
+  affiliate_link: "https://amazon.com/macbook-pro"
+  image_url: "https://example.com/macbook-pro.jpg"
+  price: 3499.00
+  featured: true
+  position: 1
+
+# Tech item without affiliate link
+iphone:
+  name: "iPhone 15 Pro"
+  category: "tech"
+  affiliate_link:
+  image_url: "https://example.com/iphone.jpg"
+  price: 999.00
+  featured: false
+  position: 2
+
+# Fitness item with affiliate link
+kettlebell:
+  name: "Rogue Kettlebell 24kg"
+  category: "fitness"
+  affiliate_link: "https://amazon.com/rogue-kettlebell"
+  image_url: "https://example.com/kettlebell.jpg"
+  price: 89.99
+  featured: true
+  position: 1
+
+# Fitness item without price
+resistance_bands:
+  name: "Resistance Band Set"
+  category: "fitness"
+  affiliate_link: "https://amazon.com/resistance-bands"
+  image_url: "https://example.com/bands.jpg"
+  price:
+  featured: false
+  position: 2
+
+# Everyday item
+backpack:
+  name: "Peak Design Everyday Backpack"
+  category: "everyday"
+  affiliate_link: "https://amazon.com/peak-design-backpack"
+  image_url: "https://example.com/backpack.jpg"
+  price: 259.95
+  featured: true
+  position: 1
+
+# Everyday item without image
+water_bottle:
+  name: "Hydro Flask 32oz"
+  category: "everyday"
+  affiliate_link: "https://amazon.com/hydro-flask"
+  image_url:
+  price: 44.95
+  featured: false
+  position: 2
+
+# Tech item with mixed case category (for normalization testing)
+keyboard:
+  name: "Keychron K8 Pro"
+  category: "TECH"
+  affiliate_link: "https://amazon.com/keychron"
+  image_url: "https://example.com/keyboard.jpg"
+  price: 109.00
+  featured: false
+  position: 3
+
+# Item with whitespace in category (for normalization testing)
+headphones:
+  name: "Sony WH-1000XM5"
+  category: "  tech  "
+  affiliate_link: "https://amazon.com/sony-headphones"
+  image_url: "https://example.com/headphones.jpg"
+  price: 399.99
+  featured: true
+  position: 4
+
+# Fitness item without description
+foam_roller:
+  name: "TriggerPoint GRID Foam Roller"
+  category: "fitness"
+  affiliate_link: "https://amazon.com/foam-roller"
+  image_url: "https://example.com/foam-roller.jpg"
+  price: 34.99
+  featured: false
+  position: 3
+
+# Everyday item minimal
+notebook:
+  name: "Moleskine Classic Notebook"
+  category: "everyday"
+  affiliate_link:
+  image_url:
+  price: 19.99
+  featured: false
+  position: 3
+
+# Tech item with zero position (for auto-position testing)
+auto_position_item:
+  name: "Auto Position Gadget"
+  category: "tech"
+  affiliate_link: "https://amazon.com/gadget"
+  image_url: "https://example.com/gadget.jpg"
+  price: 99.99
+  featured: false
+  position: 0
+
+# Expensive item
+ultrawide_monitor:
+  name: "LG UltraWide 49-inch Monitor"
+  category: "tech"
+  affiliate_link: "https://amazon.com/lg-ultrawide"
+  image_url: "https://example.com/monitor.jpg"
+  price: 1499.99
+  featured: true
+  position: 5
+
+# Budget item
+cheap_cables:
+  name: "USB-C Cable 3-Pack"
+  category: "tech"
+  affiliate_link: "https://amazon.com/usb-cables"
+  image_url: "https://example.com/cables.jpg"
+  price: 15.99
+  featured: false
+  position: 6
+
+# Fitness competition gear
+crossfit_shoes:
+  name: "Nike Metcon 9"
+  category: "fitness"
+  affiliate_link: "https://amazon.com/nike-metcon"
+  image_url: "https://example.com/metcon.jpg"
+  price: 149.99
+  featured: true
+  position: 4
+
+# Everyday carry item
+edc_knife:
+  name: "Benchmade Mini Griptilian"
+  category: "everyday"
+  affiliate_link: "https://amazon.com/benchmade"
+  image_url: "https://example.com/knife.jpg"
+  price: 109.00
+  featured: false
+  position: 4

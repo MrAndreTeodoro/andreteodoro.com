@@ -1,0 +1,129 @@
+# Social Links test fixtures
+
+# Twitter link with followers
+twitter_main:
+  platform: "twitter"
+  url: "https://twitter.com/username"
+  follower_count: 15000
+  username: "username"
+  display_in_header: true
+
+# YouTube channel with large follower count
+youtube_channel:
+  platform: "youtube"
+  url: "https://youtube.com/@channel"
+  follower_count: 2500000
+  username: "channel"
+  display_in_header: true
+
+# GitHub profile in header
+github_profile:
+  platform: "github"
+  url: "https://github.com/username"
+  follower_count: 500
+  username: "username"
+  display_in_header: true
+
+# LinkedIn profile
+linkedin_profile:
+  platform: "linkedin"
+  url: "https://linkedin.com/in/username"
+  follower_count: 3500
+  username: "username"
+  display_in_header: false
+
+# Instagram without follower count
+instagram_personal:
+  platform: "instagram"
+  url: "https://instagram.com/username"
+  follower_count:
+  username: "username"
+  display_in_header: false
+
+# Facebook page
+facebook_page:
+  platform: "facebook"
+  url: "https://facebook.com/username"
+  follower_count: 8200
+  username: "username"
+  display_in_header: false
+
+# TikTok with followers
+tiktok_account:
+  platform: "tiktok"
+  url: "https://tiktok.com/@username"
+  follower_count: 125000
+  username: "username"
+  display_in_header: true
+
+# Twitch channel
+twitch_channel:
+  platform: "twitch"
+  url: "https://twitch.tv/username"
+  follower_count: 45000
+  username: "username"
+  display_in_header: false
+
+# Discord server
+discord_server:
+  platform: "discord"
+  url: "https://discord.gg/servercode"
+  follower_count: 1250
+  username: "servername"
+  display_in_header: false
+
+# Link with zero followers
+zero_followers:
+  platform: "twitter"
+  url: "https://twitter.com/newaccount"
+  follower_count: 0
+  username: "newaccount"
+  display_in_header: false
+
+# Link with exactly 1000 followers (boundary test)
+thousand_followers:
+  platform: "github"
+  url: "https://github.com/popular"
+  follower_count: 1000
+  username: "popular"
+  display_in_header: false
+
+# Link with exactly 1M followers (boundary test)
+million_followers:
+  platform: "instagram"
+  url: "https://instagram.com/influencer"
+  follower_count: 1000000
+  username: "influencer"
+  display_in_header: true
+
+# Link with 999 followers (just under 1K)
+under_thousand:
+  platform: "youtube"
+  url: "https://youtube.com/@small"
+  follower_count: 999
+  username: "small"
+  display_in_header: false
+
+# Link with 999,999 followers (just under 1M)
+under_million:
+  platform: "tiktok"
+  url: "https://tiktok.com/@bigcreator"
+  follower_count: 999999
+  username: "bigcreator"
+  display_in_header: false
+
+# Additional Twitter for multiple platform testing
+twitter_secondary:
+  platform: "twitter"
+  url: "https://twitter.com/secondary"
+  follower_count: 2500
+  username: "secondary"
+  display_in_header: false
+
+# Link with very large follower count
+mega_influencer:
+  platform: "youtube"
+  url: "https://youtube.com/@mega"
+  follower_count: 15000000
+  username: "mega"
+  display_in_header: true

@@ -1,0 +1,157 @@
+# Sport Activities test fixtures
+
+# CrossFit Benchmark - Fran
+crossfit_fran:
+  sport_type: "crossfit"
+  category: "benchmark"
+  title: "Fran"
+  value: "3:45"
+  unit: "minutes"
+  date: <%= 30.days.ago.to_date %>
+  event_name:
+  location:
+  result_url:
+  personal_record: true
+
+# CrossFit Benchmark - Murph
+crossfit_murph:
+  sport_type: "crossfit"
+  category: "benchmark"
+  title: "Murph"
+  value: "42:30"
+  unit: "minutes"
+  date: <%= 60.days.ago.to_date %>
+  event_name:
+  location:
+  result_url:
+  personal_record: false
+
+# CrossFit Competition Result
+crossfit_competition:
+  sport_type: "crossfit"
+  category: "result"
+  title: "Local CrossFit Competition"
+  value: "5th"
+  unit: "place"
+  date: <%= 45.days.ago.to_date %>
+  event_name: "City CrossFit Challenge"
+  location: "Downtown Gym"
+  result_url: "https://example.com/results/crossfit-2024"
+  personal_record: false
+
+# HYROX Benchmark - 1K Run
+hyrox_run:
+  sport_type: "hyrox"
+  category: "benchmark"
+  title: "1K Run"
+  value: "4:15"
+  unit: "minutes"
+  date: <%= 20.days.ago.to_date %>
+  event_name:
+  location:
+  result_url:
+  personal_record: true
+
+# HYROX Event - Upcoming
+hyrox_upcoming_event:
+  sport_type: "hyrox"
+  category: "event"
+  title: "HYROX World Championship"
+  value:
+  unit:
+  date: <%= 90.days.from_now.to_date %>
+  event_name: "HYROX World Championship 2024"
+  location: "Las Vegas, NV"
+  result_url:
+  personal_record: false
+
+# HYROX Event - Past
+hyrox_past_event:
+  sport_type: "hyrox"
+  category: "event"
+  title: "HYROX Regional"
+  value: "1:28:45"
+  unit: "time"
+  date: <%= 120.days.ago.to_date %>
+  event_name: "HYROX Regional Championship"
+  location: "Chicago, IL"
+  result_url: "https://example.com/hyrox/results"
+  personal_record: true
+
+# Running Benchmark - 5K
+running_5k:
+  sport_type: "running"
+  category: "benchmark"
+  title: "5K Personal Best"
+  value: "21:30"
+  unit: "minutes"
+  date: <%= 15.days.ago.to_date %>
+  event_name:
+  location:
+  result_url:
+  personal_record: true
+
+# Running Event - Marathon
+running_marathon:
+  sport_type: "running"
+  category: "event"
+  title: "City Marathon"
+  value:
+  unit:
+  date: <%= 180.days.from_now.to_date %>
+  event_name: "Annual City Marathon"
+  location: "Downtown"
+  result_url:
+  personal_record: false
+
+# Running Result - Recent Race
+running_10k_result:
+  sport_type: "running"
+  category: "result"
+  title: "10K Race Result"
+  value: "45:22"
+  unit: "minutes"
+  date: <%= 10.days.ago.to_date %>
+  event_name: "Spring 10K Classic"
+  location: "City Park"
+  result_url: "https://example.com/10k-results"
+  personal_record: false
+
+# CrossFit Recent Activity
+crossfit_recent:
+  sport_type: "crossfit"
+  category: "benchmark"
+  title: "Grace"
+  value: "5:12"
+  unit: "minutes"
+  date: <%= 5.days.ago.to_date %>
+  event_name:
+  location:
+  result_url:
+  personal_record: true
+
+# Activity without value and unit
+no_value_activity:
+  sport_type: "crossfit"
+  category: "event"
+  title: "Local Throwdown"
+  value:
+  unit:
+  date: <%= 60.days.from_now.to_date %>
+  event_name: "Community CrossFit Throwdown"
+  location: "Local Box"
+  result_url:
+  personal_record: false
+
+# Old event from last year
+old_event:
+  sport_type: "running"
+  category: "result"
+  title: "Half Marathon"
+  value: "1:58:30"
+  unit: "time"
+  date: <%= 400.days.ago.to_date %>
+  event_name: "Fall Half Marathon"
+  location: "River Trail"
+  result_url: "https://example.com/half-marathon"
+  personal_record: true

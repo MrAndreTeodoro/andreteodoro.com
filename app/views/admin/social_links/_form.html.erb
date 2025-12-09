@@ -1,0 +1,248 @@
+<%= form_with(model: [:admin, @social_link], class: "space-y-6") do |f| %>
+  <!-- Error Messages -->
+  <% if @social_link.errors.any? %>
+    <div class="rounded-md bg-red-50 p-4 border border-red-200">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg
+            class="h-5 w-5 text-red-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </div>
+
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            <%= pluralize(@social_link.errors.count, "error") %> prohibited
+            this social link from being saved:
+          </h3>
+
+          <div class="mt-2 text-sm text-red-700">
+            <ul class="list-disc pl-5 space-y-1">
+              <% @social_link.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Platform & Basic Info Section -->
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">Platform Information</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Platform -->
+      <div>
+        <%= f.label :platform, "Platform", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.select :platform,
+          SocialLink::PLATFORMS.map { |p| [p.titleize, p] },
+          { include_blank: 'Select a platform' },
+          {
+            class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@social_link.errors[:platform].any? ? 'border-red-300' : ''}",
+            required: true
+          } %>
+
+        <% if @social_link.errors[:platform].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @social_link.errors[:platform].first %>
+          </p>
+        <% else %>
+          <p class="mt-1 text-xs text-gray-500">
+            Choose the social media platform
+          </p>
+        <% end %>
+      </div>
+
+      <!-- Username -->
+      <div>
+        <%= f.label :username, "Username/Handle", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.text_field :username,
+          placeholder: "@username or display name",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Optional: Your handle or display name
+        </p>
+      </div>
+
+      <!-- URL -->
+      <div class="md:col-span-2">
+        <%= f.label :url, "Profile URL", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.url_field :url,
+          placeholder: "https://twitter.com/username",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@social_link.errors[:url].any? ? 'border-red-300' : ''}",
+          required: true %>
+
+        <% if @social_link.errors[:url].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @social_link.errors[:url].first %>
+          </p>
+        <% else %>
+          <p class="mt-1 text-xs text-gray-500">
+            Full URL to your profile page
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistics & Display Section -->
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">Statistics & Display</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Follower Count -->
+      <div>
+        <%= f.label :follower_count, "Follower Count", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.number_field :follower_count,
+          min: 0,
+          placeholder: "0",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@social_link.errors[:follower_count].any? ? 'border-red-300' : ''}" %>
+
+        <% if @social_link.errors[:follower_count].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @social_link.errors[:follower_count].first %>
+          </p>
+        <% else %>
+          <p class="mt-1 text-xs text-gray-500">
+            Optional: Your current follower/subscriber count
+          </p>
+        <% end %>
+      </div>
+
+      <!-- Display in Header -->
+      <div class="flex items-center h-full">
+        <div class="flex items-start pt-6">
+          <div class="flex items-center h-5">
+            <%= f.check_box :display_in_header,
+              class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" %>
+          </div>
+
+          <div class="ml-3">
+            <%= f.label :display_in_header, class: "font-medium text-gray-700" do %>
+              Display in Header
+            <% end %>
+
+            <p class="text-sm text-gray-500">
+              Show this link in the navigation bar and homepage stats
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Platform Examples -->
+  <div class="bg-blue-50 rounded-lg border border-blue-200 p-4">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg
+          class="h-5 w-5 text-blue-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      </div>
+
+      <div class="ml-3">
+        <h3 class="text-sm font-medium text-blue-800">Platform Examples</h3>
+
+        <div class="mt-2 text-sm text-blue-700">
+          <div class="space-y-2">
+            <p><strong>Twitter:</strong> https://twitter.com/username</p>
+            <p><strong>GitHub:</strong> https://github.com/username</p>
+            <p><strong>LinkedIn:</strong> https://linkedin.com/in/username</p>
+            <p><strong>Instagram:</strong> https://instagram.com/username</p>
+            <p><strong>YouTube:</strong> https://youtube.com/@username</p>
+            <p><strong>TikTok:</strong> https://tiktok.com/@username</p>
+            <p><strong>Twitch:</strong> https://twitch.tv/username</p>
+            <p><strong>Discord:</strong> https://discord.gg/servername</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tips Section -->
+  <div class="bg-gray-50 rounded-lg border border-gray-200 p-4">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg
+          class="h-5 w-5 text-gray-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+          />
+        </svg>
+      </div>
+
+      <div class="ml-3">
+        <h3 class="text-sm font-medium text-gray-800">Tips</h3>
+
+        <div class="mt-2 text-sm text-gray-600">
+          <ul class="list-disc pl-5 space-y-1">
+            <li>
+              <strong>Display in Header:</strong> Only enable for your primary
+              3-5 social platforms
+            </li>
+
+            <li>
+              <strong>Follower Count:</strong> Update regularly to keep stats
+              current on your homepage
+            </li>
+
+            <li>
+              <strong>Username:</strong> Include @ symbol for Twitter/Instagram
+              handles
+            </li>
+
+            <li>
+              <strong>URL Verification:</strong> Make sure the URL is correct
+              and publicly accessible
+            </li>
+
+            <li>
+              <strong>Supported Platforms:</strong> Twitter, GitHub, LinkedIn,
+              Instagram, YouTube, Facebook, TikTok, Twitch, Discord
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Actions -->
+  <div class="flex items-center justify-end gap-4 pt-6 border-t border-gray-200">
+    <%= link_to "Cancel", admin_social_links_path, class: "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+
+    <%= f.submit (@social_link.new_record? ? "Create Social Link" : "Update Social Link"), class: "px-6 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+  </div>
+<% end %>

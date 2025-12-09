@@ -1,0 +1,259 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+  <!-- Header -->
+  <div class="mb-12">
+    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+      📚 Reading List
+    </h1>
+
+    <p class="text-xl text-gray-600">
+      Books that shaped my thinking on development, fitness, and life. Reviews,
+      notes, and recommendations.
+    </p>
+  </div>
+
+  <!-- Category Filter -->
+  <% if @categories.any? %>
+    <div class="mb-12">
+      <div class="flex flex-wrap gap-3">
+        <%= link_to "All Books", books_path, class: "px-4 py-2 rounded-lg font-medium transition-colors #{@selected_category.nil? ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" %>
+
+        <% @categories.each do |category| %>
+          <%= link_to category.titleize, books_path(category: category), class: "px-4 py-2 rounded-lg font-medium transition-colors #{@selected_category == category ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Featured Books -->
+  <% if @featured_books.any? && @selected_category.nil? %>
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">⭐ Featured Books</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <% @featured_books.each do |book| %>
+          <div
+            class="
+              bg-gradient-to-br from-blue-50 to-white border
+              border-blue-200 rounded-xl p-6 hover:border-blue-400
+              hover:shadow-lg transition-all duration-300
+            "
+          >
+            <div class="mb-4">
+              <span
+                class="
+                  inline-block px-2 py-1 bg-blue-100 text-blue-700
+                  text-xs rounded uppercase font-semibold mb-3
+                "
+              >
+                Featured
+              </span>
+
+              <h3 class="text-xl font-bold text-gray-900 mb-2">
+                <%= book.title %>
+              </h3>
+
+              <p class="text-gray-600 text-sm mb-3">by <%= book.author %></p>
+
+              <% if book.rating %>
+                <div class="flex items-center mb-3">
+                  <span class="text-yellow-400 text-sm">
+                    <%= book.star_rating %>
+                  </span>
+                </div>
+              <% end %>
+            </div>
+
+            <% if book.has_review? %>
+              <p class="text-gray-600 text-sm mb-4"><%= book.excerpt(150) %></p>
+            <% end %>
+
+            <div
+              class="
+                flex items-center justify-between pt-4 border-t
+                border-gray-200
+              "
+            >
+              <% if book.category.present? %>
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
+                  <%= book.category.titleize %>
+                </span>
+              <% end %>
+
+              <% if book.affiliate_link.present? %>
+                <a
+                  href="<%= book.affiliate_link %>"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="
+                    inline-flex items-center text-blue-600
+                    hover:text-blue-700 transition-colors text-sm
+                    font-semibold
+                  "
+                >
+                  Buy Now →
+                </a>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
+  <!-- All Books -->
+  <section>
+    <h2 class="text-3xl font-bold text-gray-900 mb-8">
+      <% if @selected_category.present? %>
+        <%= @selected_category.titleize %>
+        Books
+      <% else %>
+        All Books
+      <% end %>
+    </h2>
+
+    <% if @books.any? %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <% @books.each do |book| %>
+          <div
+            class="
+              bg-white border border-gray-200 rounded-xl p-6
+              hover:border-gray-300 hover:shadow-lg transition-all
+              duration-300
+            "
+          >
+            <!-- Book Header -->
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">
+                  <%= book.title %>
+                </h3>
+
+                <p class="text-gray-600 text-sm mb-3">by <%= book.author %></p>
+
+                <div class="flex flex-wrap items-center gap-2 mb-3">
+                  <% if book.rating %>
+                    <span class="text-yellow-500 text-sm">
+                      <%= book.star_rating %>
+                    </span>
+                  <% end %>
+
+                  <% if book.category.present? %>
+                    <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
+                      <%= book.category.titleize %>
+                    </span>
+                  <% end %>
+
+                  <% if book.read_date %>
+                    <span class="text-gray-500 text-xs">
+                      Read <%= book.read_date.strftime("%b %Y") %>
+                    </span>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review -->
+            <% if book.has_review? %>
+              <div class="mb-4">
+                <h4 class="text-sm font-semibold text-gray-700 mb-2">
+                  📝 Review
+                </h4>
+
+                <div class="text-gray-600 text-sm leading-relaxed prose max-w-none">
+                  <%= book.review %>
+                </div>
+              </div>
+            <% end %>
+
+            <!-- Notes -->
+            <% if book.has_notes? %>
+              <div class="mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <h4 class="text-sm font-semibold text-gray-700 mb-2">
+                  💡 Notes
+                </h4>
+
+                <div class="text-gray-600 text-sm leading-relaxed prose max-w-none">
+                  <%= book.notes %>
+                </div>
+              </div>
+            <% end %>
+
+            <!-- Actions -->
+            <div
+              class="
+                flex items-center justify-between pt-4 border-t
+                border-gray-200
+              "
+            >
+              <div class="text-xs text-gray-500">
+                <% if book.isbn.present? %>
+                  <span>ISBN: <%= book.isbn %></span>
+                <% end %>
+              </div>
+
+              <% if book.affiliate_link.present? %>
+                <a
+                  href="<%= book.affiliate_link %>"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="
+                    inline-flex items-center text-blue-600
+                    hover:text-blue-700 transition-colors text-sm
+                    font-semibold
+                  "
+                >
+                  Buy on Amazon →
+                </a>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="bg-white border border-gray-200 rounded-lg p-12 text-center">
+        <p class="text-gray-600 text-lg">No books found in this category.</p>
+        <%= link_to "View All Books", books_path, class: "inline-block mt-4 text-blue-600 hover:text-blue-700 transition-colors font-semibold" %>
+      </div>
+    <% end %>
+  </section>
+
+  <!-- Top Rated Books Sidebar (if not filtering) -->
+  <% if @selected_category.nil? && @top_rated_books.any? %>
+    <section class="mt-16">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">🏆 Top Rated</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <% @top_rated_books.each do |book| %>
+          <div
+            class="
+              bg-white border border-gray-200 rounded-lg p-4
+              hover:border-yellow-500 hover:shadow-lg transition-all duration-300
+            "
+          >
+            <h4 class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
+              <%= book.title %>
+            </h4>
+
+            <p class="text-xs text-gray-500 mb-2"><%= book.author %></p>
+
+            <% if book.rating %>
+              <span class="text-yellow-500 text-xs">
+                <%= book.star_rating %>
+              </span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
+  <!-- Affiliate Disclaimer -->
+  <div class="mt-16 p-6 bg-gray-50 border border-gray-200 rounded-lg">
+    <p class="text-gray-600 text-sm">
+      <span class="font-semibold text-gray-900">Affiliate Disclosure:</span>
+      Some of the links on this page are affiliate links. If you purchase
+      through these links, I may earn a small commission at no extra cost to
+      you. I only recommend books I've personally read and found valuable.
+    </p>
+  </div>
+</div>

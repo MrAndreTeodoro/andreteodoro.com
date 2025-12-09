@@ -1,0 +1,348 @@
+<%= form_with(model: [:admin, @blog_post], url: @blog_post.persisted? ? admin_blog_post_path(@blog_post.id) : admin_blog_posts_path, class: "space-y-6") do |f| %>
+  <!-- Error Messages -->
+  <% if @blog_post.errors.any? %>
+    <div class="rounded-md bg-red-50 p-4 border border-red-200">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg
+            class="h-5 w-5 text-red-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </div>
+
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            <%= pluralize(@blog_post.errors.count, "error") %> prohibited this
+            blog post from being saved:
+          </h3>
+
+          <div class="mt-2 text-sm text-red-700">
+            <ul class="list-disc pl-5 space-y-1">
+              <% @blog_post.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Basic Information Section -->
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">Basic Information</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Title -->
+      <div class="md:col-span-2">
+        <%= f.label :title, "Post Title", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.text_field :title,
+          placeholder: "e.g., How I Built a Rails 8 Portfolio in 48 Hours",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@blog_post.errors[:title].any? ? 'border-red-300' : ''}",
+          required: true %>
+
+        <% if @blog_post.errors[:title].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @blog_post.errors[:title].first %>
+          </p>
+        <% end %>
+      </div>
+
+      <!-- Slug -->
+      <div class="md:col-span-2">
+        <%= f.label :slug, "URL Slug", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.text_field :slug,
+          placeholder: "how-i-built-rails-portfolio (auto-generated if left blank)",
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 #{@blog_post.errors[:slug].any? ? 'border-red-300' : ''}" %>
+
+        <% if @blog_post.errors[:slug].any? %>
+          <p class="mt-1 text-sm text-red-600">
+            <%= @blog_post.errors[:slug].first %>
+          </p>
+        <% else %>
+          <p class="mt-1 text-xs text-gray-500">
+            Leave blank to auto-generate from title. Must be unique.
+          </p>
+        <% end %>
+      </div>
+
+      <!-- Published At -->
+      <div>
+        <%= f.label :published_at, "Publish Date & Time", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.datetime_local_field :published_at,
+          class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Leave blank to save as draft. Set future date to schedule.
+        </p>
+      </div>
+
+      <!-- Quick Publish Toggle -->
+      <div class="flex items-center h-full">
+        <div class="flex items-start pt-6">
+          <div class="text-sm">
+            <% if @blog_post.published? %>
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <svg
+                  class="w-3 h-3 mr-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Published
+              </span>
+            <% elsif @blog_post.scheduled? %>
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                <svg
+                  class="w-3 h-3 mr-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Scheduled
+              </span>
+            <% elsif @blog_post.draft? %>
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                <svg
+                  class="w-3 h-3 mr-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Draft
+              </span>
+            <% end %>
+
+            <p class="text-xs text-gray-500 mt-1">
+              Current status
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured -->
+      <div class="flex items-center h-full">
+        <div class="flex items-start">
+          <div class="flex items-center h-5">
+            <%= f.check_box :featured,
+              class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" %>
+          </div>
+
+          <div class="ml-3">
+            <%= f.label :featured, class: "font-medium text-gray-700" do %>
+              <span class="flex items-center">
+                Featured Post
+                <svg
+                  class="w-4 h-4 ml-1 text-yellow-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                  />
+                </svg>
+              </span>
+            <% end %>
+
+            <p class="text-sm text-gray-500">
+              Display prominently on blog homepage
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Viral -->
+      <div class="flex items-center h-full">
+        <div class="flex items-start">
+          <div class="flex items-center h-5">
+            <%= f.check_box :viral,
+              class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" %>
+          </div>
+
+          <div class="ml-3">
+            <%= f.label :viral, class: "font-medium text-gray-700" do %>
+              <span class="flex items-center">
+                Viral Post
+                <svg
+                  class="w-4 h-4 ml-1 text-red-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            <% end %>
+
+            <p class="text-sm text-gray-500">
+              Mark as high-performing post
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Image Section -->
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">Featured Image</h3>
+
+    <div>
+      <%= f.label :featured_image, "Upload Featured Image", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+      <% if @blog_post.featured_image.attached? %>
+        <div class="mb-4">
+          <div class="relative inline-block">
+            <%= image_tag @blog_post.featured_image.variant(resize_to_limit: [400, 300]), class: "rounded-lg border border-gray-300" %>
+            <div class="mt-2">
+              <p class="text-sm text-gray-600 mb-2">
+                Current image: <%= @blog_post.featured_image.filename %>
+              </p>
+              <div class="flex items-center">
+                <%= f.check_box :remove_featured_image, class: "h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" %>
+                <%= f.label :remove_featured_image, "Remove this image", class: "ml-2 text-sm text-red-600" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <%= f.file_field :featured_image,
+        accept: "image/*",
+        class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" %>
+
+      <p class="mt-1 text-xs text-gray-500">
+        Recommended size: 1200x630px. Accepts JPG, PNG, or WebP images.
+      </p>
+    </div>
+  </div>
+
+  <!-- Excerpt Section -->
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">Excerpt</h3>
+
+    <div>
+      <%= f.label :excerpt, "Short Description", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+      <%= f.rich_text_area :excerpt,
+        placeholder: "A brief summary of your post that will appear in listings and social media previews. Aim for 150-200 characters." %>
+
+      <p class="mt-1 text-xs text-gray-500">
+        Optional: Used in blog listings and meta descriptions for SEO
+      </p>
+    </div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="bg-white rounded-lg shadow border border-gray-200 p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">Content</h3>
+
+    <div>
+      <%= f.label :content, "Post Content", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+      <%= f.rich_text_area :content,
+        placeholder: "Write your blog post here. Rich text editing with Markdown support, code highlighting, and more..." %>
+
+      <div class="mt-2 flex items-center justify-between">
+        <p class="text-xs text-gray-500">
+          Reading time will be calculated automatically based on word count
+        </p>
+
+        <% if @blog_post.content.present? %>
+          <span class="text-xs font-medium text-gray-700">
+            ~<%= (@blog_post.content.to_plain_text.split.size / 200.0).ceil %> min read
+          </span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metadata Info (if editing) -->
+  <% if @blog_post.persisted? %>
+    <div class="bg-gray-50 rounded-lg border border-gray-200 p-4">
+      <h4 class="text-sm font-medium text-gray-900 mb-3">Post Metadata</h4>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+        <div>
+          <p class="text-gray-500">Views</p>
+          <p class="font-medium text-gray-900">
+            <%= @blog_post.views_count %>
+          </p>
+        </div>
+
+        <div>
+          <p class="text-gray-500">Reading Time</p>
+          <p class="font-medium text-gray-900">
+            <%= @blog_post.reading_time_text %>
+          </p>
+        </div>
+
+        <div>
+          <p class="text-gray-500">Created</p>
+          <p class="font-medium text-gray-900">
+            <%= @blog_post.created_at.strftime("%b %d, %Y") %>
+          </p>
+        </div>
+
+        <div>
+          <p class="text-gray-500">Last Updated</p>
+          <p class="font-medium text-gray-900">
+            <%= @blog_post.updated_at.strftime("%b %d, %Y") %>
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Form Actions -->
+  <div class="flex items-center justify-between pt-6 border-t border-gray-200">
+    <div class="flex items-center gap-4">
+      <%= link_to "Cancel", admin_blog_posts_path, class: "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <%= f.submit (@blog_post.new_record? ? "Create Blog Post" : "Update Blog Post"), class: "px-6 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+    </div>
+  </div>
+<% end %>
+
+<!-- Publish/Unpublish Actions (outside form to avoid nesting) -->
+<% if @blog_post.persisted? %>
+  <div class="flex items-center justify-end gap-3 mt-4">
+    <% if @blog_post.published? %>
+      <%= button_to "Move to Drafts", unpublish_admin_blog_post_path(@blog_post.id), method: :patch, class: "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors" %>
+    <% elsif @blog_post.draft? || @blog_post.scheduled? %>
+      <%= button_to "Publish Now", publish_admin_blog_post_path(@blog_post.id), method: :patch, class: "px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors" %>
+    <% end %>
+  </div>
+<% end %>

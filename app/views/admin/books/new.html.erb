@@ -1,0 +1,87 @@
+<% content_for :page_title, "New Book" %>
+<% content_for :page_subtitle, "Add a new book to your reading list" %>
+
+<!-- Breadcrumb Navigation -->
+<nav class="mb-6" aria-label="Breadcrumb">
+  <ol class="flex items-center space-x-2 text-sm text-gray-500">
+    <li>
+      <%= link_to "Books", admin_books_path, class: "hover:text-gray-700 transition-colors" %>
+    </li>
+
+    <li>
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          fill-rule="evenodd"
+          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </li>
+
+    <li class="font-medium text-gray-900">New Book</li>
+  </ol>
+</nav>
+
+<!-- Form Container -->
+<div class="max-w-4xl"><%= render "form" %></div>
+
+<!-- Tips Section -->
+<div class="max-w-4xl mt-6">
+  <div class="bg-blue-50 rounded-lg border border-blue-200 p-4">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg
+          class="h-5 w-5 text-blue-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      </div>
+
+      <div class="ml-3">
+        <h3 class="text-sm font-medium text-blue-800">Tips for adding books</h3>
+
+        <div class="mt-2 text-sm text-blue-700">
+          <ul class="list-disc pl-5 space-y-1">
+            <li>
+              <strong>Required fields:</strong> Only title and author are
+              required
+            </li>
+
+            <li>
+              <strong>Reviews:</strong> Public reviews are shown on your site;
+              notes are private
+            </li>
+
+            <li>
+              <strong>Featured books:</strong> Highlighted prominently on your
+              portfolio
+            </li>
+
+            <li>
+              <strong>Categories:</strong> Help organize and filter your
+              reading list
+            </li>
+
+            <li>
+              <strong>Affiliate links:</strong> Add Amazon or Bookshop.org
+              links to earn commissions
+            </li>
+
+            <li>
+              <strong>ISBN:</strong> Useful for automatic cover image lookup
+              (future feature)
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
