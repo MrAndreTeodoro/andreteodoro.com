@@ -19,11 +19,10 @@ class Admin::ProjectsController < Admin::BaseController
       @projects = @projects.where(featured: true)
     end
 
-    # Search by name or description
+    # Search by name only (description is ActionText, stored separately)
     if params[:search].present?
       @projects = @projects.where(
-        "name LIKE ? OR description LIKE ?",
-        "%#{params[:search]}%",
+        "name LIKE ?",
         "%#{params[:search]}%"
       )
     end

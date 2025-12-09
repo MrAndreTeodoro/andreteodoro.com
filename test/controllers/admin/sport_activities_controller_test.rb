@@ -238,7 +238,7 @@ class Admin::SportActivitiesControllerTest < ActionDispatch::IntegrationTest
 
     @sport_activity.reload
     assert_equal "Updated Title", @sport_activity.title
-    assert_equal "Updated description", @sport_activity.description
+    assert_equal "Updated description", @sport_activity.description.to_plain_text
     assert_equal "3:30", @sport_activity.value
   end
 

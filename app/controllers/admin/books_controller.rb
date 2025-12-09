@@ -19,9 +19,9 @@ class Admin::BooksController < Admin::BaseController
       @books = @books.where(featured: true)
     end
 
-    # Filter by reviewed
+    # Filter by reviewed (use scope that joins ActionText)
     if params[:reviewed] == "true"
-      @books = @books.where.not(review: nil)
+      @books = @books.reviewed
     end
 
     # Search by title or author

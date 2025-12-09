@@ -19,11 +19,10 @@ class Admin::SportActivitiesController < Admin::BaseController
       @sport_activities = @sport_activities.where(personal_record: true)
     end
 
-    # Search by title or description
+    # Search by title only (description is ActionText, stored separately)
     if params[:search].present?
       @sport_activities = @sport_activities.where(
-        "title LIKE ? OR description LIKE ?",
-        "%#{params[:search]}%",
+        "title LIKE ?",
         "%#{params[:search]}%"
       )
     end

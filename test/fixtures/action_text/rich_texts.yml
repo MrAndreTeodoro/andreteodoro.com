@@ -40,3 +40,52 @@ scheduled_post_excerpt:
   record: scheduled_post (BlogPost)
   name: excerpt
   body: <p>Coming soon</p>
+
+# Book Reviews
+atomic_habits_review:
+  record: atomic_habits (Book)
+  name: review
+  body: "<p>An excellent book about building better habits through small, incremental changes. Clear's approach is practical and backed by science.</p>"
+
+atomic_habits_notes:
+  record: atomic_habits (Book)
+  name: notes
+  body: "<p>Key takeaway - Focus on systems, not goals. The 1% rule is powerful for long-term change.</p>"
+
+deep_work_review:
+  record: deep_work (Book)
+  name: review
+  body: "<p>Essential reading for anyone looking to do focused, meaningful work in a distracted world.</p>"
+
+sapiens_notes:
+  record: sapiens (Book)
+  name: notes
+  body: "<p>Fascinating perspective on human history and evolution. Changes how you think about society.</p>"
+
+# GearItem Descriptions
+gear_macbook_description:
+  record: macbook_pro (GearItem)
+  name: description
+  body: "<p>My main development machine. Perfect for coding and running multiple apps simultaneously. The M3 Max chip provides incredible performance.</p>"
+
+gear_iphone_description:
+  record: iphone (GearItem)
+  name: description
+  body: "<p>Great for staying connected and productive on the go. Excellent camera and battery life.</p>"
+
+# SportActivity Descriptions
+crossfit_fran_description:
+  record: crossfit_fran (SportActivity)
+  name: description
+  body: "<p>Classic CrossFit benchmark workout. 21-15-9 reps of thrusters and pull-ups. Fast and intense.</p>"
+
+hyrox_run_description:
+  record: hyrox_run (SportActivity)
+  name: description
+  body: "<p>1K run benchmark for Hyrox training. Part of the overall race preparation.</p>"
+
+# Project Descriptions
+startup_one_description:
+  record: startup_one (Project)
+  name: description
+  body: "<p>FitTrack Pro is a fitness tracking application built with Rails 8 and PostgreSQL. Features include workout tracking, progress analytics, and social features.</p>"

@@ -28,11 +28,10 @@ class Admin::GearItemsController < Admin::BaseController
       end
     end
 
-    # Search by name or description
+    # Search by name only (description is ActionText, stored separately)
     if params[:search].present?
       @gear_items = @gear_items.where(
-        "name LIKE ? OR description LIKE ?",
-        "%#{params[:search]}%",
+        "name LIKE ?",
         "%#{params[:search]}%"
       )
     end

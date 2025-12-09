@@ -228,8 +228,8 @@ class Admin::BooksControllerTest < ActionDispatch::IntegrationTest
     }
 
     @book.reload
-    assert_equal "Updated review content", @book.review
-    assert_equal "Updated notes content", @book.notes
+    assert_equal "Updated review content", @book.review.to_plain_text
+    assert_equal "Updated notes content", @book.notes.to_plain_text
   end
 
   test "should not update book with invalid title" do
