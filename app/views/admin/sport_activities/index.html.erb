@@ -345,7 +345,7 @@
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <div class="flex items-center justify-end gap-2">
                   <% if activity.result_url.present? %>
-                    <%= link_to activity.result_url, target: "_blank", rel: "noopener", class: "text-gray-600 hover:text-gray-900 transition-colors", title: "View Result" do %>
+                    <%= link_to sanitize_url(activity.result_url), target: "_blank", rel: "noopener", class: "text-gray-600 hover:text-gray-900 transition-colors", title: "View Result" do %>
                       <svg
                         class="w-5 h-5"
                         fill="none"

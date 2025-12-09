@@ -334,7 +334,7 @@
               <% end %>
 
               <% if book.affiliate_link.present? %>
-                <%= link_to book.affiliate_link, target: "_blank", rel: "noopener", class: "inline-flex items-center text-xs text-purple-600 hover:text-purple-800 transition-colors", title: "Affiliate Link" do %>
+                <%= link_to sanitize_url(book.affiliate_link), target: "_blank", rel: "noopener", class: "inline-flex items-center text-xs text-purple-600 hover:text-purple-800 transition-colors", title: "Affiliate Link" do %>
                   <svg
                     class="w-4 h-4 mr-1"
                     fill="none"
