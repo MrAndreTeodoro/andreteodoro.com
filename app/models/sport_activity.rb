@@ -8,12 +8,12 @@ class SportActivity < ApplicationRecord
   validates :title, presence: true
 
   # Scopes
-  scope :crossfit, -> { where(sport_type: 'crossfit') }
-  scope :hyrox, -> { where(sport_type: 'hyrox') }
-  scope :running, -> { where(sport_type: 'running') }
-  scope :benchmarks, -> { where(category: 'benchmark') }
-  scope :results, -> { where(category: 'result').order(date: :desc) }
-  scope :events, -> { where(category: 'event').order(date: :asc) }
+  scope :crossfit, -> { where(sport_type: "crossfit") }
+  scope :hyrox, -> { where(sport_type: "hyrox") }
+  scope :running, -> { where(sport_type: "running") }
+  scope :benchmarks, -> { where(category: "benchmark") }
+  scope :results, -> { where(category: "result").order(date: :desc) }
+  scope :events, -> { where(category: "event").order(date: :asc) }
   scope :personal_records, -> { where(personal_record: true) }
   scope :recent, -> { order(created_at: :desc).limit(10) }
 
@@ -32,7 +32,7 @@ class SportActivity < ApplicationRecord
   end
 
   def upcoming?
-    category == 'event' && date.present? && date > Date.today
+    category == "event" && date.present? && date > Date.today
   end
 
   def past?

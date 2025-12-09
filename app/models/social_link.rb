@@ -4,7 +4,7 @@ class SocialLink < ApplicationRecord
 
   # Validations
   validates :platform, presence: true, inclusion: { in: PLATFORMS }
-  validates :url, presence: true, format: { with: URI::DEFAULT_PARSER.make_regexp(['http', 'https']), message: "must be a valid URL" }
+  validates :url, presence: true, format: { with: URI::DEFAULT_PARSER.make_regexp([ "http", "https" ]), message: "must be a valid URL" }
   validates :follower_count, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
 
   # Scopes
@@ -32,51 +32,51 @@ class SocialLink < ApplicationRecord
 
   def icon_name
     case platform
-    when 'twitter'
-      'twitter-x'
-    when 'github'
-      'github'
-    when 'youtube'
-      'youtube'
-    when 'linkedin'
-      'linkedin'
-    when 'instagram'
-      'instagram'
-    when 'facebook'
-      'facebook'
-    when 'tiktok'
-      'tiktok'
-    when 'twitch'
-      'twitch'
-    when 'discord'
-      'discord'
+    when "twitter"
+      "twitter-x"
+    when "github"
+      "github"
+    when "youtube"
+      "youtube"
+    when "linkedin"
+      "linkedin"
+    when "instagram"
+      "instagram"
+    when "facebook"
+      "facebook"
+    when "tiktok"
+      "tiktok"
+    when "twitch"
+      "twitch"
+    when "discord"
+      "discord"
     else
-      'link'
+      "link"
     end
   end
 
   def color_class
     case platform
-    when 'twitter'
-      'text-blue-400'
-    when 'github'
-      'text-gray-400'
-    when 'youtube'
-      'text-red-500'
-    when 'linkedin'
-      'text-blue-600'
-    when 'instagram'
-      'text-pink-500'
-    when 'facebook'
-      'text-blue-500'
-    when 'tiktok'
-      'text-black'
-    when 'twitch'
-      'text-purple-500'
-    when 'discord'
-      'text-indigo-500'
+    when "twitter"
+      "text-blue-400"
+    when "github"
+      "text-gray-400"
+    when "youtube"
+      "text-red-500"
+    when "linkedin"
+      "text-blue-600"
+    when "instagram"
+      "text-pink-500"
+    when "facebook"
+      "text-blue-500"
+    when "tiktok"
+      "text-black"
+    when "twitch"
+      "text-purple-500"
+    when "discord"
+      "text-indigo-500"
     else
-      'text-gray-500'
+      "text-gray-500"
     end
   end
 

@@ -1,6 +1,6 @@
 # Clear existing data in reverse order of dependencies
 puts "Clearing existing data..."
-[BlogPost, Project, GearItem, Book, SportActivity, SocialLink, User].each(&:destroy_all)
+[ BlogPost, Project, GearItem, Book, SportActivity, SocialLink, User ].each(&:destroy_all)
 
 puts "Creating admin user..."
 # Create admin user
@@ -17,7 +17,7 @@ puts "Seeding social links..."
 SocialLink.create!([
   { platform: 'twitter', url: 'https://twitter.com/andreteodoro', follower_count: 5400, username: '@andreteodoro', display_in_header: true },
   { platform: 'github', url: 'https://github.com/andreteodoro', follower_count: 1200, username: 'andreteodoro', display_in_header: true },
-  { platform: 'linkedin', url: 'https://linkedin.com/in/andreteodoro', follower_count: 3500, username: 'Andre Teodoro', display_in_header: true },
+  { platform: 'linkedin', url: 'https://linkedin.com/in/andreteodoro', follower_count: 3500, username: 'Andre Teodoro', display_in_header: true }
 ])
 
 puts "Seeding sport activities - Crossfit..."
@@ -38,7 +38,7 @@ SportActivity.create!([
 
   # Events
   { sport_type: 'crossfit', category: 'event', title: 'Local Throwdown', event_name: 'City CrossFit Competition', location: 'Local Box', date: Date.new(2025, 6, 15), description: 'Local competition with 4 WODs' },
-  { sport_type: 'crossfit', category: 'event', title: 'Granite Games', event_name: 'Granite Games Scaled Division', location: 'Minneapolis, MN', date: Date.new(2025, 7, 20), description: 'Regional competition' },
+  { sport_type: 'crossfit', category: 'event', title: 'Granite Games', event_name: 'Granite Games Scaled Division', location: 'Minneapolis, MN', date: Date.new(2025, 7, 20), description: 'Regional competition' }
 ])
 
 puts "Seeding sport activities - Hyrox..."
@@ -56,7 +56,7 @@ SportActivity.create!([
 
   # Events
   { sport_type: 'hyrox', category: 'event', title: 'Hyrox World Championships', event_name: 'Hyrox World Championships', location: 'Nice, France', date: Date.new(2025, 5, 24), description: 'Qualified for World Championships!' },
-  { sport_type: 'hyrox', category: 'event', title: 'Hyrox Boston', event_name: 'Hyrox Boston', location: 'Boston, MA', date: Date.new(2025, 3, 8), description: 'Training race before Worlds' },
+  { sport_type: 'hyrox', category: 'event', title: 'Hyrox Boston', event_name: 'Hyrox Boston', location: 'Boston, MA', date: Date.new(2025, 3, 8), description: 'Training race before Worlds' }
 ])
 
 puts "Seeding sport activities - Running..."
@@ -78,7 +78,7 @@ SportActivity.create!([
   # Events
   { sport_type: 'running', category: 'event', title: 'Boston Marathon', event_name: 'Boston Marathon', location: 'Boston, MA', date: Date.new(2025, 4, 21), description: 'Qualified! BQ-5 minutes. Dream race!' },
   { sport_type: 'running', category: 'event', title: 'NYC Marathon', event_name: 'TCS New York City Marathon', location: 'New York, NY', date: Date.new(2025, 11, 2), description: 'Running the 5 boroughs' },
-  { sport_type: 'running', category: 'event', title: 'Austin Half Marathon', event_name: 'Austin Half Marathon', location: 'Austin, TX', date: Date.new(2025, 2, 16), description: 'Training race for Boston' },
+  { sport_type: 'running', category: 'event', title: 'Austin Half Marathon', event_name: 'Austin Half Marathon', location: 'Austin, TX', date: Date.new(2025, 2, 16), description: 'Training race for Boston' }
 ])
 
 puts "Seeding books..."
@@ -287,7 +287,7 @@ Project.create!([
     featured: true,
     status: 'active',
     position: 1,
-    tech_stack: ['Rails 8', 'Turbo', 'Stimulus', 'Tailwind CSS', 'PostgreSQL'].to_json
+    tech_stack: [ 'Rails 8', 'Turbo', 'Stimulus', 'Tailwind CSS', 'PostgreSQL' ].to_json
   },
   {
     name: 'DevFlow',
@@ -297,7 +297,7 @@ Project.create!([
     featured: true,
     status: 'in_development',
     position: 2,
-    tech_stack: ['Next.js', 'TypeScript', 'Prisma', 'tRPC', 'Tailwind CSS'].to_json
+    tech_stack: [ 'Next.js', 'TypeScript', 'Prisma', 'tRPC', 'Tailwind CSS' ].to_json
   },
   {
     name: 'ReadWise Clone',
@@ -307,7 +307,7 @@ Project.create!([
     featured: true,
     status: 'active',
     position: 3,
-    tech_stack: ['Rails', 'Hotwire', 'ViewComponent', 'Tailwind CSS'].to_json
+    tech_stack: [ 'Rails', 'Hotwire', 'ViewComponent', 'Tailwind CSS' ].to_json
   }
 ])
 

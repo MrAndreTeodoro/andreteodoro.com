@@ -1,5 +1,4 @@
 class SportsController < ApplicationController
-
   def index
     # Show all sports overview
     @crossfit_benchmarks = SportActivity.crossfit.benchmarks

@@ -1,5 +1,4 @@
 class ProjectsController < ApplicationController
-
   def index
     @featured_projects = Project.featured.limit(6)
     @startups = Project.startups

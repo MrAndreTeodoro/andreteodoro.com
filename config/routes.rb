@@ -18,16 +18,16 @@ Rails.application.routes.draw do
   root "home#index"
 
   # Sports & Fitness
-  resources :sports, only: [:index, :show]
+  resources :sports, only: [ :index, :show ]
 
   # Reading List
-  resources :books, only: [:index]
+  resources :books, only: [ :index ]
 
   # Gear & Equipment
-  resources :gear_items, only: [:index], path: "gear", as: :gear
+  resources :gear_items, only: [ :index ], path: "gear", as: :gear
 
   # Projects Showcase
-  resources :projects, only: [:index]
+  resources :projects, only: [ :index ]
 
   # Blog
   get "blog", to: "blog_posts#index", as: :blog

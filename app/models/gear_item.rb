@@ -9,15 +9,15 @@ class GearItem < ApplicationRecord
   validates :name, presence: true
   validates :category, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  validates :affiliate_link, format: { with: URI::DEFAULT_PARSER.make_regexp(['http', 'https']), message: "must be a valid URL" }, allow_blank: true
+  validates :affiliate_link, format: { with: URI::DEFAULT_PARSER.make_regexp([ "http", "https" ]), message: "must be a valid URL" }, allow_blank: true
   validates :position, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   # Scopes
   scope :featured, -> { where(featured: true).order(position: :asc) }
   scope :by_category, ->(category) { where(category: category).order(position: :asc) }
-  scope :tech, -> { where(category: 'tech').order(position: :asc) }
-  scope :fitness, -> { where(category: 'fitness').order(position: :asc) }
-  scope :everyday, -> { where(category: 'everyday').order(position: :asc) }
+  scope :tech, -> { where(category: "tech").order(position: :asc) }
+  scope :fitness, -> { where(category: "fitness").order(position: :asc) }
+  scope :everyday, -> { where(category: "everyday").order(position: :asc) }
   scope :with_price, -> { where.not(price: nil).order(price: :asc) }
   scope :ordered, -> { order(position: :asc) }
 
@@ -55,7 +55,7 @@ class GearItem < ApplicationRecord
 
   def short_description(length = 100)
     return "" unless description.present?
-    description.to_plain_text.truncate(length, separator: ' ')
+    description.to_plain_text.truncate(length, separator: " ")
   end
 
   private

@@ -1,5 +1,4 @@
 class BlogPostsController < ApplicationController
-
   def index
     @blog_posts = BlogPost.published
     @featured_posts = BlogPost.featured.limit(3)

@@ -10,7 +10,7 @@ class Book < ApplicationRecord
   validates :title, presence: true
   validates :author, presence: true
   validates :rating, inclusion: { in: 1..5 }, allow_nil: true
-  validates :affiliate_link, format: { with: URI::DEFAULT_PARSER.make_regexp(['http', 'https']), message: "must be a valid URL" }, allow_blank: true
+  validates :affiliate_link, format: { with: URI::DEFAULT_PARSER.make_regexp([ "http", "https" ]), message: "must be a valid URL" }, allow_blank: true
 
   # Scopes
   scope :reviewed, -> { joins(:rich_text_review).order(read_date: :desc) }
@@ -45,7 +45,7 @@ class Book < ApplicationRecord
 
   def excerpt(length = 150)
     return "" unless review.present?
-    review.to_plain_text.truncate(length, separator: ' ')
+    review.to_plain_text.truncate(length, separator: " ")
   end
 
   def cover_image_url

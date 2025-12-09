@@ -1,5 +1,4 @@
 class GearItemsController < ApplicationController
-
   def index
     @categories = GearItem.pluck(:category).uniq.compact.sort
     @selected_category = params[:category]
