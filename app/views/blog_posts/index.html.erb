@@ -1,13 +1,11 @@
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-  <!-- Header -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <!-- Page Title -->
   <div class="mb-12">
-    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+    <h1 class="text-5xl md:text-6xl font-bold text-black mb-4">
       ✍️ Blog
     </h1>
-
-    <p class="text-xl text-gray-600">
-      Thoughts on development, fitness, and building products. Lessons learned
-      and insights gained along the way.
+    <p class="text-xl text-black font-semibold">
+      Thoughts on development, fitness, and building products. Lessons learned and insights gained along the way.
     </p>
   </div>
 
@@ -22,20 +20,12 @@
             name="query"
             value="<%= params[:query] %>"
             placeholder="Search posts..."
-            class="
-              w-full px-4 py-3 bg-white border border-gray-300 rounded-lg
-              text-gray-900 placeholder-gray-400 focus:outline-none
-              focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors
-            "
+            autocomplete="off"
+            class="w-full px-4 py-3 bg-eggwhite border-2 border-black text-black placeholder-gray-600 focus:outline-none font-semibold"
           >
-
           <button
             type="submit"
-            class="
-              absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2
-              bg-blue-600 hover:bg-blue-700 text-gray-950 rounded-lg text-sm
-              font-semibold transition-colors
-            "
+            class="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 bg-black text-eggwhite border-2 border-black text-sm font-bold hover:bg-gray-800"
           >
             Search
           </button>
@@ -44,11 +34,11 @@
 
       <!-- Year Filter -->
       <% if @years.any? %>
-        <div class="flex gap-2">
-          <%= link_to "All", blog_path, class: "px-4 py-3 rounded-lg font-medium transition-colors #{params[:year].nil? ? 'bg-blue-600 text-gray-950' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}" %>
+        <div class="flex gap-2 flex-wrap">
+          <%= link_to "All", blog_path, class: "px-4 py-3 font-bold border-2 border-black #{params[:year].nil? ? 'bg-black text-eggwhite' : 'bg-eggwhite text-black hover:bg-black hover:text-eggwhite'}" %>
 
           <% @years.each do |year| %>
-            <%= link_to year, blog_path(year: year), class: "px-4 py-3 rounded-lg font-medium transition-colors #{params[:year].to_i == year ? 'bg-blue-600 text-gray-950' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}" %>
+            <%= link_to year, blog_path(year: year), class: "px-4 py-3 font-bold border-2 border-black #{params[:year].to_i == year ? 'bg-black text-eggwhite' : 'bg-eggwhite text-black hover:bg-black hover:text-eggwhite'}" %>
           <% end %>
         </div>
       <% end %>
@@ -58,55 +48,40 @@
   <!-- Featured Posts -->
   <% if @featured_posts.any? && params[:query].nil? && params[:year].nil? %>
     <section class="mb-16">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6">⭐ Featured</h2>
+      <h2 class="text-3xl font-bold text-black mb-8 border-b-2 border-black pb-3">⭐ Featured</h2>
 
       <div class="grid grid-cols-1 gap-6">
         <% @featured_posts.each do |post| %>
-          <%= link_to blog_post_path(post.slug), class: "block bg-gradient-to-br from-blue-50 to-white border border-blue-200 rounded-xl p-6 hover:border-blue-400 hover:shadow-lg transition-all duration-300 group" do %>
+          <%= link_to blog_post_path(post.slug), class: "block bg-yellow-200 border-2 border-black p-6 hover:bg-yellow-300" do %>
             <div class="flex items-start justify-between mb-3">
               <div class="flex-1">
-                <div class="flex items-center space-x-3 mb-2">
-                  <span
-                    class="
-                      px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded
-                      uppercase font-semibold
-                    "
-                  >
+                <div class="flex items-center flex-wrap gap-3 mb-2">
+                  <span class="px-2 py-1 bg-black text-eggwhite text-xs font-bold uppercase border-2 border-black">
                     Featured
                   </span>
 
-                  <p class="text-sm text-gray-500">
+                  <p class="text-sm text-black font-semibold">
                     <%= post.formatted_published_date %>
                   </p>
 
                   <% if post.viral? %>
-                    <span
-                      class="
-                        px-2 py-1 bg-pink-100 text-pink-700 text-xs
-                        rounded uppercase font-semibold
-                      "
-                    >
+                    <span class="px-2 py-1 bg-pink-300 text-black text-xs font-bold uppercase border-2 border-black">
                       Viral
                     </span>
                   <% end %>
 
-                  <span class="text-gray-400 text-xs">
+                  <span class="text-black text-xs font-semibold">
                     <%= post.reading_time_text %>
                   </span>
                 </div>
 
-                <h3
-                  class="
-                    text-2xl font-bold text-gray-900 mb-2
-                    group-hover:text-blue-600 transition-colors
-                  "
-                >
+                <h3 class="text-2xl font-bold text-black mb-2">
                   <%= post.title %>
                 </h3>
 
-                <p class="text-gray-600 mb-3"><%= post.short_excerpt(200) %></p>
+                <p class="text-black mb-3 font-semibold"><%= post.short_excerpt(200) %></p>
 
-                <div class="flex items-center text-sm text-gray-500">
+                <div class="flex items-center text-sm text-black font-bold">
                   <span><%= post.views_count %> views</span>
                 </div>
               </div>
@@ -119,14 +94,11 @@
 
   <!-- All Posts -->
   <section>
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">
+    <h2 class="text-3xl font-bold text-black mb-8 border-b-2 border-black pb-3">
       <% if params[:query].present? %>
-        Search Results for "
-        <%= params[:query] %>
-        "
+        Search Results for "<%= params[:query] %>"
       <% elsif params[:year].present? %>
-        Posts from
-        <%= params[:year] %>
+        Posts from <%= params[:year] %>
       <% else %>
         All Posts
       <% end %>
@@ -135,55 +107,40 @@
     <% if @blog_posts.any? %>
       <div class="space-y-6">
         <% @blog_posts.each do |post| %>
-          <%= link_to blog_post_path(post.slug), class: "block bg-white border border-gray-200 rounded-xl p-6 hover:border-gray-300 hover:shadow-lg transition-all duration-300 group" do %>
+          <%= link_to blog_post_path(post.slug), class: "block bg-eggwhite border-2 border-black p-6 hover:bg-eggwhite-dark" do %>
             <div class="flex items-start justify-between">
               <div class="flex-1">
-                <div class="flex items-center space-x-3 mb-2">
-                  <p class="text-sm text-gray-500">
+                <div class="flex items-center flex-wrap gap-3 mb-2">
+                  <p class="text-sm text-black font-semibold">
                     <%= post.formatted_published_date %>
                   </p>
 
                   <% if post.viral? %>
-                    <span
-                      class="
-                        px-2 py-1 bg-pink-100 text-pink-700 text-xs
-                        rounded uppercase font-semibold
-                      "
-                    >
+                    <span class="px-2 py-1 bg-pink-300 text-black text-xs font-bold uppercase border-2 border-black">
                       Viral
                     </span>
                   <% end %>
 
                   <% if post.featured? %>
-                    <span
-                      class="
-                        px-2 py-1 bg-blue-100 text-blue-700 text-xs
-                        rounded uppercase font-semibold
-                      "
-                    >
+                    <span class="px-2 py-1 bg-yellow-300 text-black text-xs font-bold uppercase border-2 border-black">
                       Featured
                     </span>
                   <% end %>
 
-                  <span class="text-gray-400 text-xs">
+                  <span class="text-black text-xs font-semibold">
                     <%= post.reading_time_text %>
                   </span>
                 </div>
 
-                <h3
-                  class="
-                    text-xl font-bold text-gray-900 mb-2
-                    group-hover:text-blue-600 transition-colors
-                  "
-                >
+                <h3 class="text-xl font-bold text-black mb-2">
                   <%= post.title %>
                 </h3>
 
-                <p class="text-gray-600 text-sm mb-3">
+                <p class="text-black text-sm mb-3 font-semibold">
                   <%= post.short_excerpt %>
                 </p>
 
-                <div class="flex items-center text-sm text-gray-500">
+                <div class="flex items-center text-sm text-black font-bold">
                   <span><%= post.views_count %> views</span>
                 </div>
               </div>
@@ -192,44 +149,41 @@
         <% end %>
       </div>
     <% else %>
-      <div class="bg-white border border-gray-200 rounded-lg p-12 text-center">
-        <p class="text-gray-600 text-lg mb-4">No posts found.</p>
+      <div class="bg-eggwhite border-2 border-black p-12 text-center">
+        <p class="text-black text-lg font-bold mb-4">No posts found.</p>
 
         <% if params[:query].present? || params[:year].present? %>
-          <%= link_to "View All Posts", blog_path, class: "inline-block text-blue-600 hover:text-blue-700 transition-colors font-semibold" %>
+          <%= link_to "View All Posts", blog_path, class: "inline-block text-black hover:underline font-bold border-2 border-black px-4 py-2 bg-eggwhite hover:bg-black hover:text-eggwhite" %>
         <% end %>
       </div>
     <% end %>
   </section>
 
-  <!-- Sidebar Stats -->
+  <!-- Stats -->
   <% if params[:query].nil? && params[:year].nil? %>
     <aside class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
       <!-- Total Posts -->
-      <div class="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
-        <p class="text-3xl font-bold text-blue-600">
+      <div class="bg-eggwhite border-2 border-black p-6 text-center hover:bg-eggwhite-dark">
+        <p class="text-4xl font-bold text-black">
           <%= BlogPost.published.count %>
         </p>
-
-        <p class="text-gray-600 text-sm mt-2">Total Posts</p>
+        <p class="text-black text-sm mt-2 font-semibold">Total Posts</p>
       </div>
 
       <!-- Viral Posts -->
-      <div class="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
-        <p class="text-3xl font-bold text-pink-600">
+      <div class="bg-eggwhite border-2 border-black p-6 text-center hover:bg-eggwhite-dark">
+        <p class="text-4xl font-bold text-black">
           <%= BlogPost.viral.count %>
         </p>
-
-        <p class="text-gray-600 text-sm mt-2">Viral Posts</p>
+        <p class="text-black text-sm mt-2 font-semibold">Viral Posts</p>
       </div>
 
       <!-- Total Views -->
-      <div class="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
-        <p class="text-3xl font-bold text-green-600">
+      <div class="bg-eggwhite border-2 border-black p-6 text-center hover:bg-eggwhite-dark">
+        <p class="text-4xl font-bold text-black">
           <%= number_with_delimiter(BlogPost.sum(:views_count)) %>
         </p>
-
-        <p class="text-gray-600 text-sm mt-2">Total Views</p>
+        <p class="text-black text-sm mt-2 font-semibold">Total Views</p>
       </div>
     </aside>
   <% end %>

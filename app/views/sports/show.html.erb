@@ -1,7 +1,7 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <!-- Back Button -->
-  <div class="mb-12">
-    <%= link_to sports_path, class: "inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors mb-4" do %>
+  <div class="mb-8">
+    <%= link_to sports_path, class: "inline-flex items-center text-black hover:underline font-bold" do %>
       <svg
         class="w-5 h-5 mr-2"
         fill="none"
@@ -17,8 +17,11 @@
       </svg>
       Back to All Sports
     <% end %>
+  </div>
 
-    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+  <!-- Page Title -->
+  <div class="mb-12 border-b-2 border-black pb-6">
+    <h1 class="text-5xl md:text-6xl font-bold text-black mb-4">
       <% case @sport_type %>
       <% when 'crossfit' %>
         🏋️ CrossFit
@@ -29,48 +32,52 @@
       <% end %>
     </h1>
 
-    <p class="text-xl text-gray-600">
+    <p class="text-xl text-black font-semibold">
       <% case @sport_type %>
       <% when 'crossfit' %>
-        Constantly varied, high-intensity functional movements. Building
-        strength and conditioning through the sport of fitness.
+        Constantly varied, high-intensity functional movements. Building strength and conditioning through the sport of fitness.
       <% when 'hyrox' %>
-        The fitness race for every body. 8km of running combined with 8 workout
-        stations testing strength and endurance.
+        The fitness race for every body. 8km of running combined with 8 workout stations testing strength and endurance.
       <% when 'running' %>
         From 5Ks to marathons, tracking progress one mile at a time.
+      <% when 'ocr' %>
+        Obstacle Course Racing - combining running with challenging obstacles.
       <% end %>
     </p>
   </div>
 
   <!-- Benchmarks Section -->
   <section class="mb-16">
-    <h2 class="text-3xl font-bold text-gray-900 mb-8">Benchmarks</h2>
+    <h2 class="text-3xl font-bold text-black mb-8 border-b-2 border-black pb-3">Benchmarks</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <% @benchmarks.each do |benchmark| %>
-        <div
-          class="
-            bg-white border border-gray-200 rounded-lg p-6
-            hover:border-gray-300 hover:shadow-lg transition-all duration-300
-          "
-        >
-          <h3 class="text-xl font-bold text-gray-900 mb-3">
+        <div class="bg-eggwhite border-2 border-black p-6 hover:bg-eggwhite-dark">
+          <% if benchmark.run_type_badge.present? %>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-lg"><%= benchmark.run_type_emoji %></span>
+              <span class="px-2 py-1 bg-black text-eggwhite text-xs font-bold uppercase border-2 border-black">
+                <%= benchmark.run_type_badge %>
+              </span>
+            </div>
+          <% end %>
+
+          <h3 class="text-xl font-bold text-black mb-3">
             <%= benchmark.title %>
           </h3>
 
           <div class="flex items-baseline space-x-2 mb-4">
-            <span class="text-4xl font-bold text-blue-600">
+            <span class="text-4xl font-bold text-black">
               <%= benchmark.value %>
             </span>
 
             <% if benchmark.unit.present? %>
-              <span class="text-gray-600 text-lg"><%= benchmark.unit %></span>
+              <span class="text-black text-lg font-semibold"><%= benchmark.unit %></span>
             <% end %>
           </div>
 
           <% if benchmark.description.present? %>
-            <div class="text-gray-600 text-sm prose max-w-none">
+            <div class="text-black text-sm prose max-w-none">
               <%= benchmark.description %>
             </div>
           <% end %>
@@ -78,13 +85,8 @@
       <% end %>
 
       <% if @benchmarks.empty? %>
-        <div
-          class="
-            col-span-full bg-white border border-gray-200 rounded-lg
-            p-8 text-center
-          "
-        >
-          <p class="text-gray-600">No benchmarks recorded yet.</p>
+        <div class="col-span-full bg-eggwhite border-2 border-black p-8 text-center">
+          <p class="text-black font-semibold">No benchmarks recorded yet.</p>
         </div>
       <% end %>
     </div>
@@ -93,25 +95,28 @@
   <!-- Personal Records Section -->
   <% if @personal_records.any? %>
     <section class="mb-16">
-      <h2 class="text-3xl font-bold text-gray-900 mb-8">🏆 Personal Records</h2>
+      <h2 class="text-3xl font-bold text-black mb-8 border-b-2 border-black pb-3">🏆 Personal Records</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <% @personal_records.each do |pr| %>
-          <div
-            class="
-              bg-gradient-to-br from-yellow-50 to-white border
-              border-yellow-200 rounded-lg p-6 hover:border-yellow-400
-              hover:shadow-lg transition-all duration-300
-            "
-          >
+          <div class="bg-yellow-200 border-2 border-black p-6 hover:bg-yellow-300">
+            <% if pr.run_type_badge.present? %>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-lg"><%= pr.run_type_emoji %></span>
+                <span class="px-2 py-1 bg-black text-eggwhite text-xs font-bold uppercase border-2 border-black">
+                  <%= pr.run_type_badge %>
+                </span>
+              </div>
+            <% end %>
+
             <div class="flex items-start justify-between mb-3">
               <div>
-                <h3 class="text-xl font-bold text-gray-900 mb-1">
+                <h3 class="text-xl font-bold text-black mb-1">
                   <%= pr.title %>
                 </h3>
 
                 <% if pr.date %>
-                  <p class="text-sm text-yellow-600">
+                  <p class="text-sm text-black font-semibold">
                     <%= pr.date.strftime("%B %d, %Y") %>
                   </p>
                 <% end %>
@@ -121,23 +126,23 @@
             </div>
 
             <div class="flex items-baseline space-x-2 mb-3">
-              <span class="text-3xl font-bold text-yellow-600">
+              <span class="text-3xl font-bold text-black">
                 <%= pr.value %>
               </span>
 
               <% if pr.unit.present? %>
-                <span class="text-gray-600 text-lg"><%= pr.unit %></span>
+                <span class="text-black text-lg font-semibold"><%= pr.unit %></span>
               <% end %>
             </div>
 
             <% if pr.description.present? %>
-              <div class="text-gray-600 text-sm prose max-w-none">
+              <div class="text-black text-sm prose max-w-none">
                 <%= pr.description %>
               </div>
             <% end %>
 
             <% if pr.location.present? %>
-              <p class="text-gray-500 text-xs mt-2">📍 <%= pr.location %></p>
+              <p class="text-black text-xs mt-2 font-semibold">📍 <%= pr.location %></p>
             <% end %>
           </div>
         <% end %>
@@ -145,145 +150,113 @@
     </section>
   <% end %>
 
-  <!-- Recent Results Section -->
+  <!-- Recent Workouts Section -->
   <section class="mb-16">
-    <h2 class="text-3xl font-bold text-gray-900 mb-8">Recent Results</h2>
+    <h2 class="text-3xl font-bold text-black mb-8 border-b-2 border-black pb-3">Recent Workouts</h2>
 
     <div class="space-y-4">
-      <% @results.each do |result| %>
-        <div
-          class="
-            bg-white border border-gray-200 rounded-xl p-6
-            hover:border-gray-300 hover:shadow-lg transition-all
-            duration-300
-          "
-        >
+      <% @workouts.each do |workout| %>
+        <div class="bg-eggwhite border-2 border-black p-6 hover:bg-eggwhite-dark">
           <div class="flex items-start justify-between">
             <div class="flex-1">
               <div class="flex items-center space-x-3 mb-2">
-                <% if result.date %>
-                  <span class="text-sm text-gray-500">
-                    <%= result.date.strftime("%B %d, %Y") %>
+                <% if workout.run_type_emoji.present? %>
+                  <span class="text-xl"><%= workout.run_type_emoji %></span>
+                <% end %>
+
+                <% if workout.date %>
+                  <span class="text-sm text-black font-semibold">
+                    <%= workout.date.strftime("%B %d, %Y") %>
                   </span>
                 <% end %>
 
-                <% if result.personal_record %>
-                  <span
-                    class="
-                      px-2 py-1 bg-yellow-100 text-yellow-700 text-xs
-                      rounded uppercase font-semibold flex items-center
-                    "
-                  >
+                <% if workout.personal_record %>
+                  <span class="px-2 py-1 bg-yellow-300 text-black text-xs font-bold uppercase border-2 border-black flex items-center">
                     🏆 PR
                   </span>
                 <% end %>
               </div>
 
-              <h3 class="text-xl font-bold text-gray-900 mb-2">
-                <%= result.title %>
+              <h3 class="text-xl font-bold text-black mb-2">
+                <%= workout.title %>
               </h3>
 
-              <% if result.description.present? %>
-                <div class="text-gray-600 text-sm mb-3 prose max-w-none">
-                  <%= result.description %>
+              <% if workout.description.present? %>
+                <div class="text-black text-sm mb-3 prose max-w-none">
+                  <%= workout.description %>
                 </div>
               <% end %>
 
-              <% if result.location.present? %>
-                <p class="text-gray-500 text-sm">📍 <%= result.location %></p>
+              <% if workout.location.present? %>
+                <p class="text-black text-sm font-semibold">📍 <%= workout.location %></p>
               <% end %>
 
-              <% if result.result_url.present? %>
+              <% if workout.result_url.present? %>
                 <a
-                  href="<%= result.result_url %>"
+                  href="<%= workout.result_url %>"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="
-                    inline-flex items-center text-blue-600
-                    hover:text-blue-700 transition-colors text-sm
-                    font-semibold mt-2
-                  "
+                  class="inline-flex items-center text-black hover:underline font-bold text-sm mt-2 border-2 border-black px-3 py-1 bg-eggwhite hover:bg-black hover:text-eggwhite"
                 >
-                  View Results →
+                  View Details →
                 </a>
               <% end %>
             </div>
 
             <div class="text-right ml-4">
-              <p class="text-3xl font-bold text-blue-600">
-                <%= result.formatted_value %>
+              <p class="text-3xl font-bold text-black">
+                <%= workout.formatted_value %>
               </p>
             </div>
           </div>
         </div>
       <% end %>
 
-      <% if @results.empty? %>
-        <div class="bg-white border border-gray-200 rounded-lg p-8 text-center">
-          <p class="text-gray-600">No results recorded yet.</p>
+      <% if @workouts.empty? %>
+        <div class="bg-eggwhite border-2 border-black p-8 text-center">
+          <p class="text-black font-semibold">No workouts recorded yet.</p>
         </div>
       <% end %>
     </div>
   </section>
 
   <!-- Upcoming Events Section -->
-  <% if @events.any? %>
-    <section>
-      <h2 class="text-3xl font-bold text-gray-900 mb-8">Upcoming Events</h2>
+  <% if @upcoming_events.any? %>
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-black mb-8 border-b-2 border-black pb-3">📅 Upcoming Events</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <% @events.each do |event| %>
-          <div
-            class="
-              bg-white border border-gray-200 rounded-lg p-6
-              hover:border-blue-500 hover:shadow-lg transition-all duration-300
-            "
-          >
+        <% @upcoming_events.each do |event| %>
+          <div class="bg-eggwhite border-2 border-black p-6 hover:bg-eggwhite-dark">
+            <% if event.run_type_badge.present? %>
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-lg"><%= event.run_type_emoji %></span>
+                <span class="px-2 py-1 bg-black text-eggwhite text-xs font-bold uppercase border-2 border-black">
+                  <%= event.run_type_badge %>
+                </span>
+              </div>
+            <% end %>
+
             <div class="mb-4">
               <% if event.date %>
                 <div class="flex items-center space-x-2 mb-2">
-                  <span
-                    class="
-                      px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded
-                      uppercase font-semibold
-                    "
-                  >
-                    <%= event.date.strftime("%b %d") %>
+                  <span class="px-2 py-1 bg-black text-eggwhite text-xs font-bold uppercase border-2 border-black">
+                    <%= event.date.strftime("%b %d, %Y") %>
                   </span>
-
-                  <% if event.upcoming? %>
-                    <span
-                      class="
-                        px-2 py-1 bg-green-100 text-green-700 text-xs
-                        rounded uppercase font-semibold
-                      "
-                    >
-                      Upcoming
-                    </span>
-                  <% elsif event.past? %>
-                    <span
-                      class="
-                        px-2 py-1 bg-gray-100 text-gray-600 text-xs
-                        rounded uppercase font-semibold
-                      "
-                    >
-                      Completed
-                    </span>
-                  <% end %>
                 </div>
               <% end %>
 
-              <h4 class="text-lg font-semibold text-gray-900 mt-2">
-                <%= event.event_name || event.title %>
+              <h4 class="text-lg font-bold text-black mt-2">
+                <%= event.title %>
               </h4>
             </div>
 
             <% if event.location.present? %>
-              <p class="text-gray-600 text-sm mb-2">📍 <%= event.location %></p>
+              <p class="text-black text-sm font-semibold mb-2">📍 <%= event.location %></p>
             <% end %>
 
             <% if event.description.present? %>
-              <div class="text-gray-500 text-sm prose max-w-none">
+              <div class="text-black text-sm prose max-w-none">
                 <%= event.description %>
               </div>
             <% end %>
@@ -293,10 +266,7 @@
                 href="<%= event.result_url %>"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="
-                  inline-flex items-center text-blue-600 hover:text-blue-700
-                  transition-colors text-sm font-semibold mt-3
-                "
+                class="inline-flex items-center text-black hover:underline font-bold text-sm mt-3 border-2 border-black px-3 py-1 bg-eggwhite hover:bg-black hover:text-eggwhite"
               >
                 Event Details →
               </a>
@@ -306,11 +276,68 @@
       </div>
     </section>
   <% else %>
-    <section>
-      <h2 class="text-3xl font-bold text-gray-900 mb-8">Upcoming Events</h2>
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-black mb-8 border-b-2 border-black pb-3">📅 Upcoming Events</h2>
 
-      <div class="bg-white border border-gray-200 rounded-lg p-8 text-center">
-        <p class="text-gray-600">No upcoming events scheduled.</p>
+      <div class="bg-eggwhite border-2 border-black p-8 text-center">
+        <p class="text-black font-semibold">No upcoming events scheduled.</p>
+      </div>
+    </section>
+  <% end %>
+
+  <!-- Past Activities Section -->
+  <% if @past_activities.any? %>
+    <section>
+      <h2 class="text-3xl font-bold text-black mb-8 border-b-2 border-black pb-3">Past Activities</h2>
+
+      <div class="space-y-4">
+        <% @past_activities.each do |activity| %>
+          <div class="bg-eggwhite border-2 border-black p-6 hover:bg-eggwhite-dark">
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <div class="flex items-center gap-3 mb-2">
+                  <% if activity.run_type_emoji.present? %>
+                    <span class="text-xl"><%= activity.run_type_emoji %></span>
+                  <% end %>
+
+                  <span class="px-2 py-1 bg-black text-eggwhite text-xs font-bold uppercase border-2 border-black">
+                    <%= activity.category_display_name %>
+                  </span>
+
+                  <% if activity.personal_record %>
+                    <span class="px-2 py-1 bg-yellow-300 text-black text-xs font-bold uppercase border-2 border-black">
+                      🏆 PR
+                    </span>
+                  <% end %>
+                </div>
+
+                <h3 class="text-xl font-bold text-black mb-2">
+                  <%= activity.title %>
+                </h3>
+
+                <% if activity.description.present? %>
+                  <div class="text-black text-sm mb-3 prose max-w-none">
+                    <%= activity.description %>
+                  </div>
+                <% end %>
+
+                <div class="flex items-center gap-4 text-sm text-black font-semibold">
+                  <span><%= activity.date.strftime("%B %d, %Y") %></span>
+
+                  <% if activity.location.present? %>
+                    <span>📍 <%= activity.location %></span>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="text-right ml-4">
+                <p class="text-3xl font-bold text-black">
+                  <%= activity.formatted_value %>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
     </section>
   <% end %>

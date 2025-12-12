@@ -68,3 +68,5 @@ group :test do
 end
 
 gem "lexxy", "~> 0.1.23.beta"
+
+gem "honeybadger", "~> 6.2"

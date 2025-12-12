@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_08_210950) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_12_022359) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -136,20 +136,22 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_08_210950) do
   create_table "sport_activities", force: :cascade do |t|
     t.string "category", null: false
     t.datetime "created_at", null: false
-    t.date "date"
+    t.date "date", null: false
     t.string "event_name"
     t.string "location"
     t.boolean "personal_record", default: false
     t.string "result_url"
     t.string "sport_type", null: false
+    t.string "sub_type"
     t.string "title", null: false
-    t.string "unit"
+    t.string "unit", null: false
     t.datetime "updated_at", null: false
-    t.string "value"
+    t.string "value", null: false
     t.index ["category"], name: "index_sport_activities_on_category"
     t.index ["date"], name: "index_sport_activities_on_date"
     t.index ["personal_record"], name: "index_sport_activities_on_personal_record"
     t.index ["sport_type"], name: "index_sport_activities_on_sport_type"
+    t.index ["sub_type"], name: "index_sport_activities_on_sub_type"
   end
 
   create_table "users", force: :cascade do |t|

@@ -67,6 +67,7 @@ class Admin::SportActivitiesController < Admin::BaseController
   def sport_activity_params
     params.require(:sport_activity).permit(
       :sport_type,
+      :sub_type,
       :category,
       :title,
       :description,

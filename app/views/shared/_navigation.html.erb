@@ -1,0 +1,65 @@
+<% unless controller_name == 'home' && action_name == 'index' %>
+<nav
+  class="
+    fixed top-0 left-0 right-0 z-50 bg-eggwhite
+    border-b-2 border-black
+  "
+  style="margin-left: 300px;"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo/Name -->
+      <div class="flex-shrink-0">
+        <%= link_to root_path, class: "text-xl font-bold text-black hover:underline" do %>
+          Andre Teodoro
+        <% end %>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8">
+        <%= link_to "Home", root_path, class: "text-black hover:underline #{current_page?(root_path) ? 'font-bold underline' : 'font-semibold'}" %>
+        <%= link_to "Sports", sports_path, class: "text-black hover:underline #{current_page?(sports_path) || controller_name == 'sports' ? 'font-bold underline' : 'font-semibold'}" %>
+        <%= link_to "Projects", projects_path, class: "text-black hover:underline #{current_page?(projects_path) || controller_name == 'projects' ? 'font-bold underline' : 'font-semibold'}" %>
+        <%= link_to "Books", books_path, class: "text-black hover:underline #{current_page?(books_path) || controller_name == 'books' ? 'font-bold underline' : 'font-semibold'}" %>
+        <%= link_to "Gear", gear_index_path, class: "text-black hover:underline #{controller_name == 'gear_items' ? 'font-bold underline' : 'font-semibold'}" %>
+        <%= link_to "Blog", blog_path, class: "text-black hover:underline #{current_page?(blog_path) || controller_name == 'blog_posts' ? 'font-bold underline' : 'font-semibold'}" %>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button
+          type="button"
+          class="text-black"
+          id="mobile-menu-button"
+        >
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="hidden md:hidden" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1 bg-eggwhite-dark border-t-2 border-black">
+      <%= link_to "Home", root_path, class: "block px-3 py-2 text-base font-medium text-black hover:underline #{current_page?(root_path) ? 'font-bold underline' : ''}" %>
+      <%= link_to "Sports", sports_path, class: "block px-3 py-2 text-base font-medium text-black hover:underline #{controller_name == 'sports' ? 'font-bold underline' : ''}" %>
+      <%= link_to "Projects", projects_path, class: "block px-3 py-2 text-base font-medium text-black hover:underline #{controller_name == 'projects' ? 'font-bold underline' : ''}" %>
+      <%= link_to "Books", books_path, class: "block px-3 py-2 text-base font-medium text-black hover:underline #{controller_name == 'books' ? 'font-bold underline' : ''}" %>
+      <%= link_to "Gear", gear_index_path, class: "block px-3 py-2 text-base font-medium text-black hover:underline #{controller_name == 'gear_items' ? 'font-bold underline' : ''}" %>
+      <%= link_to "Blog", blog_path, class: "block px-3 py-2 text-base font-medium text-black hover:underline #{controller_name == 'blog_posts' ? 'font-bold underline' : ''}" %>
+    </div>
+  </div>
+</nav>
+<% end %>

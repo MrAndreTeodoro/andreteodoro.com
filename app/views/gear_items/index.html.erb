@@ -1,13 +1,11 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-  <!-- Header -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <!-- Page Title -->
   <div class="mb-12">
-    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+    <h1 class="text-5xl md:text-6xl font-bold text-black mb-4">
       ⚙️ Gear & Setup
     </h1>
-
-    <p class="text-xl text-gray-600">
-      The tools, equipment, and gear I use every day for development, fitness,
-      and life. Everything I actually use and recommend.
+    <p class="text-xl text-black font-semibold">
+      The tools, equipment, and gear I use every day for development, fitness, and life. Everything I actually use and recommend.
     </p>
   </div>
 
@@ -15,10 +13,10 @@
   <% if @categories.any? %>
     <div class="mb-12">
       <div class="flex flex-wrap gap-3">
-        <%= link_to "All Gear", gear_index_path, class: "px-4 py-2 rounded-lg font-medium transition-colors #{@selected_category.nil? ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" %>
+        <%= link_to "All Gear", gear_index_path, class: "px-4 py-2 font-bold border-2 border-black #{@selected_category.nil? ? 'bg-black text-eggwhite' : 'bg-eggwhite text-black hover:bg-black hover:text-eggwhite'}" %>
 
         <% @categories.each do |category| %>
-          <%= link_to category.titleize, gear_index_path(category: category), class: "px-4 py-2 rounded-lg font-medium transition-colors #{@selected_category == category ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}" %>
+          <%= link_to category.titleize, gear_index_path(category: category), class: "px-4 py-2 font-bold border-2 border-black #{@selected_category == category ? 'bg-black text-eggwhite' : 'bg-eggwhite text-black hover:bg-black hover:text-eggwhite'}" %>
         <% end %>
       </div>
     </div>
@@ -27,58 +25,42 @@
   <!-- Featured Gear -->
   <% if @featured_gear.any? && @selected_category.nil? %>
     <section class="mb-16">
-      <h2 class="text-3xl font-bold text-gray-900 mb-8">⭐ Featured Gear</h2>
+      <h2 class="text-3xl font-bold text-black mb-8 border-b-2 border-black pb-3">⭐ Featured Gear</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <% @featured_gear.each do |item| %>
-          <div
-            class="
-              bg-gradient-to-br from-blue-50 to-white border
-              border-blue-200 rounded-xl p-6 hover:border-blue-400
-              hover:shadow-lg transition-all duration-300 hover:scale-105
-            "
-          >
+          <div class="bg-yellow-200 border-2 border-black p-6 hover:bg-yellow-300">
             <!-- Product Image -->
             <% if item.product_image.attached? %>
-              <%= image_tag item.product_image, class: "w-full h-48 object-cover rounded-lg shadow-md border border-gray-200 mb-4", alt: "#{item.name} image" %>
+              <%= image_tag item.product_image, class: "w-full h-48 object-cover border-2 border-black mb-4", alt: "#{item.name} image" %>
             <% elsif item.image_url.present? %>
-              <%= image_tag item.image_url, class: "w-full h-48 object-cover rounded-lg shadow-md border border-gray-200 mb-4", alt: "#{item.name} image" %>
+              <%= image_tag item.image_url, class: "w-full h-48 object-cover border-2 border-black mb-4", alt: "#{item.name} image" %>
             <% end %>
 
             <div class="mb-4">
               <div class="flex items-center justify-between mb-3">
-                <span
-                  class="
-                    inline-block px-2 py-1 bg-blue-100 text-blue-700
-                    text-xs rounded uppercase font-semibold
-                  "
-                >
+                <span class="inline-block px-2 py-1 bg-black text-eggwhite text-xs font-bold uppercase border-2 border-black">
                   Featured
                 </span>
 
                 <% if item.price %>
-                  <span class="text-blue-600 font-bold text-lg">
+                  <span class="text-black font-bold text-lg">
                     <%= item.formatted_price %>
                   </span>
                 <% end %>
               </div>
 
-              <h3 class="text-xl font-bold text-gray-900 mb-2">
+              <h3 class="text-xl font-bold text-black mb-2">
                 <%= item.name %>
               </h3>
 
-              <span
-                class="
-                  inline-block px-2 py-1 bg-gray-100 text-gray-700 text-xs
-                  rounded mb-3
-                "
-              >
+              <span class="inline-block px-2 py-1 bg-black text-eggwhite text-xs font-bold border-2 border-black mb-3">
                 <%= item.category_display_name %>
               </span>
             </div>
 
             <% if item.description.present? %>
-              <p class="text-gray-600 text-sm mb-4"><%= item.short_description(150) %></p>
+              <p class="text-black text-sm mb-4 font-semibold"><%= item.short_description(150) %></p>
             <% end %>
 
             <% if item.has_affiliate_link? %>
@@ -86,11 +68,7 @@
                 href="<%= item.affiliate_link %>"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="
-                  inline-flex items-center justify-center w-full px-4 py-2
-                  bg-blue-600 hover:bg-blue-700 text-white rounded-lg
-                  font-semibold transition-colors
-                "
+                class="inline-flex items-center justify-center w-full px-4 py-2 bg-black text-eggwhite border-2 border-black font-bold hover:bg-gray-800"
               >
                 Check it out →
               </a>
@@ -104,32 +82,26 @@
   <!-- Tech Gear -->
   <% if (@selected_category.nil? || @selected_category == 'tech') && @tech_gear.any? %>
     <section class="mb-16">
-      <h2 class="text-3xl font-bold text-gray-900 mb-8">💻 Tech & Development</h2>
+      <h2 class="text-3xl font-bold text-black mb-8 border-b-2 border-black pb-3">💻 Tech & Development</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <% @tech_gear.each do |item| %>
-          <div
-            class="
-              bg-white border border-gray-200 rounded-xl p-6
-              hover:border-gray-300 hover:shadow-lg transition-all
-              duration-300
-            "
-          >
+          <div class="bg-eggwhite border-2 border-black p-6 hover:bg-eggwhite-dark">
             <!-- Product Image -->
             <% if item.product_image.attached? %>
-              <%= image_tag item.product_image, class: "w-full h-48 object-cover rounded-lg shadow-md border border-gray-200 mb-4", alt: "#{item.name} image" %>
+              <%= image_tag item.product_image, class: "w-full h-48 object-cover border-2 border-black mb-4", alt: "#{item.name} image" %>
             <% elsif item.image_url.present? %>
-              <%= image_tag item.image_url, class: "w-full h-48 object-cover rounded-lg shadow-md border border-gray-200 mb-4", alt: "#{item.name} image" %>
+              <%= image_tag item.image_url, class: "w-full h-48 object-cover border-2 border-black mb-4", alt: "#{item.name} image" %>
             <% end %>
 
             <div class="flex items-start justify-between mb-3">
               <div class="flex-1">
-                <h3 class="text-lg font-bold text-gray-900 mb-2">
+                <h3 class="text-lg font-bold text-black mb-2">
                   <%= item.name %>
                 </h3>
 
                 <% if item.price %>
-                  <p class="text-purple-600 font-semibold text-lg mb-3">
+                  <p class="text-black font-bold text-lg mb-3">
                     <%= item.formatted_price %>
                   </p>
                 <% end %>
@@ -137,7 +109,7 @@
             </div>
 
             <% if item.description.present? %>
-              <p class="text-gray-600 text-sm mb-4"><%= item.short_description(150) %></p>
+              <p class="text-black text-sm mb-4 font-semibold"><%= item.short_description(150) %></p>
             <% end %>
 
             <% if item.has_affiliate_link? %>
@@ -145,10 +117,7 @@
                 href="<%= item.affiliate_link %>"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="
-                  inline-flex items-center text-blue-600 hover:text-blue-700
-                  transition-colors text-sm font-semibold
-                "
+                class="inline-flex items-center text-black hover:underline font-bold text-sm border-2 border-black px-3 py-1 bg-eggwhite hover:bg-black hover:text-eggwhite"
               >
                 View Product →
               </a>
@@ -162,32 +131,26 @@
   <!-- Fitness Gear -->
   <% if (@selected_category.nil? || @selected_category == 'fitness') && @fitness_gear.any? %>
     <section class="mb-16">
-      <h2 class="text-3xl font-bold text-gray-900 mb-8">🏋️ Fitness Equipment</h2>
+      <h2 class="text-3xl font-bold text-black mb-8 border-b-2 border-black pb-3">🏋️ Fitness Equipment</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <% @fitness_gear.each do |item| %>
-          <div
-            class="
-              bg-white border border-gray-200 rounded-xl p-6
-              hover:border-gray-300 hover:shadow-lg transition-all
-              duration-300
-            "
-          >
+          <div class="bg-eggwhite border-2 border-black p-6 hover:bg-eggwhite-dark">
             <!-- Product Image -->
             <% if item.product_image.attached? %>
-              <%= image_tag item.product_image, class: "w-full h-48 object-cover rounded-lg shadow-md border border-gray-200 mb-4", alt: "#{item.name} image" %>
+              <%= image_tag item.product_image, class: "w-full h-48 object-cover border-2 border-black mb-4", alt: "#{item.name} image" %>
             <% elsif item.image_url.present? %>
-              <%= image_tag item.image_url, class: "w-full h-48 object-cover rounded-lg shadow-md border border-gray-200 mb-4", alt: "#{item.name} image" %>
+              <%= image_tag item.image_url, class: "w-full h-48 object-cover border-2 border-black mb-4", alt: "#{item.name} image" %>
             <% end %>
 
             <div class="flex items-start justify-between mb-3">
               <div class="flex-1">
-                <h3 class="text-lg font-bold text-gray-900 mb-2">
+                <h3 class="text-lg font-bold text-black mb-2">
                   <%= item.name %>
                 </h3>
 
                 <% if item.price %>
-                  <p class="text-green-600 font-semibold text-lg mb-3">
+                  <p class="text-black font-bold text-lg mb-3">
                     <%= item.formatted_price %>
                   </p>
                 <% end %>
@@ -195,7 +158,7 @@
             </div>
 
             <% if item.description.present? %>
-              <p class="text-gray-600 text-sm mb-4"><%= item.short_description(150) %></p>
+              <p class="text-black text-sm mb-4 font-semibold"><%= item.short_description(150) %></p>
             <% end %>
 
             <% if item.has_affiliate_link? %>
@@ -203,10 +166,7 @@
                 href="<%= item.affiliate_link %>"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="
-                  inline-flex items-center text-blue-600 hover:text-blue-700
-                  transition-colors text-sm font-semibold
-                "
+                class="inline-flex items-center text-black hover:underline font-bold text-sm border-2 border-black px-3 py-1 bg-eggwhite hover:bg-black hover:text-eggwhite"
               >
                 View Product →
               </a>
@@ -220,32 +180,26 @@
   <!-- Everyday Gear -->
   <% if (@selected_category.nil? || @selected_category == 'everyday') && @everyday_gear.any? %>
     <section class="mb-16">
-      <h2 class="text-3xl font-bold text-gray-900 mb-8">🎒 Everyday Carry</h2>
+      <h2 class="text-3xl font-bold text-black mb-8 border-b-2 border-black pb-3">🎒 Everyday Carry</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <% @everyday_gear.each do |item| %>
-          <div
-            class="
-              bg-white border border-gray-200 rounded-xl p-6
-              hover:border-gray-300 hover:shadow-lg transition-all
-              duration-300
-            "
-          >
+          <div class="bg-eggwhite border-2 border-black p-6 hover:bg-eggwhite-dark">
             <!-- Product Image -->
             <% if item.product_image.attached? %>
-              <%= image_tag item.product_image, class: "w-full h-48 object-cover rounded-lg shadow-md border border-gray-200 mb-4", alt: "#{item.name} image" %>
+              <%= image_tag item.product_image, class: "w-full h-48 object-cover border-2 border-black mb-4", alt: "#{item.name} image" %>
             <% elsif item.image_url.present? %>
-              <%= image_tag item.image_url, class: "w-full h-48 object-cover rounded-lg shadow-md border border-gray-200 mb-4", alt: "#{item.name} image" %>
+              <%= image_tag item.image_url, class: "w-full h-48 object-cover border-2 border-black mb-4", alt: "#{item.name} image" %>
             <% end %>
 
             <div class="flex items-start justify-between mb-3">
               <div class="flex-1">
-                <h3 class="text-lg font-bold text-gray-900 mb-2">
+                <h3 class="text-lg font-bold text-black mb-2">
                   <%= item.name %>
                 </h3>
 
                 <% if item.price %>
-                  <p class="text-orange-600 font-semibold text-lg mb-3">
+                  <p class="text-black font-bold text-lg mb-3">
                     <%= item.formatted_price %>
                   </p>
                 <% end %>
@@ -253,7 +207,7 @@
             </div>
 
             <% if item.description.present? %>
-              <p class="text-gray-600 text-sm mb-4"><%= item.short_description(150) %></p>
+              <p class="text-black text-sm mb-4 font-semibold"><%= item.short_description(150) %></p>
             <% end %>
 
             <% if item.has_affiliate_link? %>
@@ -261,10 +215,7 @@
                 href="<%= item.affiliate_link %>"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="
-                  inline-flex items-center text-blue-600 hover:text-blue-700
-                  transition-colors text-sm font-semibold
-                "
+                class="inline-flex items-center text-black hover:underline font-bold text-sm border-2 border-black px-3 py-1 bg-eggwhite hover:bg-black hover:text-eggwhite"
               >
                 View Product →
               </a>
@@ -277,20 +228,17 @@
 
   <!-- Empty State -->
   <% if @featured_gear.empty? && @tech_gear.empty? && @fitness_gear.empty? && @everyday_gear.empty? %>
-    <div class="bg-white border border-gray-200 rounded-lg p-12 text-center">
-      <p class="text-gray-600 text-lg mb-4">No gear found in this category.</p>
-
-      <%= link_to "View All Gear", gear_index_path, class: "inline-block text-blue-600 hover:text-blue-700 transition-colors font-semibold" %>
+    <div class="bg-eggwhite border-2 border-black p-12 text-center">
+      <p class="text-black text-lg font-bold mb-4">No gear found in this category.</p>
+      <%= link_to "View All Gear", gear_index_path, class: "inline-block text-black hover:underline font-bold border-2 border-black px-4 py-2 bg-eggwhite hover:bg-black hover:text-eggwhite" %>
     </div>
   <% end %>
 
   <!-- Affiliate Disclaimer -->
-  <div class="mt-16 p-6 bg-gray-50 border border-gray-200 rounded-lg">
-    <p class="text-gray-600 text-sm">
-      <span class="font-semibold text-gray-900">Affiliate Disclosure:</span>
-      Some of the links on this page are affiliate links. If you purchase
-      through these links, I may earn a small commission at no extra cost to
-      you. I only recommend gear I actually use and believe provides real value.
+  <div class="mt-16 p-6 bg-eggwhite-dark border-2 border-black">
+    <p class="text-black text-sm">
+      <span class="font-bold text-black">Affiliate Disclosure:</span>
+      Some of the links on this page are affiliate links. If you purchase through these links, I may earn a small commission at no extra cost to you. I only recommend gear I actually use and believe provides real value.
     </p>
   </div>
 </div>

@@ -50,7 +50,8 @@
           [
             ['CrossFit', 'crossfit'],
             ['Hyrox', 'hyrox'],
-            ['Running', 'running']
+            ['Running', 'running'],
+            ['OCR', 'ocr']
           ],
           { include_blank: 'Select a sport type' },
           {
@@ -63,6 +64,25 @@
             <%= @sport_activity.errors[:sport_type].first %>
           </p>
         <% end %>
+      </div>
+
+      <!-- Sub Type (for Running) -->
+      <div>
+        <%= f.label :sub_type, "Running Type", class: "block text-sm font-medium text-gray-700 mb-2" %>
+
+        <%= f.select :sub_type,
+          [
+            ['Road', 'road'],
+            ['Trail', 'trail']
+          ],
+          { include_blank: 'Not applicable' },
+          {
+            class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          } %>
+
+        <p class="mt-1 text-xs text-gray-500">
+          Only for running activities
+        </p>
       </div>
 
       <!-- Category -->
@@ -196,6 +216,8 @@
           </div>
         </div>
       </div>
+
+
     </div>
   </div>
 

@@ -69,6 +69,15 @@ class Project < ApplicationRecord
     status == "in_development"
   end
 
+  def url_host
+    return "" unless has_url?
+    begin
+      URI.parse(url).host
+    rescue URI::InvalidURIError
+      url
+    end
+  end
+
   private
 
   def set_default_position

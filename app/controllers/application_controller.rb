@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     # Only load sidebar data if not on auth pages
     unless controller_name.in?(%w[sessions passwords])
       @sidebar_social_links = SocialLink.header_links
-      @sidebar_upcoming_events = SportActivity.events.where("date >= ?", Date.today).limit(3)
+      @sidebar_upcoming_events = SportActivity.upcoming_events.limit(3)
       @sidebar_featured_projects = Project.featured.startups.limit(3)
       @sidebar_side_projects = Project.side_projects.limit(12)
       @sidebar_recent_posts = BlogPost.published.recent.limit(3)

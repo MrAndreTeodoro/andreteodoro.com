@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   resources :gear_items, only: [ :index ], path: "gear", as: :gear
 
   # Projects Showcase
-  resources :projects, only: [ :index ]
+  resources :projects, only: [ :index, :show ]
 
   # Blog
   get "blog", to: "blog_posts#index", as: :blog

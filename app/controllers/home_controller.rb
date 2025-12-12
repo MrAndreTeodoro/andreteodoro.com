@@ -8,8 +8,8 @@ class HomeController < ApplicationController
     @hyrox_benchmarks = SportActivity.hyrox.benchmarks.limit(3)
     @running_benchmarks = SportActivity.running.benchmarks.limit(3)
 
-    @recent_results = SportActivity.results.limit(5)
-    @upcoming_events = SportActivity.events.where("date >= ?", Date.today).limit(3)
+    @recent_results = SportActivity.workouts.limit(5)
+    @upcoming_events = SportActivity.upcoming_events.limit(3)
 
     # Projects
     @featured_projects = Project.featured.startups.limit(3)

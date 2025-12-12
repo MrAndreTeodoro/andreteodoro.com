@@ -266,6 +266,9 @@
                     end %>
                   "
                 >
+                  <% if activity.run_type_emoji.present? %>
+                    <%= activity.run_type_emoji %>
+                  <% end %>
                   <%= activity.sport_display_name %>
                 </span>
               </td>

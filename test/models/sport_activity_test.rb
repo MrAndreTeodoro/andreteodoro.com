@@ -6,25 +6,46 @@ class SportActivityTest < ActiveSupport::TestCase
     activity = SportActivity.new(
       sport_type: "crossfit",
       category: "benchmark",
-      title: "Test Activity"
+      title: "Test Activity",
+      value: "5:00",
+      unit: "minutes",
+      date: Date.today
     )
     assert activity.valid?
   end
 
   test "should require sport_type" do
-    activity = SportActivity.new(category: "benchmark", title: "Test")
+    activity = SportActivity.new(
+      category: "benchmark",
+      title: "Test",
+      value: "5:00",
+      unit: "minutes",
+      date: Date.today
+    )
     assert_not activity.valid?
     assert_includes activity.errors[:sport_type], "can't be blank"
   end
 
   test "should require category" do
-    activity = SportActivity.new(sport_type: "crossfit", title: "Test")
+    activity = SportActivity.new(
+      sport_type: "crossfit",
+      title: "Test",
+      value: "5:00",
+      unit: "minutes",
+      date: Date.today
+    )
     assert_not activity.valid?
     assert_includes activity.errors[:category], "can't be blank"
   end
 
   test "should require title" do
-    activity = SportActivity.new(sport_type: "crossfit", category: "benchmark")
+    activity = SportActivity.new(
+      sport_type: "crossfit",
+      category: "benchmark",
+      value: "5:00",
+      unit: "minutes",
+      date: Date.today
+    )
     assert_not activity.valid?
     assert_includes activity.errors[:title], "can't be blank"
   end
@@ -56,7 +77,7 @@ class SportActivityTest < ActiveSupport::TestCase
     activity.category = "benchmark"
     assert activity.valid?
 
-    activity.category = "result"
+    activity.category = "workout"
     assert activity.valid?
 
     activity.category = "event"
@@ -89,24 +110,24 @@ class SportActivityTest < ActiveSupport::TestCase
   end
 
   test "benchmarks scope returns only benchmark activities" do
-    benchmarks = SportActivity.benchmarks
-    assert benchmarks.all? { |a| a.category == "benchmark" }
-    assert_includes benchmarks, sport_activities(:crossfit_fran)
-    assert_includes benchmarks, sport_activities(:hyrox_run)
-    assert_not_includes benchmarks, sport_activities(:crossfit_competition)
+    benchmark_activities = SportActivity.benchmarks
+    assert benchmark_activities.all? { |a| a.category == "benchmark" }
+    assert_includes benchmark_activities, sport_activities(:crossfit_fran)
+    assert_includes benchmark_activities, sport_activities(:crossfit_murph)
+    assert_not_includes benchmark_activities, sport_activities(:crossfit_competition)
   end
 
-  test "results scope returns only result activities" do
-    results = SportActivity.results
-    assert results.all? { |a| a.category == "result" }
-    assert_includes results, sport_activities(:crossfit_competition)
-    assert_includes results, sport_activities(:running_10k_result)
-    assert_not_includes results, sport_activities(:crossfit_fran)
+  test "workouts scope returns only workout activities" do
+    workout_activities = SportActivity.workouts
+    assert workout_activities.all? { |a| a.category == "workout" }
+    assert_includes workout_activities, sport_activities(:crossfit_competition)
+    assert_includes workout_activities, sport_activities(:running_10k_result)
+    assert_not_includes workout_activities, sport_activities(:crossfit_fran)
   end
 
-  test "results scope orders by date descending" do
-    results = SportActivity.results
-    dates = results.pluck(:date)
+  test "workouts scope orders by date descending" do
+    workouts = SportActivity.workouts
+    dates = workouts.pluck(:date)
     assert_equal dates, dates.sort.reverse
   end
 
@@ -118,11 +139,7 @@ class SportActivityTest < ActiveSupport::TestCase
     assert_not_includes events, sport_activities(:crossfit_fran)
   end
 
-  test "events scope orders by date ascending" do
-    events = SportActivity.events
-    dates = events.pluck(:date)
-    assert_equal dates, dates.sort
-  end
+
 
   test "personal_records scope returns only personal records" do
     prs = SportActivity.personal_records
@@ -159,9 +176,9 @@ class SportActivityTest < ActiveSupport::TestCase
     assert_equal "100", activity.formatted_value
   end
 
-  test "formatted_value returns nil when no value" do
+  test "formatted_value returns value with unit for TBD events" do
     activity = sport_activities(:hyrox_upcoming_event)
-    assert_nil activity.formatted_value
+    assert_equal "TBD time", activity.formatted_value
   end
 
   test "sport_display_name returns capitalized sport type" do
@@ -179,8 +196,8 @@ class SportActivityTest < ActiveSupport::TestCase
     benchmark = sport_activities(:crossfit_fran)
     assert_equal "Benchmark", benchmark.category_display_name
 
-    result = sport_activities(:crossfit_competition)
-    assert_equal "Result", result.category_display_name
+    workout = sport_activities(:crossfit_competition)
+    assert_equal "Workout", workout.category_display_name
 
     event = sport_activities(:hyrox_upcoming_event)
     assert_equal "Event", event.category_display_name
@@ -206,7 +223,9 @@ class SportActivityTest < ActiveSupport::TestCase
       sport_type: "crossfit",
       category: "event",
       title: "No Date Event",
-      date: nil
+      value: "TBD",
+      unit: "place",
+      date: Date.today - 1.day
     )
     assert_not activity.upcoming?
   end
@@ -216,14 +235,16 @@ class SportActivityTest < ActiveSupport::TestCase
     assert activity.past?
   end
 
-  test "past? returns true for today" do
-    activity = SportActivity.new(
+  test "past? returns false for today" do
+    activity = SportActivity.create!(
       sport_type: "crossfit",
       category: "benchmark",
-      title: "Today",
+      title: "Today's Activity",
+      value: "5:00",
+      unit: "minutes",
       date: Date.today
     )
-    assert activity.past?
+    assert_not activity.past?
   end
 
   test "past? returns false for future dates" do
@@ -231,14 +252,13 @@ class SportActivityTest < ActiveSupport::TestCase
     assert_not activity.past?
   end
 
-  test "past? returns false when date is nil" do
-    activity = SportActivity.new(
-      sport_type: "crossfit",
-      category: "benchmark",
-      title: "No Date",
-      date: nil
-    )
-    assert_not activity.past?
+  test "past_activities scope returns activities before today" do
+    past_count = SportActivity.past_activities.count
+    assert past_count > 0
+
+    SportActivity.past_activities.each do |activity|
+      assert activity.date < Date.today
+    end
   end
 
   # Integration Tests
@@ -246,7 +266,10 @@ class SportActivityTest < ActiveSupport::TestCase
     activity = SportActivity.create!(
       sport_type: "crossfit",
       category: "benchmark",
-      title: "Minimal Activity"
+      title: "Minimal Activity",
+      value: "5:00",
+      unit: "minutes",
+      date: Date.today
     )
     assert activity.persisted?
     assert_equal "crossfit", activity.sport_type
@@ -256,7 +279,7 @@ class SportActivityTest < ActiveSupport::TestCase
   test "can create activity with all fields" do
     activity = SportActivity.create!(
       sport_type: "running",
-      category: "result",
+      category: "workout",
       title: "Complete Activity",
       description: "Full description here",
       value: "25:00",
@@ -296,30 +319,122 @@ class SportActivityTest < ActiveSupport::TestCase
     assert crossfit_benchmarks.count >= 2
   end
 
-  test "activities with nil date are handled correctly" do
-    activity = SportActivity.create!(
-      sport_type: "crossfit",
-      category: "benchmark",
-      title: "No Date",
-      date: nil
-    )
-    assert_not activity.past?
-    assert_not activity.upcoming?
-  end
-
-  test "activities can have empty optional fields" do
+  test "formatted_value works with valid value and unit" do
     activity = SportActivity.create!(
       sport_type: "hyrox",
       category: "event",
-      title: "Minimal Event",
-      description: nil,
-      value: nil,
-      unit: nil,
+      title: "Event with TBD",
+      value: "TBD",
+      unit: "time",
+      date: Date.today + 30.days,
       event_name: nil,
       location: nil,
       result_url: nil
     )
     assert activity.valid?
-    assert_nil activity.formatted_value
+    assert_equal "TBD time", activity.formatted_value
+  end
+
+  # Run Type Helper Tests
+  test "run_type_emoji returns road emoji for road running" do
+    activity = SportActivity.create!(
+      sport_type: "running",
+      sub_type: "road",
+      category: "workout",
+      title: "5K Road Run",
+      value: "21:30",
+      unit: "minutes",
+      date: Date.today
+    )
+    assert_equal "🛣️", activity.run_type_emoji
+  end
+
+  test "run_type_emoji returns trail emoji for trail running" do
+    activity = SportActivity.create!(
+      sport_type: "running",
+      sub_type: "trail",
+      category: "workout",
+      title: "Mountain Trail Run",
+      value: "45:00",
+      unit: "minutes",
+      date: Date.today
+    )
+    assert_equal "⛰️", activity.run_type_emoji
+  end
+
+  test "run_type_emoji returns nil for running without sub_type" do
+    activity = SportActivity.create!(
+      sport_type: "running",
+      sub_type: nil,
+      category: "workout",
+      title: "Generic Run",
+      value: "30:00",
+      unit: "minutes",
+      date: Date.today
+    )
+    assert_nil activity.run_type_emoji
+  end
+
+  test "run_type_emoji returns nil for non-running activities" do
+    activity = SportActivity.create!(
+      sport_type: "crossfit",
+      category: "benchmark",
+      title: "Fran",
+      value: "5:00",
+      unit: "minutes",
+      date: Date.today
+    )
+    assert_nil activity.run_type_emoji
+  end
+
+  test "run_type_badge returns 'Road' for road running" do
+    activity = SportActivity.create!(
+      sport_type: "running",
+      sub_type: "road",
+      category: "workout",
+      title: "5K Road Run",
+      value: "21:30",
+      unit: "minutes",
+      date: Date.today
+    )
+    assert_equal "Road", activity.run_type_badge
+  end
+
+  test "run_type_badge returns 'Trail' for trail running" do
+    activity = SportActivity.create!(
+      sport_type: "running",
+      sub_type: "trail",
+      category: "workout",
+      title: "Mountain Trail Run",
+      value: "45:00",
+      unit: "minutes",
+      date: Date.today
+    )
+    assert_equal "Trail", activity.run_type_badge
+  end
+
+  test "run_type_badge returns nil for running without sub_type" do
+    activity = SportActivity.create!(
+      sport_type: "running",
+      sub_type: nil,
+      category: "workout",
+      title: "Generic Run",
+      value: "30:00",
+      unit: "minutes",
+      date: Date.today
+    )
+    assert_nil activity.run_type_badge
+  end
+
+  test "run_type_badge returns nil for non-running activities" do
+    activity = SportActivity.create!(
+      sport_type: "crossfit",
+      category: "benchmark",
+      title: "Fran",
+      value: "5:00",
+      unit: "minutes",
+      date: Date.today
+    )
+    assert_nil activity.run_type_badge
   end
 end

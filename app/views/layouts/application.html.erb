@@ -38,7 +38,7 @@
   <body
     class="
       <%= controller_name.in?(%w[sessions passwords]) ? 'min-h-full
-      bg-gray-100' : 'min-h-full bg-white text-gray-900 antialiased' %>
+      bg-eggwhite' : 'min-h-full bg-eggwhite text-black antialiased' %>
     "
   >
     <% if controller_name.in?(%w[sessions passwords]) %>
@@ -51,77 +51,14 @@
       <%= render 'shared/sidebar' %>
 
       <!-- Navigation (hidden on homepage) -->
-      <% unless controller_name == 'home' && action_name == 'index' %>
-      <nav
-        class="
-          fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md
-          border-b border-gray-200
-        "
-        style="margin-left: 300px;"
-      >
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex items-center justify-between h-16">
-            <!-- Logo/Name -->
-            <div class="flex-shrink-0">
-              <%= link_to root_path, class: "text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors" do %>
-                Andre Teodoro
-              <% end %>
-            </div>
+      <%# <%= render 'shared/navigation' %>
 
-            <!-- Desktop Navigation -->
-            <div class="hidden md:flex items-center space-x-8">
-              <%= link_to "Home", root_path, class: "text-gray-600 hover:text-gray-900 transition-colors #{current_page?(root_path) ? 'text-gray-900 font-semibold' : ''}" %>
-              <%= link_to "Sports", sports_path, class: "text-gray-600 hover:text-gray-900 transition-colors #{current_page?(sports_path) || controller_name == 'sports' ? 'text-gray-900 font-semibold' : ''}" %>
-              <%= link_to "Projects", projects_path, class: "text-gray-600 hover:text-gray-900 transition-colors #{current_page?(projects_path) || controller_name == 'projects' ? 'text-gray-900 font-semibold' : ''}" %>
-              <%= link_to "Books", books_path, class: "text-gray-600 hover:text-gray-900 transition-colors #{current_page?(books_path) || controller_name == 'books' ? 'text-gray-900 font-semibold' : ''}" %>
-              <%= link_to "Gear", gear_index_path, class: "text-gray-600 hover:text-gray-900 transition-colors #{controller_name == 'gear_items' ? 'text-gray-900 font-semibold' : ''}" %>
-              <%= link_to "Blog", blog_path, class: "text-gray-600 hover:text-gray-900 transition-colors #{current_page?(blog_path) || controller_name == 'blog_posts' ? 'text-gray-900 font-semibold' : ''}" %>
-            </div>
-
-            <!-- Mobile menu button -->
-            <div class="md:hidden">
-              <button
-                type="button"
-                class="text-gray-600 hover:text-gray-900"
-                id="mobile-menu-button"
-              >
-                <svg
-                  class="h-6 w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Mobile menu -->
-        <div class="hidden md:hidden" id="mobile-menu">
-          <div class="px-2 pt-2 pb-3 space-y-1 bg-gray-50 border-t border-gray-200">
-            <%= link_to "Home", root_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 #{current_page?(root_path) ? 'bg-gray-100 text-gray-900' : ''}" %>
-            <%= link_to "Sports", sports_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 #{controller_name == 'sports' ? 'bg-gray-100 text-gray-900' : ''}" %>
-            <%= link_to "Projects", projects_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 #{controller_name == 'projects' ? 'bg-gray-100 text-gray-900' : ''}" %>
-            <%= link_to "Books", books_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 #{controller_name == 'books' ? 'bg-gray-100 text-gray-900' : ''}" %>
-            <%= link_to "Gear", gear_index_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 #{controller_name == 'gear_items' ? 'bg-gray-100 text-gray-900' : ''}" %>
-            <%= link_to "Blog", blog_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 #{controller_name == 'blog_posts' ? 'bg-gray-100 text-gray-900' : ''}" %>
-          </div>
-        </div>
-      </nav>
-      <% end %>
       <!-- Flash Messages -->
       <% if flash.any? %>
         <div class="fixed top-20 right-4 z-50 space-y-2">
           <% flash.each do |type, message| %>
-            <div class="max-w-sm w-full bg-white border border-gray-200 rounded-lg shadow-lg p-4 <%= type == 'alert' ? 'border-red-500' : 'border-green-500' %>">
-              <p class="text-sm text-gray-800"><%= message %></p>
+            <div class="max-w-sm w-full bg-eggwhite border-2 border-black p-4 <%= type == 'alert' ? 'bg-red-100' : 'bg-green-100' %>">
+              <p class="text-sm text-black font-semibold"><%= message %></p>
             </div>
           <% end %>
         </div>
@@ -130,14 +67,14 @@
       <main class="<%= controller_name == 'home' && action_name == 'index' ? '' : 'pt-16' %>" style="margin-left: 300px;"><%= yield %></main>
       <!-- Footer (hidden on homepage) -->
       <% unless controller_name == 'home' && action_name == 'index' %>
-      <footer class="bg-gray-50 border-t border-gray-200 mt-20" style="margin-left: 300px;">
+      <footer class="bg-eggwhite-dark border-t-2 border-black mt-20" style="margin-left: 300px;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- About -->
             <div>
-              <h3 class="text-gray-900 font-bold text-lg mb-4">Andre Teodoro</h3>
+              <h3 class="text-black font-bold text-lg mb-4">Andre Teodoro</h3>
 
-              <p class="text-gray-600 text-sm">
+              <p class="text-black text-sm">
                 Developer, athlete, and creator. Building products and pushing
                 limits. Based in the cloud, shipping to the world.
               </p>
@@ -145,38 +82,38 @@
 
             <!-- Quick Links -->
             <div>
-              <h3 class="text-gray-900 font-bold text-lg mb-4">Quick Links</h3>
+              <h3 class="text-black font-bold text-lg mb-4">Quick Links</h3>
 
               <ul class="space-y-2">
                 <li>
-                  <%= link_to "Home", root_path, class: "text-gray-600 hover:text-gray-900 text-sm transition-colors" %>
+                  <%= link_to "Home", root_path, class: "text-black hover:underline text-sm font-semibold" %>
                 </li>
 
                 <li>
-                  <%= link_to "Sports & Fitness", sports_path, class: "text-gray-600 hover:text-gray-900 text-sm transition-colors" %>
+                  <%= link_to "Sports & Fitness", sports_path, class: "text-black hover:underline text-sm font-semibold" %>
                 </li>
 
                 <li>
-                  <%= link_to "Projects", projects_path, class: "text-gray-600 hover:text-gray-900 text-sm transition-colors" %>
+                  <%= link_to "Projects", projects_path, class: "text-black hover:underline text-sm font-semibold" %>
                 </li>
 
                 <li>
-                  <%= link_to "Reading List", books_path, class: "text-gray-600 hover:text-gray-900 text-sm transition-colors" %>
+                  <%= link_to "Reading List", books_path, class: "text-black hover:underline text-sm font-semibold" %>
                 </li>
 
                 <li>
-                  <%= link_to "Gear", gear_index_path, class: "text-gray-600 hover:text-gray-900 text-sm transition-colors" %>
+                  <%= link_to "Gear", gear_index_path, class: "text-black hover:underline text-sm font-semibold" %>
                 </li>
 
                 <li>
-                  <%= link_to "Blog", blog_path, class: "text-gray-600 hover:text-gray-900 text-sm transition-colors" %>
+                  <%= link_to "Blog", blog_path, class: "text-black hover:underline text-sm font-semibold" %>
                 </li>
               </ul>
             </div>
 
             <!-- Social Links -->
             <div>
-              <h3 class="text-gray-900 font-bold text-lg mb-4">Connect</h3>
+              <h3 class="text-black font-bold text-lg mb-4">Connect</h3>
 
               <div class="flex space-x-4">
                 <% SocialLink.header_links.each do |link| %>
@@ -184,7 +121,7 @@
                     href="<%= link.url %>"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="text-gray-600 hover:text-gray-900 transition-colors"
+                    class="text-black hover:opacity-60"
                     title="<%= link.platform_display_name %>"
                   >
                     <svg
@@ -218,8 +155,8 @@
             </div>
           </div>
 
-          <div class="border-t border-gray-200 mt-8 pt-8 text-center">
-            <p class="text-gray-600 text-sm">
+          <div class="border-t-2 border-black mt-8 pt-8 text-center">
+            <p class="text-black text-sm font-semibold">
               &copy; <%= Date.today.year %> Andre Teodoro. Built with Rails,
               Turbo, and Tailwind CSS.
             </p>

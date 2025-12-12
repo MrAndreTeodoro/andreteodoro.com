@@ -6,3 +6,39 @@
 @source "../../../app/javascript/**/*.js";
 @source "../../../app/components/**/*.{rb,erb}";
 @source "../../../app/controllers/**/*.rb";
+
+/* Custom theme configuration for brutalist/retro design */
+@theme {
+	/* Custom eggwhite color palette */
+	--color-eggwhite: #faf8f3;
+	--color-eggwhite-dark: #f5f2e9;
+
+	/* Override default colors for brutalist aesthetic */
+	--color-background: var(--color-eggwhite);
+	--color-foreground: #000000;
+}
+
+/* Global base styles for brutalist design */
+@layer base {
+	body {
+		background-color: var(--color-eggwhite);
+		color: #000000;
+	}
+}
+
+/* Utility classes for brutalist design */
+@layer utilities {
+	.bg-eggwhite {
+		background-color: #faf8f3;
+	}
+
+	.bg-eggwhite-dark {
+		background-color: #f5f2e9;
+	}
+
+	/* Remove default focus rings, add brutalist ones */
+	.focus-brutalist:focus {
+		outline: 2px solid #000000;
+		outline-offset: 2px;
+	}
+}

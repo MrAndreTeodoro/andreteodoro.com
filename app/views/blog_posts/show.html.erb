@@ -1,29 +1,19 @@
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+<div class="mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <!-- Back Button -->
   <div class="mb-8">
-    <%= link_to blog_path, class: "inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors" do %>
-      <svg
-        class="w-5 h-5 mr-2"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M10 19l-7-7m0 0l7-7m-7 7h18"
-        />
+    <%= link_to blog_path, class: "inline-flex items-center text-black hover:underline font-bold" do %>
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
       </svg>
       Back to Blog
     <% end %>
   </div>
 
   <!-- Article -->
-  <article class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+  <article class="bg-eggwhite border-2 border-black">
     <!-- Featured Image -->
     <% if @blog_post.featured_image.attached? %>
-      <div class="w-full">
+      <div class="w-full border-b-2 border-black">
         <%= image_tag @blog_post.featured_image,
           class: "blog-featured-image w-full h-auto",
           alt: "#{@blog_post.title} featured image" %>
@@ -33,79 +23,61 @@
     <!-- Article Content -->
     <div class="p-8 md:p-12">
       <!-- Article Header -->
-      <header class="mb-8">
+      <header class="mb-8 pb-8 border-b-2 border-black">
         <!-- Meta Info -->
-        <div class="flex items-center space-x-3 mb-4">
-          <time class="text-sm text-gray-500">
+        <div class="flex items-center flex-wrap gap-3 mb-4">
+          <time class="text-sm text-black font-semibold">
             <%= @blog_post.formatted_published_date %>
           </time>
 
-          <span class="text-gray-300">•</span>
+          <span class="text-black font-bold">•</span>
 
-          <span class="text-sm text-gray-500">
+          <span class="text-sm text-black font-semibold">
             <%= @blog_post.reading_time_text %>
           </span>
 
-          <span class="text-gray-300">•</span>
+          <span class="text-black font-bold">•</span>
 
-          <span class="text-sm text-gray-500">
+          <span class="text-sm text-black font-semibold">
             <%= @blog_post.views_count %> views
           </span>
 
           <% if @blog_post.viral? %>
-            <span class="px-2 py-1 bg-pink-100 text-pink-700 text-xs rounded uppercase font-semibold">
+            <span class="px-2 py-1 bg-pink-300 text-black text-xs font-bold uppercase border-2 border-black">
               Viral
             </span>
           <% end %>
 
           <% if @blog_post.featured? %>
-            <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded uppercase font-semibold">
+            <span class="px-2 py-1 bg-yellow-300 text-black text-xs font-bold uppercase border-2 border-black">
               Featured
             </span>
           <% end %>
         </div>
 
         <!-- Title -->
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6">
           <%= @blog_post.title %>
         </h1>
 
         <!-- Excerpt -->
         <% if @blog_post.excerpt.present? %>
-          <div class="text-xl text-gray-600 leading-relaxed">
+          <div class="text-xl text-black font-semibold leading-relaxed">
             <%= @blog_post.excerpt %>
           </div>
         <% end %>
       </header>
 
       <!-- Article Body -->
-      <div
-        class="
-          prose prose-lg max-w-none mb-12
-          prose-headings:text-gray-900 prose-headings:font-bold
-          prose-p:text-gray-700 prose-p:leading-relaxed
-          prose-a:text-blue-600 prose-a:no-underline hover:prose-a:text-blue-700
-          prose-strong:text-gray-900 prose-strong:font-semibold
-          prose-code:text-pink-600 prose-code:bg-pink-50
-          prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
-          prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:border prose-pre:border-gray-300
-          prose-blockquote:border-l-4 prose-blockquote:border-blue-500
-          prose-blockquote:bg-blue-50 prose-blockquote:py-2 prose-blockquote:px-4
-          prose-blockquote:text-gray-700 prose-blockquote:italic
-          prose-img:rounded-lg prose-img:shadow-lg prose-img:border prose-img:border-gray-200
-          prose-hr:border-gray-200
-          prose-ul:text-gray-700 prose-ol:text-gray-700
-          prose-li:text-gray-700 prose-li:leading-relaxed
-        "
-      >
+      <div class="prose prose-lg max-w-none mb-12 prose-headings:text-black prose-headings:font-bold prose-p:text-black prose-p:leading-relaxed prose-a:text-black prose-a:underline hover:prose-a:no-underline prose-strong:text-black prose-strong:font-bold prose-code:text-black prose-code:bg-eggwhite-dark prose-code:px-1.5 prose-code:py-0.5 prose-code:border prose-code:border-black prose-code:text-sm prose-pre:bg-black prose-pre:text-eggwhite prose-pre:border-2 prose-pre:border-black prose-blockquote:border-l-4 prose-blockquote:border-black prose-blockquote:bg-eggwhite-dark prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:text-black prose-blockquote:font-semibold prose-img:border-2 prose-img:border-black prose-hr:border-black prose-hr:border-2 prose-ul:text-black prose-ol:text-black prose-li:text-black prose-li:leading-relaxed">
         <%= @blog_post.content %>
       </div>
 
       <!-- Article Footer -->
-      <footer class="border-t border-gray-200 pt-8">
+      <footer class="border-t-2 border-black pt-8">
         <!-- Share Section -->
         <div class="mb-8">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4">Share this post</h3>
+          <h3 class="text-lg font-bold text-black mb-4 border-b-2 border-black pb-2">Share this post</h3>
 
           <div class="flex flex-wrap gap-3">
             <!-- Twitter Share -->
@@ -113,15 +85,10 @@
               href="https://twitter.com/intent/tweet?text=<%= CGI.escape(@blog_post.title) %>&url=<%= CGI.escape(blog_post_url(@blog_post.slug)) %>"
               target="_blank"
               rel="noopener noreferrer"
-              class="
-                inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-600
-                text-white rounded-lg transition-colors
-              "
+              class="inline-flex items-center px-4 py-2 bg-black text-eggwhite border-2 border-black font-bold hover:bg-gray-800"
             >
               <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-                />
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
               </svg>
               Share on Twitter
             </a>
@@ -131,15 +98,10 @@
               href="https://www.linkedin.com/sharing/share-offsite/?url=<%= CGI.escape(blog_post_url(@blog_post.slug)) %>"
               target="_blank"
               rel="noopener noreferrer"
-              class="
-                inline-flex items-center px-4 py-2 bg-blue-700 hover:bg-blue-800
-                text-white rounded-lg transition-colors
-              "
+              class="inline-flex items-center px-4 py-2 bg-black text-eggwhite border-2 border-black font-bold hover:bg-gray-800"
             >
               <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-                />
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
               </svg>
               Share on LinkedIn
             </a>
@@ -147,23 +109,10 @@
             <!-- Copy Link -->
             <button
               onclick="navigator.clipboard.writeText('<%= blog_post_url(@blog_post.slug) %>'); this.textContent = 'Copied!'; setTimeout(() => this.innerHTML = '<svg class=\'w-5 h-5 mr-2\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z\'></path></svg>Copy Link', 2000)"
-              class="
-                inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700
-                text-white rounded-lg transition-colors
-              "
+              class="inline-flex items-center px-4 py-2 bg-eggwhite text-black border-2 border-black font-bold hover:bg-black hover:text-eggwhite"
             >
-              <svg
-                class="w-5 h-5 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-                />
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
               Copy Link
             </button>
@@ -175,34 +124,29 @@
 
   <!-- Related Posts -->
   <% if @related_posts.any? %>
-    <section class="mt-16 pt-12 border-t border-gray-200">
-      <h2 class="text-3xl font-bold text-gray-900 mb-8">Related Posts</h2>
+    <section class="mt-16 pt-12 border-t-2 border-black">
+      <h2 class="text-3xl font-bold text-black mb-8 border-b-2 border-black pb-3">Related Posts</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <% @related_posts.each do |post| %>
-          <%= link_to blog_post_path(post.slug), class: "block bg-white border border-gray-200 rounded-xl p-6 hover:border-gray-300 hover:shadow-lg transition-all duration-300 group" do %>
-            <div class="flex items-center space-x-2 mb-3">
-              <p class="text-sm text-gray-500">
+          <%= link_to blog_post_path(post.slug), class: "block bg-eggwhite border-2 border-black p-6 hover:bg-eggwhite-dark" do %>
+            <div class="flex items-center flex-wrap gap-2 mb-3">
+              <p class="text-sm text-black font-semibold">
                 <%= post.formatted_published_date %>
               </p>
 
               <% if post.viral? %>
-                <span class="px-2 py-1 bg-pink-100 text-pink-700 text-xs rounded uppercase font-semibold">
+                <span class="px-2 py-1 bg-pink-300 text-black text-xs font-bold uppercase border-2 border-black">
                   Viral
                 </span>
               <% end %>
             </div>
 
-            <h3
-              class="
-                text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600
-                transition-colors
-              "
-            >
+            <h3 class="text-lg font-bold text-black mb-2">
               <%= post.title %>
             </h3>
 
-            <p class="text-gray-600 text-sm"><%= post.short_excerpt %></p>
+            <p class="text-black text-sm font-semibold"><%= post.short_excerpt %></p>
           <% end %>
         <% end %>
       </div>
@@ -211,19 +155,13 @@
 
   <!-- Newsletter CTA -->
   <section class="mt-16">
-    <div
-      class="
-        bg-gradient-to-r from-blue-50 to-purple-50 border
-        border-blue-200 rounded-xl p-8 text-center
-      "
-    >
-      <h3 class="text-2xl font-bold text-gray-900 mb-4">
+    <div class="bg-yellow-200 border-2 border-black p-8 text-center">
+      <h3 class="text-2xl font-bold text-black mb-4">
         Enjoyed this post? Get more like it.
       </h3>
 
-      <p class="text-gray-600 mb-6">
-        Join my newsletter for more insights on development, fitness, and
-        building products.
+      <p class="text-black mb-6 font-semibold">
+        Join my newsletter for more insights on development, fitness, and building products.
       </p>
 
       <form class="max-w-md mx-auto">
@@ -231,19 +169,13 @@
           <input
             type="email"
             placeholder="Enter your email"
-            class="
-              flex-1 px-4 py-3 bg-white border border-gray-300 rounded-lg
-              text-gray-900 placeholder-gray-400 focus:outline-none
-              focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors
-            "
+            autocomplete="email"
+            class="flex-1 px-4 py-3 bg-eggwhite border-2 border-black text-black placeholder-gray-600 focus:outline-none font-semibold"
           >
 
           <button
             type="submit"
-            class="
-              px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg
-              font-semibold transition-colors whitespace-nowrap
-            "
+            class="px-6 py-3 bg-black text-eggwhite border-2 border-black font-bold hover:bg-gray-800 whitespace-nowrap"
           >
             Subscribe
           </button>

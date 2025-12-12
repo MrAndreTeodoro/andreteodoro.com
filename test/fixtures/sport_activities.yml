@@ -26,10 +26,10 @@ crossfit_murph:
   result_url:
   personal_record: false
 
-# CrossFit Competition Result
+# CrossFit Competition Workout
 crossfit_competition:
   sport_type: "crossfit"
-  category: "result"
+  category: "workout"
   title: "Local CrossFit Competition"
   value: "5th"
   unit: "place"
@@ -57,8 +57,8 @@ hyrox_upcoming_event:
   sport_type: "hyrox"
   category: "event"
   title: "HYROX World Championship"
-  value:
-  unit:
+  value: "TBD"
+  unit: "time"
   date: <%= 90.days.from_now.to_date %>
   event_name: "HYROX World Championship 2024"
   location: "Las Vegas, NV"
@@ -96,18 +96,18 @@ running_marathon:
   sport_type: "running"
   category: "event"
   title: "City Marathon"
-  value:
-  unit:
+  value: "TBD"
+  unit: "time"
   date: <%= 180.days.from_now.to_date %>
   event_name: "Annual City Marathon"
   location: "Downtown"
   result_url:
   personal_record: false
 
-# Running Result - Recent Race
+# Running Workout - Recent Race
 running_10k_result:
   sport_type: "running"
-  category: "result"
+  category: "workout"
   title: "10K Race Result"
   value: "45:22"
   unit: "minutes"
@@ -130,23 +130,23 @@ crossfit_recent:
   result_url:
   personal_record: true
 
-# Activity without value and unit
+# Activity with value and unit for future event
 no_value_activity:
   sport_type: "crossfit"
   category: "event"
   title: "Local Throwdown"
-  value:
-  unit:
+  value: "TBD"
+  unit: "place"
   date: <%= 60.days.from_now.to_date %>
   event_name: "Community CrossFit Throwdown"
   location: "Local Box"
   result_url:
   personal_record: false
 
-# Old event from last year
+# Old workout from last year
 old_event:
   sport_type: "running"
-  category: "result"
+  category: "workout"
   title: "Half Marathon"
   value: "1:58:30"
   unit: "time"

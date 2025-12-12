@@ -34,8 +34,8 @@ class Admin::SportActivitiesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should filter by category result" do
-    get admin_sport_activities_url, params: { category: "result" }
+  test "should filter by category workout" do
+    get admin_sport_activities_url, params: { category: "workout" }
     assert_response :success
   end
 
@@ -88,7 +88,8 @@ class Admin::SportActivitiesControllerTest < ActionDispatch::IntegrationTest
           title: "New Benchmark",
           description: "Test benchmark",
           value: "5:00",
-          unit: "minutes"
+          unit: "minutes",
+          date: Date.today
         }
       }
     end
@@ -200,9 +201,9 @@ class Admin::SportActivitiesControllerTest < ActionDispatch::IntegrationTest
           sport_type: "running",
           category: "benchmark",
           title: "Minimal Activity",
-          value: "",
-          unit: "",
-          date: "",
+          value: "30:00",
+          unit: "minutes",
+          date: Date.today,
           personal_record: false
         }
       }
@@ -253,11 +254,11 @@ class Admin::SportActivitiesControllerTest < ActionDispatch::IntegrationTest
 
   test "should update activity category" do
     patch admin_sport_activity_url(@sport_activity), params: {
-      sport_activity: { category: "result" }
+      sport_activity: { category: "workout" }
     }
 
     @sport_activity.reload
-    assert_equal "result", @sport_activity.category
+    assert_equal "workout", @sport_activity.category
   end
 
   test "should toggle personal_record status" do
@@ -404,7 +405,10 @@ class Admin::SportActivitiesControllerTest < ActionDispatch::IntegrationTest
         sport_activity: {
           sport_type: "crossfit",
           category: "benchmark",
-          title: long_title
+          title: long_title,
+          value: "5:00",
+          unit: "minutes",
+          date: Date.today
         }
       }
     end
@@ -421,7 +425,10 @@ class Admin::SportActivitiesControllerTest < ActionDispatch::IntegrationTest
         sport_activity: {
           sport_type: "crossfit",
           category: "benchmark",
-          title: special_title
+          title: special_title,
+          value: "5:00",
+          unit: "minutes",
+          date: Date.today
         }
       }
     end
@@ -455,6 +462,7 @@ class Admin::SportActivitiesControllerTest < ActionDispatch::IntegrationTest
           description: "3 rounds: 400m run, 21 KB swings, 12 pull-ups",
           value: "9:30",
           unit: "minutes",
+          date: Date.today,
           personal_record: true
         }
       }
@@ -472,9 +480,11 @@ class Admin::SportActivitiesControllerTest < ActionDispatch::IntegrationTest
         sport_activity: {
           sport_type: "hyrox",
           category: "event",
-          title: "HYROX World Championship",
-          date: Date.today + 60.days,
-          event_name: "HYROX World Championship 2025",
+          title: "HYROX Las Vegas",
+          value: "TBD",
+          unit: "time",
+          date: 90.days.from_now,
+          event_name: "HYROX World Championship",
           location: "Las Vegas, NV"
         }
       }
@@ -485,12 +495,12 @@ class Admin::SportActivitiesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "event", activity.category
   end
 
-  test "should create running result" do
+  test "should create running workout" do
     assert_difference("SportActivity.count") do
       post admin_sport_activities_url, params: {
         sport_activity: {
           sport_type: "running",
-          category: "result",
+          category: "workout",
           title: "5K Race Result",
           value: "21:45",
           unit: "minutes",
@@ -503,6 +513,6 @@ class Admin::SportActivitiesControllerTest < ActionDispatch::IntegrationTest
 
     activity = SportActivity.find_by(title: "5K Race Result")
     assert_equal "running", activity.sport_type
-    assert_equal "result", activity.category
+    assert_equal "workout", activity.category
   end
 end

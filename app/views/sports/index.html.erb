@@ -1,47 +1,48 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-  <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
-    Sports & Fitness
-  </h1>
-
-  <p class="text-xl text-gray-600 mb-12">
-    Track my journey across CrossFit, Hyrox, and Running. Benchmarks, race
-    results, and upcoming events.
-  </p>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <!-- Page Title -->
+  <div class="mb-12">
+    <h1 class="text-5xl md:text-6xl font-bold text-black mb-4">
+      Sports & Fitness
+    </h1>
+    <p class="text-xl text-black font-semibold">
+      Track my journey across CrossFit, Hyrox, and Running. Benchmarks, workouts, and upcoming events.
+    </p>
+  </div>
 
   <!-- Sport Type Tabs -->
-  <div class="flex space-x-4 mb-12 border-b border-gray-200">
-    <%= link_to "All Sports", sports_path, class: "px-4 py-3 font-semibold text-blue-600 border-b-2 border-blue-600 transition-colors" %>
-    <%= link_to "CrossFit", sport_path('crossfit'), class: "px-4 py-3 font-semibold text-gray-600 hover:text-gray-900 transition-colors" %>
-    <%= link_to "Hyrox", sport_path('hyrox'), class: "px-4 py-3 font-semibold text-gray-600 hover:text-gray-900 transition-colors" %>
-    <%= link_to "Running", sport_path('running'), class: "px-4 py-3 font-semibold text-gray-600 hover:text-gray-900 transition-colors" %>
+  <div class="flex space-x-4 mb-12">
+    <%= link_to "All Sports", sports_path, class: "px-4 py-2 font-bold border-2 border-black bg-black text-eggwhite" %>
+    <%= link_to "CrossFit", sport_path('crossfit'), class: "px-4 py-2 font-bold border-2 border-black bg-eggwhite text-black hover:bg-black hover:text-eggwhite" %>
+    <%= link_to "Hyrox", sport_path('hyrox'), class: "px-4 py-2 font-bold border-2 border-black bg-eggwhite text-black hover:bg-black hover:text-eggwhite" %>
+    <%= link_to "Running", sport_path('running'), class: "px-4 py-2 font-bold border-2 border-black bg-eggwhite text-black hover:bg-black hover:text-eggwhite" %>
   </div>
 
   <!-- Benchmarks Section -->
   <section class="mb-16">
-    <h2 class="text-3xl font-bold text-gray-900 mb-8">Benchmarks</h2>
+    <h2 class="text-3xl font-bold text-black mb-8">Benchmarks</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- CrossFit Benchmarks -->
       <div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+        <h3 class="text-xl font-bold text-black mb-4 flex items-center border-b-2 border-black pb-2">
           <span class="text-2xl mr-2">🏋️</span> CrossFit
         </h3>
 
         <div class="space-y-3">
           <% @crossfit_benchmarks.each do |activity| %>
-            <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-lg transition-shadow">
+            <div class="bg-eggwhite border-2 border-black p-4 hover:bg-eggwhite-dark">
               <div class="flex justify-between items-center">
-                <span class="text-gray-700 font-medium">
+                <span class="text-black font-semibold">
                   <%= activity.title %>
                 </span>
 
-                <span class="text-gray-900 font-bold">
+                <span class="text-black font-bold">
                   <%= activity.formatted_value %>
                 </span>
               </div>
 
               <% if activity.description.present? %>
-                <div class="text-gray-500 text-xs mt-2 prose max-w-none">
+                <div class="text-black text-xs mt-2 prose max-w-none">
                   <%= activity.description %>
                 </div>
               <% end %>
@@ -52,25 +53,25 @@
 
       <!-- Hyrox Benchmarks -->
       <div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+        <h3 class="text-xl font-bold text-black mb-4 flex items-center border-b-2 border-black pb-2">
           <span class="text-2xl mr-2">⚡</span> Hyrox
         </h3>
 
         <div class="space-y-3">
           <% @hyrox_benchmarks.each do |activity| %>
-            <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-lg transition-shadow">
+            <div class="bg-eggwhite border-2 border-black p-4 hover:bg-eggwhite-dark">
               <div class="flex justify-between items-center">
-                <span class="text-gray-700 font-medium">
+                <span class="text-black font-semibold">
                   <%= activity.title %>
                 </span>
 
-                <span class="text-gray-900 font-bold">
+                <span class="text-black font-bold">
                   <%= activity.formatted_value %>
                 </span>
               </div>
 
               <% if activity.description.present? %>
-                <div class="text-gray-500 text-xs mt-2 prose max-w-none">
+                <div class="text-black text-xs mt-2 prose max-w-none">
                   <%= activity.description %>
                 </div>
               <% end %>
@@ -81,25 +82,34 @@
 
       <!-- Running Benchmarks -->
       <div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+        <h3 class="text-xl font-bold text-black mb-4 flex items-center border-b-2 border-black pb-2">
           <span class="text-2xl mr-2">🏃</span> Running
         </h3>
 
         <div class="space-y-3">
           <% @running_benchmarks.each do |activity| %>
-            <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-lg transition-shadow">
+            <div class="bg-eggwhite border-2 border-black p-4 hover:bg-eggwhite-dark">
+              <% if activity.run_type_badge.present? %>
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="text-lg"><%= activity.run_type_emoji %></span>
+                  <span class="px-2 py-1 bg-black text-eggwhite text-xs font-bold uppercase border-2 border-black">
+                    <%= activity.run_type_badge %>
+                  </span>
+                </div>
+              <% end %>
+
               <div class="flex justify-between items-center">
-                <span class="text-gray-700 font-medium">
+                <span class="text-black font-semibold">
                   <%= activity.title %>
                 </span>
 
-                <span class="text-gray-900 font-bold">
+                <span class="text-black font-bold">
                   <%= activity.formatted_value %>
                 </span>
               </div>
 
               <% if activity.description.present? %>
-                <div class="text-gray-500 text-xs mt-2 prose max-w-none">
+                <div class="text-black text-xs mt-2 prose max-w-none">
                   <%= activity.description %>
                 </div>
               <% end %>
@@ -110,52 +120,56 @@
     </div>
   </section>
 
-  <!-- Recent Results -->
-  <% if @recent_results.any? %>
+  <!-- Recent Workouts -->
+  <% if @recent_workouts.any? %>
     <section class="mb-16">
-      <h2 class="text-3xl font-bold text-gray-900 mb-8">Recent Results</h2>
+      <h2 class="text-3xl font-bold text-black mb-8">Recent Workouts</h2>
 
       <div class="space-y-4">
-        <% @recent_results.each do |result| %>
-          <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+        <% @recent_workouts.each do |workout| %>
+          <div class="bg-eggwhite border-2 border-black p-6 hover:bg-eggwhite-dark">
             <div class="flex items-start justify-between">
               <div class="flex-1">
                 <div class="flex items-center gap-3 mb-2">
-                  <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded uppercase">
-                    <%= result.sport_display_name %>
+                  <% if workout.run_type_emoji.present? %>
+                    <span class="text-xl"><%= workout.run_type_emoji %></span>
+                  <% end %>
+
+                  <span class="px-2 py-1 bg-black text-eggwhite text-xs font-bold uppercase border-2 border-black">
+                    <%= workout.sport_display_name %>
                   </span>
 
-                  <% if result.personal_record %>
-                    <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded uppercase font-semibold">
+                  <% if workout.personal_record %>
+                    <span class="px-2 py-1 bg-yellow-300 text-black text-xs font-bold uppercase border-2 border-black">
                       🏆 PR
                     </span>
                   <% end %>
                 </div>
 
-                <h3 class="text-xl font-bold text-gray-900 mb-2">
-                  <%= result.title %>
+                <h3 class="text-xl font-bold text-black mb-2">
+                  <%= workout.title %>
                 </h3>
 
-                <% if result.description.present? %>
-                  <div class="text-gray-600 text-sm mb-3 prose max-w-none">
-                    <%= result.description %>
+                <% if workout.description.present? %>
+                  <div class="text-black text-sm mb-3 prose max-w-none">
+                    <%= workout.description %>
                   </div>
                 <% end %>
 
-                <div class="flex items-center gap-4 text-sm text-gray-500">
-                  <% if result.date %>
-                    <span><%= result.date.strftime("%B %d, %Y") %></span>
+                <div class="flex items-center gap-4 text-sm text-black font-semibold">
+                  <% if workout.date %>
+                    <span><%= workout.date.strftime("%B %d, %Y") %></span>
                   <% end %>
 
-                  <% if result.location.present? %>
-                    <span>📍 <%= result.location %></span>
+                  <% if workout.location.present? %>
+                    <span>📍 <%= workout.location %></span>
                   <% end %>
                 </div>
               </div>
 
               <div class="text-right">
-                <p class="text-3xl font-bold text-blue-600">
-                  <%= result.formatted_value %>
+                <p class="text-3xl font-bold text-black">
+                  <%= workout.formatted_value %>
                 </p>
               </div>
             </div>
@@ -168,31 +182,41 @@
   <!-- Upcoming Events -->
   <% if @upcoming_events.any? %>
     <section class="mb-16">
-      <h2 class="text-3xl font-bold text-gray-900 mb-8">📅 Upcoming Events</h2>
+      <h2 class="text-3xl font-bold text-black mb-8 border-b-2 border-black pb-3">📅 Upcoming Events</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <% @upcoming_events.each do |event| %>
-          <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-blue-500 hover:shadow-lg transition-all duration-300">
+          <div class="bg-eggwhite border-2 border-black p-6 hover:bg-eggwhite-dark">
             <div class="flex items-start justify-between mb-3">
-              <div>
-                <p class="text-sm text-gray-500">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="text-2xl">
+                    <%= event.sport_emoji %>
+                  </span>
+                  <% if event.run_type_emoji.present? %>
+                    <span class="text-2xl">
+                      <%= event.run_type_emoji %>
+                    </span>
+                  <% end %>
+                  <span class="px-2 py-1 bg-black text-eggwhite text-xs font-bold uppercase border-2 border-black">
+                    <%= event.sport_display_name %>
+                  </span>
+                </div>
+
+                <p class="text-sm text-black font-semibold mb-1">
                   <%= event.date.strftime("%b %d, %Y") %>
                 </p>
 
-                <h3 class="text-lg font-semibold text-gray-900 mt-1">
-                  <%= event.event_name %>
+                <h3 class="text-lg font-bold text-black">
+                  <%= event.title %>
                 </h3>
               </div>
-
-              <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded uppercase font-semibold">
-                <%= event.sport_display_name %>
-              </span>
             </div>
 
-            <p class="text-gray-600 text-sm mb-3"><%= event.location %></p>
+            <p class="text-black text-sm font-semibold mb-3">📍 <%= event.location %></p>
 
             <% if event.description.present? %>
-              <div class="text-gray-600 text-sm prose max-w-none">
+              <div class="text-black text-sm prose max-w-none">
                 <%= event.description %>
               </div>
             <% end %>
@@ -201,8 +225,4 @@
       </div>
     </section>
   <% end %>
-
-
-
-
 </div>
